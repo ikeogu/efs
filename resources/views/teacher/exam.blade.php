@@ -203,6 +203,7 @@
                             $total = 0;
                             
                             $status = array();
+                            $h =0;
                         @endphp
                         <td>{{App\Student::averPer($avg,$EXAM_score )}} </td>
                         <td>{{App\Student::h_grade($avgPer,$grades)}}  </td>

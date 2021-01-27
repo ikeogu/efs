@@ -512,5 +512,11 @@ class StudentController extends Controller
         $studs = Student::whereIn('id', $ids)->get();
         return view('ind_students',['students'=>$studs,'term'=>$t,'class_'=>$c]);
     }
+    public function import_(){
+        $terms = Term::all();
+        $class_ = S5Class::all();
+        dd($terms,$class_);
+        return view('students.import',['terms'=>$terms,'class_'=>$class_]);
+    }
 
 }

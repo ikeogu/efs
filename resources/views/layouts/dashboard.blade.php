@@ -111,7 +111,11 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Create new Term</span></a>
       </li>
-      
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('import')}}">
+            <i class="fas fa-fw fa-setting-o"></i>
+            <span>Import Students </span></a>
+      </li> 
       <li class="nav-item">
         <a class="nav-link" href="{{route('class.index')}}">
           <i class="fas fa-fw fa-house"></i>
@@ -134,11 +138,11 @@
             <i class="fas fa-fw fa-setting-o"></i>
             <span>Grade Settings</span></a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" href="{{route('sub')}}">
             <i class="fas fa-fw fa-setting-o"></i>
             <span>E.Y. Subj Comment</span></a>
-      </li> 
+      </li>  --}}
       <li class="nav-item">
         <a class="nav-link" href="{{route('ind')}}">
             <i class="fas fa-fw fa-setting-o"></i>

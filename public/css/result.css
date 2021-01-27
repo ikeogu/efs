@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#header, #footer{
+    height: 140px;
+    color: #eee;
+    background: linear-gradient(to right, green 40%, yellow 70%);
+}
+footer{
+    height: 12px;
+    color: #eee;
+    background: linear-gradient(to right, green, yellow);
+}
+.yellow{
+    background-color: yellow;
+}
+body{
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.lt-heading, .rt-heading, .assessment-heading{
+    font-size: 14px;
+}
+
+
+.left-table{
+    border: 1px solid green;
+}
+
+.left-table .gender,
+.present, .absent{
+    border-left: 1px solid green;
+    border-right: 1px solid green;
+}
+
+.left-table .days{
+    border-left: 1px solid green;
+}
+
+.left-table td{
+    width: 100%;
+    text-transform: uppercase;
+    border-bottom: 1px solid #28a745 ;
+    font-size: 0.99em;
+    font-weight: 600;
+}
+
+.left-table td ul{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.left-table td ul li{
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+.left-col hr{
+    margin-bottom: 0;
+}
+
+.left-table th{
+    padding: 10px;
+    font-size: 0.8em;
+    border-right: 1px solid #28a745;
+    font-weight: 600;
+}
+
+.right-table th{
+    font-size: 0.7em;
+}
+
+.right-col hr{
+    margin-bottom: 0;
+    border-bottom: 1px solid #28a745;
+}
+
+.right-table td{
+    font-size: 0.9em;
+}
+
+
+.bottom-left-col{
+    margin-top: -24px;
+}
+
+.bottom-left-card td strong{
+    font-size: 0.99em;
+}
+
+.bottom-left-card td{
+    font-size: 0.9em;
+}
+
+.bottom-left-card th{
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.summary .left-list {
+    width: 18em;
+}
+
+.left-list .list-group-item{
+    padding: 0px 10px !important;
+}
+
+
+.summary .right-list {
+    width: 18em;
+}
+
+.right-list .list-group-item{
+    padding: 0px 10px !important;
+}
+
+.left-list h5{
+    font-size: 1em;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.left-list span{
+    border-left: 1px solid #ccc;
+    width: 30px;
+    text-align: center;
+    padding: 5px 0px
+}
+
+.right-list span{
+    border-left: 1px solid #ccc;
+    text-align: center;
+    width: 30px;
+    padding: 5px 0px
+}
+
+.right-list h5{
+    font-size: 1em;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.bottom-right-table{
+    margin: 0;
+}
+
+.bottom-right-table td{
+    width: 20%;
+}
+
+.bottom-right-card .remarks-heading{
+    width: 100%;
+    background: #eee;
+    color: #28a745;
+    padding: 10px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.remarks-box p{
+    font-weight: 300;
+    font-size: 0.9em;
+    padding: 10px;
+    color: #444;
+}
+
+.sha{
+    display: inline-block;
+  
+  margin: 0 3em;
+  /**outline: solid 1px;/**/
+  height: inherit;
+  width: auto;
+
+    background-color:green ;
+}
+.det{
+    
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    
+}
+.d{
+    padding: 0px;
+    margin: 0px; 
+}
+@media screen and (max-width: 990px){
+    .left-col{
+        margin-bottom: 30px;
+        padding: 10px !important;
+    }
+
+    .right-col{
+        margin-bottom: 30px;
+        padding: 10px !important;
+    }
+
+    .bottom-left-col{
+        margin-bottom: 30px;
+        padding: 10px !important; 
+    }
+
+    .bottom-left-col h6{
+        text-align: center;
+    }
+
+    
+    .summary{
+        display: block !important;
+    }
+
+
+    .summary .left-list {
+        width: 100%;
+    }
+
+    .summary .right-list {
+        width: 100%;
+    }
+
+    
+    
+
+
+}
+
+.main {
+    width: 1200px;
+    height: 200px;
+    position: relative;
+    
+}
+.outer-mask {
+    position: absolute;
+    left: 2px;
+    top: 20px;
+    width: 1200px;
+    height: 200px;
+    overflow: hidden;
+    /* -webkit-transform: skew(20deg, 0deg);
+        -ms-transform: skew(20deg, 0deg);
+         -o-transform: skew(20deg, 0deg);
+            transform: skew(20deg, 0deg); */
+}
+.inner-mask {
+    position: absolute;
+    left: -40px;
+    top: 0px;
+    width: 1200px;
+    height: 200px;
+    
+    
+    -webkit-transform: skew(-15deg, 0deg);
+        -ms-transform: skew(-15deg, 0deg);
+         -o-transform: skew(-15deg, 0deg);
+            transform: skew(-15deg, 0deg);
+}
+.content {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 50;
+    font-style: normal;
+    background-color: green;
+    
+}
+
+

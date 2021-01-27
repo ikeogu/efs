@@ -46,6 +46,7 @@ import students from './components/students/index.vue';
 //  Vue.prototype.$userId = document.querySelector("meta[name='user_id']").getAttribute('content');
 import moment from 'moment';
 import student_class_T from  './components/class/class-ct.vue';
+import import_students from './components/students/import_students.vue';
 
 
 import _ from 'lodash'
@@ -125,6 +126,7 @@ new Vue({
         'summative-test':Summative,
         'class-ct':student_class_T,
         'subcomment':SubjComment,
+        'import_students':import_students
     },
     
 });

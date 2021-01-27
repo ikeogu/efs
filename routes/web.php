@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('teachers','teacher.index')->name('teachers.index');
     Route::view('subject_commment','subject_commment')->name('sub');
     
+    
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/logout', 'HomeController@logout')->name('logout');
@@ -82,8 +83,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('cordinators_braodsheet/{teacher}','TeacherController@allbroadsheet')->name('broad');
     Route::post('allbroadsheet', 'StudentController@allbroadsheet')->name('class_broad');
     Route::post('class_student', 'StudentController@class_student')->name('class_student');
+    Route::post('import_student', 'StudentController@import_student')->name('import_student');
     Route::get('unlock_all_studens','StudentController@unlockall')->name('unlock');
     Route::get('lock_all_studens','StudentController@lockall')->name('lock');
     Route::get('no_result_yet','StudentController@no_result')->name('no_result');
     Route::get('individual_result','StudentController@i')->name('ind');
+    Route::get('import_students','StudentController@import_')->name('import');
 });

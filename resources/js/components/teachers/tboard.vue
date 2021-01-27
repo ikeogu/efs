@@ -473,13 +473,16 @@
 }
 </style>
 <script>
-  const BASE_URL = 'https://efs.ishlp.com';
-  $(function(){
+ $(function(){
     $("#div2").hide();
     $("#preview").on("click", function(){
         $("#div1, #div2").toggle();
     });
 });
+</script>
+<script>
+  const BASE_URL = 'https://efs.ishlp.com';
+ 
   export default {
     data() {
       return {
