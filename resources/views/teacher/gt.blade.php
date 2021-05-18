@@ -446,7 +446,7 @@
                    $no_of_subject =0;
                @endphp
                <td>{{App\Student::averPer($avg,$GT_score )}} </td>
-               <td>{{App\Student::grade($avgPer,$grades)}}  </td>
+               <td>{{App\Student::h_grade($avgPer,$grades)}}  </td>
               
                
            </tr>
@@ -510,7 +510,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))),$grades)}}</td>
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))),$grades)}}</td>
                         @endforeach
                         
                         

@@ -36,7 +36,7 @@
                     <div class="card-body">
                       <h5 class="card-title">{{term.name}}</h5>
                       <p class="card-text">{{term.session}}</p>
-                      <a :href="'https://efs.ishlp.com/api/students_in_term/'+ term.id+'/class/'+class_.id" class="btn btn-success"  >view</a>
+                      <a :href="'/api/students_in_term/'+ term.id+'/class/'+class_.id" class="btn btn-success"  >view</a>
                     </div>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {

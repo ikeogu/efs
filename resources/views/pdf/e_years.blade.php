@@ -5,25 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://emerald-field-school.herokuapp.com/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://emerald-field-school.herokuapp.com/css/result.css">
+    <link rel="stylesheet" href="/css/result.css">
     
     <title>Early Years Result</title>
 </head>
 <body>
     
-    <div class="d-flex justify-content-end">
-        <a href="{{route('dr',[$student->id,$term->id,$class_->id])}}" type="button" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
-    </div>
+    
     
     <!-- top-left table -->
     <div class="container mt-5">
         <header >
             <div class="row">
                 <div class="col-8 yellow ">
-                  <img src="img/header.png" height="120" width="650">
+                  <img src="/img/header.png" height="120" width="650">
                 </div>
                 <div class="col-4 yellow" >
                     
@@ -133,32 +131,32 @@
                                 @if($behave != null)
                                 <tr>
                                     <td scope="row">Participates in class</td>
-                                     {{App\Student::behave($behave->pic)}}
+                                     {{App\Student::behave($behave->pic) ?? ''}}
                            
                                 </tr>
                                 <tr>
                                     <td scope="row">Listens Attentively</td>
-                                    {{App\Student::behave($behave->la)}}
+                                    {{App\Student::behave($behave->la)?? ''}}
                                 </tr>
                                 <tr>
                                     <td scope="row">Follows instrunction First time </td>
-                                    {{App\Student::behave($behave->fift)}}
+                                    {{App\Student::behave($behave->fift) ?? ''}}
                                 </tr>
                                 <tr>
                                     <td scope="row">Completes work on time</td>
-                                    {{App\Student::behave($behave->cwot)}}
+                                    {{App\Student::behave($behave->cwot)?? ''}}
                                 </tr>
                                 <tr>
                                     <td scope="row">Accepts new Challenges and persist with activities </td>
-                                    {{App\Student::behave($behave->anc)}}
+                                    {{App\Student::behave($behave->anc) ?? ''}}
                                 </tr>
                                 <tr>
                                     <td scope="row">Expresses feelings and Opinions </td>
-                                    {{App\Student::behave($behave->efao)}}
+                                    {{App\Student::behave($behave->efao)?? ''}}
                                 </tr>
                                 <tr>
                                     <td scope="row">Shows respect and Kidness to all </td>
-                                    {{App\Student::behave($behave->srk)}}
+                                    {{App\Student::behave($behave->srk) ?? ''}}
                                 </tr>
                                 @endif
                             </tbody>

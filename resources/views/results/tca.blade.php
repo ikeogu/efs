@@ -5,6 +5,9 @@
 @section('content')
 
 <div class="container-fluid" > 
+    <form>
+        <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
+    </form>
     <div class="card">
         <div class="card-header bg-success text-white">Total Continuous Assessment {{$class_->name}} |  {{$class_->description}}  |  {{$term->name}} ||  {{$term->session}}</div>
          <div class="card-body">

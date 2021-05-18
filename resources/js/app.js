@@ -47,6 +47,12 @@ import students from './components/students/index.vue';
 import moment from 'moment';
 import student_class_T from  './components/class/class-ct.vue';
 import import_students from './components/students/import_students.vue';
+import Tooltip from "vue-directive-tooltip";
+import "vue-directive-tooltip/dist/vueDirectiveTooltip.css";
+
+
+Vue.use(Tooltip);
+Vue.config.productionTip = false;
 
 
 import _ from 'lodash'

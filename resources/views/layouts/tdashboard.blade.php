@@ -106,6 +106,11 @@
                     <i class="fas fa-fw fa-setting-o"></i>
                     <span>Individual result</span></a>
               </li> 
+               <li class="nav-item">
+                <a class="nav-link" href="{{route('sub_point')}}">
+                    <i class="fas fa-fw fa-setting-o"></i>
+                    <span>Multiply subject </span></a>
+              </li> 
               
               <hr class="sidebar-divider d-none d-md-block">
         
@@ -226,12 +231,8 @@
         <!-- Custom scripts for all pages-->
         <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
       
-        <!-- Page level plugins -->
-        <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
-      
-        <!-- Page level custom scripts -->
-        <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
-        <script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
+
+        
     <script>
       function goBack() {
         window.history.back();

@@ -43,7 +43,7 @@
 
 </template>
 <script>
-     const BASE_URL = 'https://efs.ishlp.com';
+     const BASE_URL = window.location.origin;
      export default {
          data(){
             return{

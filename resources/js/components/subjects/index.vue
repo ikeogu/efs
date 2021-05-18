@@ -59,48 +59,6 @@
                         </option>
                       </select>
                   </div>
-                  <div id="high" v-if="selected === 1">
-                  <div class="form-group">
-                      <label for="name">CAT 1</label>
-                      <input type="number" name="cat_1" id="name" class="form-control"  placeholder="Mark for CAT 1" v-model="subject.cat_1" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">CAT 2</label>
-                      <input type="number" name="cat_2" id="name" class="form-control"  placeholder="Mark for CAT 2 " v-model="subject.cat_2" />
-                    </div>
-                     <div class="form-group">
-                      <label for="name">Home Work</label>
-                      <input type="hidden" name="home_work" id="home_work" class="form-control" value="10" v-model="subject.home_work" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">Class Work</label>
-                      <input type="hidden" name="class_work" id="class_work" class="form-control" value="10" v-model="subject.class_work" />
-                    </div>
-                  </div>
-                  <div id="year" v-if="selected === 2">
-                    <div class="form-group">
-                      <label for="name">Home Work</label>
-                      <input type="number" name="home_work" id="home_work" class="form-control" value="10" v-model="subject.home_work" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">Class Work</label>
-                      <input type="number" name="class_work" id="class_work" class="form-control" value="10" v-model="subject.class_work" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">Summative Test</label>
-                      <input type="number" name="summative_test" id="name" class="form-control"  placeholder="Mark for Summative Test " v-model="subject.summative_test" />
-                    </div>
-                  </div>
-                  <div id="early" v-if="selected === 3">
-                    <div class="form-group">
-                      <label for="name">Summative Test</label>
-                      <input type="number" name="summative_test" id="name" class="form-control"  placeholder="Mark for Summative Test " v-model="subject.summative_test" />
-                    </div>
-                  </div> 
-                  <div class="form-group">
-                      <label for="name">Exam</label>
-                      <input type="number" name="exam" id="name" class="form-control"  placeholder="Mark for Exams " v-model="subject.exam" />
-                    </div> 
                     <div class="form-group text-right">
                       <button class="btn btn-success">Submit</button>
                     </div>
@@ -123,8 +81,8 @@
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
               <div class="modal-body">
                 <form method="post" name="updatesubject" id="updatesubject" action="#" @submit.prevent="updateSubject">
@@ -132,12 +90,12 @@
                     <label for="name">Subject Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Name" v-model="subject.name" />
                   </div>
-                   <div class="form-group">
+                  <div class="form-group">
                     <label for="name">Description</label>
                     <input type="text" name="description" id="description" class="form-control" placeholder="This subject is for ...." v-model="subject.description" />
                   </div>
                     
-                    <div class="form-group">
+                  <div class="form-group">
                       <select class="form-control" name="level" v-model="selected" v-on:change="getText">
                         <option>Choose Option</option>
                         <option v-for="option in options" v-bind:value="option.value" :key="option.value">
@@ -145,55 +103,11 @@
                         </option>
                       </select>
                   </div>
-                  <!--
-                  <div id="high" v-if="selected === 1">
-                  <div class="form-group">
-                      <label for="name">CAT 1</label>
-                      <input type="number" name="cat_1" id="name" class="form-control"  placeholder="Mark for CAT 1" v-model="subject.cat_1" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">CAT 2</label>
-                      <input type="number" name="cat_2" id="name" class="form-control"  placeholder="Mark for CAT 2 " v-model="subject.cat_2" />
-                    </div>
-                  </div>
-                  <div id="high" v-if="selected === 2">
-                  <div class="form-group">
-                      <label for="name">CAT 1</label>
-                      <input type="number" name="cat_1" id="name" class="form-control"  placeholder="Mark for CAT 1" v-model="subject.cat_1" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">CAT 2</label>
-                      <input type="number" name="cat_2" id="name" class="form-control"  placeholder="Mark for CAT 2 " v-model="subject.cat_2" />
-                    </div>
-                  </div>
-                  <div id="year" v-if="selected === 3">
-                    <div class="form-group">
-                      <label for="name">Home Work</label>
-                      <input type="number" name="home_work" id="home_work" class="form-control" value="10" v-model="subject.home_work" />
-                    </div>
-                    <div class="form-group">
-                      <label for="name">Class Work</label>
-                      <input type="number" name="class_work" id="class_work" class="form-control" value="10" v-model="subject.class_work" />
-                    </div>
-                    
-                  </div>
-                  <div id="early" v-if="selected === 4">
-                    <div class="form-group">
-                      <label for="name">Summative Test</label>
-                      <input type="number" name="summative_test" id="name" class="form-control"  placeholder="Mark for Summative Test " v-model="subject.summative_test" />
-                    </div>
-                  </div> 
-                   <div class="form-group">
-                    <label for="name">Exam</label>
-                    <input type="number" name="exam" id="name" class="form-control"  placeholder="Mark for Exams " v-model="subject.exam" />
-                  </div>-->
-                
                   <div class="form-group text-right">
                     <button class="btn btn-success">Submit</button>
                   </div>
                 </form>
               </div>
-
             </div>
           </div>
         </div>
@@ -271,7 +185,7 @@
 </template>
 
 <script>
-  const BASE_URL = 'https://efs.ishlp.com';
+  const BASE_URL = window.location.origin;
   export default {
     data() {
       return {
@@ -285,14 +199,7 @@
         subject: {
           name: '',
           description: '',
-          home_work: '',
-          class_work:'',
-          friday_test:'',
-          holiday_assignment:'',
-          cat_1:'',
-          cat_2:'',
-          summative_test:'',
-          exam:'',
+         
           level:'',
         },
         laravelData: {},
@@ -330,14 +237,7 @@
           .post(BASE_URL + '/api/subjects', {
             name: this.subject.name,
             description: this.subject.description,
-            home_work: this.subject.home_work,
-            class_work: this.subject.class_work,
-            friday_test: this.subject.friday_test,
-            holiday_assignment: this.subject.holiday_assignment,
-            cat_1: this.subject.cat_1,
-            cat_2: this.subject.cat_1,
-            summative_test: this.subject.summative_test,
-            exam: this.subject.exam,
+           
             level:this.subject.level
           })
           .then(data => {
@@ -345,14 +245,7 @@
             console.log(data)
             this.subject.name = ''
             this.subject.description = ''
-             this.subject.home_work = ''
-            this.subject.class_work = ''
-            this.subject.friday_test = ''
-            this.subject.holiday_assignment = ''
-             this.subject.cat_1 = ''
-            this.subject.cat_2 = ''
-            this.subject.summative_test = ''
-            this.subject.exam = ''
+             
             this.subject.level = ''
             var self = this
             setTimeout(function() {
@@ -371,14 +264,7 @@
         this.$http.get(BASE_URL + '/api/subjects/' + subjectid).then(data => {
           this.subject.name = data.data.data.name,
           this.subject.description = data.data.data.description,
-          this.subject.home_work = data.data.data.home_work,
-          this.subject.class_work = data.data.data.class_work,
-          this.subject.friday_test = data.data.data.friday_test,
-          this.subject.holiday_assignment = data.data.data.holiday_assignment,
-          this.subject.cat_1 = data.data.data.cat_1,
-          this.subject.cat_2 = data.data.data.cat_2,
-          this.subject.exam = data.data.data.exam,
-          this.subject.summative_test = data.data.data.summative_test,
+          
           this.subject.level = data.data.data.level,
           this.id = subjectid
         })
@@ -388,13 +274,7 @@
           .patch(BASE_URL + '/api/subjects/' + this.id, {
             name: this.subject.name,
             description: this.subject.description,
-            // home_work: this.subject.home_work,
-            // class_work: this.subject.class_work,
-            // friday_test: this.subject.friday_test,
-            // holiday_assignment: this.subject.holiday_assignment,
-            // cat_1: this.subject.cat_1,
-            // cat_2: this.subject.cat_1,
-            // summative_test: this.subject.summative_test,
+            
             subject_id: this.id,
             level:this.subject.level
           })

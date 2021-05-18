@@ -69,7 +69,8 @@ class StudentController extends Controller
       $student->gender = $request->gender;
       $student->contact = $request->contact;
       $student->address = $request->address;
-      $student->s_class = $request->s_class; 
+      $student->s_class = $request->s_class;
+      $student->p_fee = 1; 
        $class = s5Class::find($request->s_class);
       
        $student->level = $class->status;
@@ -124,7 +125,7 @@ class StudentController extends Controller
      */
     public function update(Request $request)
     {
-      $STUD=Student::whereId($request->student_id)->update($request->except(['_method','_token','student_id']));
+      Student::whereId($request->student_id)->update($request->except(['_method','_token','student_id']));
 
     }
 
@@ -172,10 +173,12 @@ class StudentController extends Controller
          return $subjects;
         }
 
-      public function assignSubject(Student $student, Subject $subject,$s5class,Term $term)
+      public function assignSubject(Student $student,Subject $subject,$s5class,Term $term)
       {
         $class_ = S5Class::find($s5class);
-        return $this->subject_fix($student,$class_->id,$term->id,$subject); 
+        // $sub = Subject::find($subject);
+        
+        $this->subject_fix($student->id,$class_->id,$term->id,$subject->id); 
       }
       // assign subjects to all my student.
       public function assignSubjectToMyStudent($term, $s5class)
@@ -187,8 +190,8 @@ class StudentController extends Controller
           foreach($subjects->sortBy('name') as $subject){
             $studentterm = StudentTerm::where('student_id',$student->id)->where('term_id',$data['term']->id)->
             where('s5_class_id',$data['class_T']->id)->where('subject_id',$subject->id)->first();
-            if($studentterm == null){
-              return $this->subject_fix($student->id,$data['class_T']->id,$data['term']->id,$subject->id);
+            if($studentterm != null){
+               $this->subject_fix($student->id,$data['class_T']->id,$data['term']->id,$subject->id);
             }
            
           }
@@ -251,9 +254,9 @@ class StudentController extends Controller
       public function search(Request $request){
          $qry = $request->input('query');
         $users = DB::table('students')
-        ->where('name','like','%'.$qry.'%')
-        ->orWhere('oname','like','%'.$qry.'%')->
-        orWhere('surname','like','%'.$qry.'%')->get();
+        ->where('name','ilike','%'.$qry.'%')
+        ->orWhere('oname','ilike','%'.$qry.'%')->
+        orWhere('surname','ilike','%'.$qry.'%')->get();
         if($users){
           return response()->json($users);
         }
@@ -288,21 +291,30 @@ class StudentController extends Controller
       }
       // imports students from previous term and assigns subjects to them.
       public function import_students(Request $request){
+          
         $t = Term::find($request->term);
         $c = S5Class::find($request->sclass);
-        $new_term = $request->term_to;
-        $students = StudentTermClass::where('5s_class_id',$c->id)->where('term_id',$t->id)->get();
+        $new_term = Term::find($request->term_to);
+        $stud_ids = StudentTerm::where('s5_class_id',$c->id)->where('term_id',$t->id)->get();
+        $_ids = [];
+        foreach($stud_ids as $sid){
+            array_push($_ids,$sid->student_id);
+        }
+        
+        $students = Student::whereIn('id',$_ids)->get();
+        
         foreach($students as $student){
           // add students to class
           $this->TermController->add_student_term($student, $new_term, $c->id);
           // assigns subjects to them
-          $subjects = $this->assignedSubjects($student,$c->id,$t->id);
-          $studentterm = StudentTerm::where('student_id',$student->id)->where('term_id',$new_term)->
+          $subjects = $this->assignedSubjects($student,$c->id,$t);
+          
+          $studentterm = StudentTerm::where('student_id',$student->id)->where('term_id',$new_term->id)->
             where('s5_class_id',$c->id)->first();
-
-            if($studentterm == null){
+            
+            if($studentterm != null){
               foreach($subjects->sortBy('name') as $subject){
-                return $this->subject_fix($student->id,$c->id,$new_term,$subject->id);
+                 $this->subject_fix($student->id,$c->id,$new_term->id,$subject->id);
               }
             }
         } 
@@ -317,47 +329,48 @@ class StudentController extends Controller
 
         $term->subject()->attach($subject->id,array('student_id' => $student->id,'s5_class_id'=>$class_id));
         $student->subjects()->attach($subject->id,array('term_id' => $term->id,'s5_class_id'=>$class_->id));
-                
-        $mark = new SubjectMark();
-        $mark->student_id = $student->id;
-        $mark->subject_id = $subject->id;
-        $mark->subname = $subject->name;
-        $mark->term_id = $term->id;
-        $mark->s5_class_id= $class_id;
-        if($mark->subname == 'ENGLISH LANGUAGE' || $mark->subname == 'LITERATURE' && $subject->status =='Junior High School'){
-          $mark->status = 1;
-        }elseif($mark->subname == 'BASIC SCIENCE' || $mark->subname == 'BASIC TECHNOLOGY' || $mark->subname == 'P.H.E' || $mark->subname == 'I.C.T' && $subject->status =='Junior High School'){
-          $mark->status = 2;
+        
+        $mar = SubjectMark::where('student_id',$student->id)->where('term_id',$term->id)->where('subject_id',$subject->id)->where('s5_class_id',$class_->id)->first();
+        if($mar == null){
+            $mark = new SubjectMark();
+            $mark->student_id = $student->id;
+            $mark->subject_id = $subject->id;
+            $mark->subname = $subject->name;
+            $mark->term_id = $term->id;
+            $mark->s5_class_id= $class_id;
+            if($subject->status =='Junior High School' AND $subject->name =='ENGLISH LANG' OR $subject->name =='LITERATURE IN ENG'){
+              $mark->status = 1;
+            }elseif($subject->status =='Junior High School' AND $subject->name =='BASIC SCIENCE' OR $subject->name =='BASIC TECHNOLOGY' OR $subject->name =='P.H.E' OR $subject->name =='I.C.T'){
+              $mark->status = 2;
+            }
+            elseif($subject->name =='HOME ECONOMICS' || $subject->name =='AGRIC SCIENCE'  && $subject->status =='Junior High School'){
+              $mark->status = 3;
+            }
+            elseif($subject->name == 'SOCIAL STUDIES' || $subject->name =='CIVIC EDUCATION'  && $subject->status =='Junior High School'){
+              $mark->status = 4;
+            }elseif($subject->name == 'DANCE & DRAMA' || $subject->name == 'MUSIC' || $subject->name == 'FINE ART' && $subject->status =='Junior High School'){
+              $mark->status = 5;
+            }elseif($subject->name =='BUSINESS STUDIES' && $subject->status =='Junior High School'){
+              $mark->status = 6;
+            }
+            elseif($subject->name =='FRENCH' && $subject->status =='Junior High School'){
+              $mark->status = 7;
+            }
+              
+            elseif($subject->name =='MATHEMATICS' && $subject->status =='Junior High School'){
+              $mark->status = 8;
+            }
+            elseif($subject->name =='RELIGIOUS STUDIES' && $subject->status =='Junior High School'){
+              $mark->status = 9;
+            }
+            elseif($subject->name =='HANDWRITING' && $subject->status =='Junior High School'){
+              $mark->status = 10;
+            }
+            
+            $student->subjectMark()->save($mark);
+            $subject->subjectMark()->save($mark);
+            $class_->subjectMark()->save($mark); 
         }
-        elseif($mark->subname == 'HOME ECONOMICS' || $mark->subname == 'AGRIC SCIENCE'  && $subject->status =='Junior High School'){
-          $mark->status = 3;
-        }
-        elseif($mark->subname == 'SOCIAL STUDIES' || $mark->subname == 'CIVIC EDUCATION'  && $subject->status =='Junior High School'){
-          $mark->status = 4;
-        }elseif($mark->subname == 'DANCE & DRAMA' || $mark->subname == 'MUSIC' || $mark->subname == 'FINE ART' && $subject->status =='Junior High School'){
-          $mark->status = 5;
-        }elseif($mark->subname == 'BUSINESS STUDIES' && $subject->status =='Junior High School'){
-          $mark->status = 6;
-        }
-        elseif($mark->subname == 'FRENCH' && $subject->status =='Junior High School'){
-          $mark->status = 7;
-        }
-          
-        elseif($mark->subname == 'MATHEMATICS' && $subject->status =='Junior High School'){
-          $mark->status = 8;
-        }
-        elseif($mark->subname == 'RELIGIOUS STUDIES' && $subject->status =='Junior High School'){
-          $mark->status = 9;
-        }
-        elseif($mark->subname == 'HANDWRITING' && $subject->status =='Junior High School'){
-          $mark->status = 10;
-        }
-        else{
-          $mark->status = null;
-        }
-        $student->subjectMark()->save($mark);
-        $subject->subjectMark()->save($mark);
-        $class_->subjectMark()->save($mark); 
       }
 }
 

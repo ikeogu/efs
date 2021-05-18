@@ -13,7 +13,7 @@
           <div class="card-header bg-success text-white"> {{assignedSubjects.length}} Subject's Record</div>
             <div class="card-body">
 
-              <div class="row" v-if="this.class__.status =='Junior High School'">
+              <div class="row" v-if="this.class__.status =='Junior High School' || this.class__.status =='Senior High School'">
                
                 <div class="col-12 table-responsive">
                   <table  class=" table-bordered table-striped" >
@@ -60,54 +60,8 @@
                   </table>
                 </div>
               </div> 
-              <div class="row" v-if="this.class__.status =='Senior High School'">
-               
-                <div class="col-12 table-responsive">
-                  <table  class=" table-bordered table-striped" >
-                    <thead >
-                      <th>Subject</th>
-                        <th>CAT 1</th>
-                        <th>CAT 2</th>
-                        <th>MSC</th>
-                        <th>TCA</th>
-                        <th>Exam</th>
-                        <th>Grand Total</th>
-                         
-                    </thead>
-                    <tbody>
-        
-                      <tr v-for="marks in assignedSubjects" :key="marks.id" :subject_id="marks.subject_id">
-                         <td>{{marks.subname}}</td>
-                          <td>{{marks.CAT1}}</td>
-                           <td>{{marks.CAT2}}</td>
-                           <td>{{marks.MSC}}</td>
-                           <td>{{marks.TCA}}</td>
-                            <td>{{marks.Exam}}</td>
-                            <td>{{marks.GT}}</td>
-                       
-                          <td>  
-                            <!-- <a href="#"
-                                data-target="#exampleModal"
-                                data-toggle="modal"
-                                v-on:click="getSubjectID(subject.id)"
-                                class="btn btn-success" >Add Score
-                            </a> 
-                              <a href="#"
-                               v-on:click="editScore(marks.id)"
-                                data-target="#exampleModalEdit"
-                                data-toggle="modal"
-                                v-bind:title="marks.subject_id"
-                                class="btn btn-success">Edit
-                            </a>-->
-                            
-                        </td>
-                      </tr>
-                      
-                    </tbody>
-                  </table>
-                </div>
-              </div> 
-              <div class="row" v-if="class__.status == 'Year School'">
+             
+              <div class="row" v-if="class__.status == 'Year School' ||class__.status == 'Early Years'">
                 
                 <div class="col-12 table-responsive">
                   <table  class="table tab table-bordered table-striped" >
@@ -117,7 +71,8 @@
                         <th>CW</th>
                         <th>HA</th>
                         <th>FT</th>
-                        <th>S.T</th>
+                        <th>S.T 1</th>
+                        <th>S.T 2</th>
                         <th>TCA</th>
                         <th>Exam</th>
                         <th>Grand Total</th>
@@ -131,6 +86,7 @@
                            <td class="td2">{{marks.CW}}</td>
                            <td class="td2">{{marks.HA}}</td>
                             <td class="td2">{{marks.FT}}</td>
+                            <td class="td2">{{marks.summative_1}}</td>
                             <td class="td2">{{marks.summative_test}}</td>
                             <td class="td2">{{marks.TCA}}</td>
                             <td class="td2">{{marks.Exam}}</td>
@@ -152,52 +108,7 @@
                   </table>
                 </div>
               </div>
-              <div class="row" v-if="class__.status == 'Early Years'">
-                
-                <div class="col-12 table-responsive">
-                  <table  class="table tab table-bordered table-striped" >
-                    <thead >
-                      <th>Subject</th>
-                        <th>Hw</th>
-                        <th>CW</th>
-                        <th>HA</th>
-                        <th>FT</th>
-                        <th>S.T</th>
-                        <th>TCA</th>
-                        <th>Exam</th>
-                        <th>Grand Total</th>
-                        <th>Action</th>  
-                    </thead>
-                    <tbody>
-        
-                      <tr v-for="marks in assignedSubjects" :key="marks.id" :subject_id="marks.subject_id">
-                          <td class="td"> {{marks.subname}}</td>
-                          <td class="td2">{{marks.HW}}</td>
-                           <td class="td2">{{marks.CW}}</td>
-                           <td class="td2">{{marks.HA}}</td>
-                            <td class="td2">{{marks.FT}}</td>
-                            <td class="td2">{{marks.summative_test}}</td>
-                            <td class="td2">{{marks.TCA}}</td>
-                            <td class="td2">{{marks.Exam}}</td>
-                            <td class="td2">{{marks.GT}}</td>
-                       
-                          <td> 
-                          <!-- 
-                             <a href="#"
-                               v-on:click="editScore(marks.id)"
-                                data-target="#exampleModalEdit"
-                                data-toggle="modal"
-                                v-bind:title="marks.id"
-                                class="btn btn-success">Edit
-                            </a> -->
-                            
-                          </td>
-                      </tr>
-                      
-                    </tbody>
-                  </table>
-                </div>
-              </div> 
+              
               <!-- Still need to do table for creche -->
             </div>
           </div>
@@ -264,7 +175,11 @@
                     <input type="number" name="HA"  class="form-control"  v-model="student_mark.HA" />
                   </div>
                   <div class="form-group">
-                    <label for="roll_no">Summative Test</label>
+                    <label for="roll_no">Summative Test 1</label>
+                    <input type="number" name="summative_1" class="form-control"  v-model="student_mark.summative_1" >
+                  </div>
+                  <div class="form-group">
+                    <label for="roll_no">Summative Test 2</label>
                     <input type="number" name="summative_test" class="form-control"  v-model="student_mark.summative_test" >
                   </div>
                   
@@ -340,7 +255,7 @@
  }
 </style>
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {

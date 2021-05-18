@@ -41,61 +41,11 @@ class SubjectController extends Controller
     {
                 
         $subject = new Subject();
-        if($request->level === 'Early Years'){
-            $subject->name = $request->name;
-            $subject->description = $request->description;
-            $subject->home_work = $request->home_work;
-            $subject->class_work = $request->class_work;
-            $subject->friday_test = $request->friday_test;
-            $subject->holiday_assignment = $request->holiday_assignment;
-            $subject->level = $request->level;
-            $subject->summative_test= $request->summative_test;
-            $subject->exam = $request->exam;
-            // $subject->status = $request->status;
-        }
-        if($request->level === 'Year School'){
-            $subject->name = $request->name;
-            $subject->description = $request->description;
-            $subject->home_work = $request->home_work;
-            $subject->class_work = $request->class_work;
-            $subject->friday_test = $request->friday_test;
-            $subject->holiday_assignment = $request->holiday_assignment;
-            $subject->level = $request->level;
-            $subject->summative_test= $request->summative_test;
-            $subject->exam = $request->exam;
-            // $subject->status = $request->status;
-        }
-        if ($request->level === 'Junior High School') {
-            # code...
-            $subject->name = $request->name;
-            $subject->description = $request->description;
-            $subject->home_work = '';
-            $subject->class_work = '';
-            $subject->friday_test = '';
-            $subject->holiday_assignment = '';
-            $subject->level = $request->level;
-            $subject->summative_test= '';
-            $subject->cat_1 = $request->cat_1;
-            $subject->cat_2 = $request->cat_2;
-            $subject->exam = $request->exam;
-            // $subject->status = $request->status;
-        }
-        if ($request->level === 'Senior High School') {
-            # code...
-            $subject->name = $request->name;
-            $subject->description = $request->description;
-            $subject->home_work = '';
-            $subject->class_work = '';
-            $subject->friday_test = '';
-            $subject->holiday_assignment = '';
-            $subject->level = $request->level;
-            $subject->summative_test= '';
-            $subject->cat_1 = $request->cat_1;
-            $subject->cat_2 = $request->cat_2;
-            $subject->exam = $request->exam;
-            // $subject->status = $request->status;
-        }
         
+            $subject->name = $request->name;
+            $subject->description = $request->description;
+            $subject->level = $request->level;
+            
         
 
         $subject->save();
@@ -124,7 +74,7 @@ class SubjectController extends Controller
     public function update(Request $request)
     {
         
-        $sub=Subject::whereId($request->subject_id)->update($request->except(['_method','_token','subject_id']));
+        Subject::whereId($request->subject_id)->update($request->except(['_method','_token','subject_id']));
 
         // return new SubjectResource($subject);
     }

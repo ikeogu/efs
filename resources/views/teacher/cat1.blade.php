@@ -84,149 +84,143 @@
                 
                 @endphp  
                 <tbody>
-                    @foreach ($scores as $key=> $item)
+                    @foreach ($scores->sortBy('status') as $key=> $item)
                      
-                    <tr>
-                       
-                    @if($item->term_id == $term->id && $item->s5_class_id == $class_->id)
-                   
-                         @if(!in_array($item->status,$status))
-                               @php
-                                 $sum = App\SubjectMark::where('term_id',$term->id)->where('s5_class_id',$class_->id)->where('student_id',$student->id)->where('status',$item->status)->sum('CAT1');
-                                 array_push($status,$item->status);
-                                  
-                                @endphp
-                            
-                            @if($item->status ==1 )
-                                <td>5</td>
-                                <td class="">ENGLISH STUDIES</td>
-                    
-                            <td>{{round($sum/2)}}</td>
-                                @php
-                                 $total_sum =round($sum/2);
-                                 
-                                 @endphp
-                            @endif
-                            @if($item->status == 2)
-                                <td>{{$key +1}}</td>
-                                 <td class="">BASIC SCIENCE AND TECH</td>
-                    
-                                 <td>{{round($sum/4)}}</td>
-                                 @php
-                                 $total_sum =round($sum/4);
-                                 
-                                 @endphp
-                            @endif
-                            @if($item->status == 3)
-                                    <td>{{$key +1}}</td>
-                                    <td class="">PREVOCATIONAL STUDIES</td>
-                    
-                                 <td>{{round($sum/2)}}</td>
-                                 @php
-                                 $total_sum =round($sum/2);
-                                 
-                                 @endphp
-                            @endif
-                            @if($item->status == 4)
-                            
-                                <td>4</td>
-                                <td class="">NATIONAL VALUES</td>
-                    
-                                <td> {{round($sum/2)}}</td>
-                                 @php
-                                 $total_sum =round($sum/2);
-                                 
-                                 @endphp
-                            @endif
-                            @if($item->status ==5)
-                                <td>{{$key}}</td>
-                                    <td class="">C.C.A</td>
-                    
-                                <td> {{round($sum/3)}}</td>
-                                 @php
-                                 $total_sum =round($sum/3);
-                                 
-                                 @endphp
-                            @endif
-                            
-                            @if($item->status ==6)
-                                <td>3</td>
-                                <td class="">BUSINESS STUDIES</td>
-                    
-                                <td> {{$item->CAT1}}</td>
-                                 @php
-                                 $total_sum =$item->CAT1;
-                                 
-                                 @endphp
-                            @endif
-                             @if($item->status ==7)
-                                <td>{{$key}}</td>
-                                <td class="">FRENCH</td>
-                    
-                                <td> {{$item->CAT1}}</td>
-                                 @php
-                                 $total_sum =$item->CAT1;
-                                 
-                                 @endphp
-                            @endif
-                            @if($item->status ==8)
-                                <td>{{$key - 3}}</td>
-                                    <td class="">MATHEMATICS</td>
-                    
-                                <td> {{$item->CAT1}}</td>
-                                 @php
-                                 $total_sum =$item->CAT1;
-                                 
-                                 @endphp
-                            @endif
-                             @if($item->status ==9)
+                     <tr>
+                               
+                            @if($item->term_id == $term->id && $item->s5_class_id == $class_->id)
+                           
+                                 @if(!in_array($item->status,$status))
+                                       @php
+                                         $sum = App\SubjectMark::where('term_id',$term->id)->where('s5_class_id',$class_->id)->where('student_id',$student->id)->where('status',$item->status)->sum('CAT1');
+                                         array_push($status,$item->status);
+                                          
+                                        @endphp
                                     
-                                    <td>{{$key -6}}</td>
-                                    <td class="">RELIGIOUS STUDIES</td>
-                        
-                                    <td> {{$item->CAT1}}</td>
-                                     @php
-                                     $total_sum =$item->CAT1;
-                                     if($item->CAT1 == null)
-                                        $emp = 1;
-                                     
-                                     @endphp
-                            @endif
-                             @if($item->status ==10)    
-                                @if($class_->name =='JSS 3') 
-                                <td>{{$key - 9}}</td>
-                                @else
-                                <td>{{$key - 6}}</td>
-                                @endif
-                                <td>HANDWRITING</td>
-                                
-                                <td> {{$item->CAT1}}</td>
-                                 @php
-                                 $total_sum =$item->CAT1;
-                                 
-                                 @endphp
-                            @endif
+                                    @if($item->status == 1 )
+                                        <td>1</td>
+                                        <td class="">ENGLISH STUDIES</td>
                             
-                            @php
-                            $total += $total_sum;
-                                  
+                                    <td>{{round($sum/2)}}</td>
+                                        @php
+                                         $total_sum =round($sum/2);
+                                         
+                                         @endphp
+                                    @endif
+                                    @if($item->status == 2)
+                                        <td>2</td>
+                                         <td class="">BASIC SCIENCE AND TECH</td>
+                            
+                                         <td>{{round($sum/4)}}</td>
+                                         @php
+                                         $total_sum =round($sum/4);
+                                         
+                                         @endphp
+                                    @endif
+                                    @if($item->status == 3)
+                                            <td>3</td>
+                                            <td class="">PREVOCATIONAL STUDIES</td>
+                            
+                                         <td>{{round($sum/2)}}</td>
+                                         @php
+                                         $total_sum =round($sum/2);
+                                         
+                                         @endphp
+                                    @endif
+                                    @if($item->status == 4)
+                                    
+                                        <td>4</td>
+                                        <td class="">NATIONAL VALUES</td>
+                            
+                                        <td> {{round($sum/2)}}</td>
+                                         @php
+                                         $total_sum =round($sum/2);
+                                         
+                                         @endphp
+                                    @endif
+                                    @if($item->status ==5)
+                                        <td>5</td>
+                                            <td class="">CULTURAL & CREATIVE ART</td>
+                            
+                                        <td> {{round($sum/3)}}</td>
+                                         @php
+                                         $total_sum =round($sum/3);
+                                         
+                                         @endphp
+                                    @endif
+                                    
+                                    @if($item->status ==6)
+                                        <td>6</td>
+                                        <td class="">BUSINESS STUDIES</td>
+                            
+                                        <td> {{$item->CAT1}}</td>
+                                         @php
+                                         $total_sum =$item->CAT1;
+                                         
+                                         @endphp
+                                    @endif
+                                     @if($item->status ==7)
+                                        <td>7</td>
+                                        <td class="">FRENCH</td>
+                            
+                                        <td> {{$item->CAT1}}</td>
+                                         @php
+                                         $total_sum =$item->CAT1;
+                                         
+                                         @endphp
+                                    @endif
+                                    @if($item->status ==8)
+                                        <td>8</td>
+                                            <td class="">MATHEMATICS</td>
+                            
+                                        <td> {{$item->CAT1}}</td>
+                                         @php
+                                         $total_sum =$item->CAT1;
+                                         
+                                         @endphp
+                                    @endif
+                                     @if($item->status ==9)
+                                            
+                                            <td>9</td>
+                                            <td class="">RELIGIOUS STUDIES</td>
+                                
+                                            <td> {{$item->CAT1}}</td>
+                                             @php
+                                             $total_sum =$item->CAT1;
+                                             if($item->CAT1 == null)
+                                                $emp = 1;
+                                             
+                                             @endphp
+                                    @endif
+                                     @if($item->status ==10)    
+                                        <td>10</td>
+                                        <td>HANDWRITING</td>
+                                        <td> {{$item->CAT1}}</td>
+                                         @php
+                                             $total_sum =$item->CAT1;
+                                         @endphp
+                                    @endif
+                                    
+                                    @php
+                                    $total += $total_sum;
+                                          
+                                     
+                                    
+                                    if($emp == 1){
+                                        $cnt =count($status) - 1;
+                                    }else{
+                                        $cnt = count($status);
+                                    }
+                                    @endphp
+                                
+                                 <td>{{round(App\Student::c1_jmax_score($item->status,$class_->id,$term->id))}}</td> 
+                                <td>{{App\Student::average(App\Student::jsubAver($item->status,$class_->id,$term->id),$users->count())}}</td>
+
+                            @endif
                              
                             
-                            if($emp == 1){
-                                $cnt =count($status) - 1;
-                            }else{
-                                $cnt = count($status);
-                            }
-                            @endphp
-                        
-                         <td>{{round(App\Student::c1_jmax_score($item->status,$class_->id,$term->id))}}</td> 
-                        <td>{{App\Student::average(App\Student::jsubAver($item->status,$class_->id,$term->id),$users->count())}}</td>
-
-                    @endif
-                     
-                    
-                   
-                    </tr> 
+                           
+                            </tr>
                      @endif
                     
                     @endforeach

@@ -172,7 +172,8 @@ class SubjectMarkController extends Controller
         $class__ = S5Class::find($subjectMarks->s5_class_id);
         if($class__->status === 'Year School' || $class__->status === 'Early Years'){
             $subjectMarks->summative_test = $request->summative_test;
-            $subjectMarks->TCA =  $request->HA + $request->HW + $request->CW + $request->FT + $request->summative_test;
+            $subjectMark->summative_1 = $request->summative_1;
+            $subjectMarks->TCA =  $request->HA + $request->HW + $request->CW + $request->FT + $request->summative_test + $request->summative_1;
             $subjectMarks->GT = $subjectMarks->TCA +$request->Exam;
             $subjectMarks->save();
         }elseif($class__->status === 'Junior High School'){
@@ -219,118 +220,116 @@ class SubjectMarkController extends Controller
            # code...
            foreach ($stud->subjectMark as $item) {
                # code...
-               if($item->term_id == $term->id && $item->s5_class_id == $class_->id){                
+               if($item->term_id == $term->id && $item->s5_class_id == $class_->id && $item->GT !=null){                
                         $total += $item->GT;
                 }
             }
             // find another way to update and create new average
             $avg = Average::where('student_id',$stud->id)->where('s5_class_id',$class_)->where('term_id',$term->id)->first();
-            if($avg === null || $avg == 0){
+            if($avg){
+                $avg->aver_ = $total /$stud->subjectMark->count();
+                $avg->save();
+
+            }else{
                 $avg = new Average();
                 $avg->aver_ = $total /$stud->subjectMark->count();
                 $avg->student_id = $stud->id;
                 $avg->s5_class_id = $class_->id;
                 $avg->term_id = $term->id;
                 $avg->save();
-            }else{
                
-                $avg->aver_ = $total /$stud->subjectMark->count();
-                $avg->student_id = $stud->id;
-                $avg->s5_class_id = $class_->id;
-                $avg->term_id = $term->id;
-                $avg->save();
             }
     }
     
-     private function merge_sub($student_id, $term_id,$class_id){
-         $score = SubjectMark::where('student_id',$student_id)->where('term_id',$term_id)
-        ->where('s5_class_id',$class_id)->where('status',null)->get();
-        $subsub = SubSubject::where('student_id',$student_id)->where('term_id',$term_id)
-        ->where('s5_class_id',$class_id)->first();
+    //  private function merge_sub($student_id, $term_id,$class_id){
+    //      $score = SubjectMark::where('student_id',$student_id)->where('term_id',$term_id)
+    //     ->where('s5_class_id',$class_id)->where('status',null)->get();
+    //     $subsub = SubSubject::where('student_id',$student_id)->where('term_id',$term_id)
+    //     ->where('s5_class_id',$class_id)->first();
        
-        if(!$subsub){
-           $subsub = new SubSubject();
-            $myscore = 0;
-            $sum= 0;
+    //     if(!$subsub){
+    //        $subsub = new SubSubject();
+    //         $myscore = 0;
+    //         $sum= 0;
         
-            for($x =1; $x =5; $x++){
-                 $stud_scores = SubjectMark::where('student_id',$student_id)->where('term_id',$term_id)
-                ->where('s5_class_id',$class_id)->where('status','=',$x)->get();
+    //         for($x =1; $x =5; $x++){
+    //              $stud_scores = SubjectMark::where('student_id',$student_id)->where('term_id',$term_id)
+    //             ->where('s5_class_id',$class_id)->where('status','=',$x)->get();
                 
-                foreach($stud_scores as $item){
-                    $myscore += $item->CAT1;
-                }
-                if($x === 1){
-                    $subsub->cat_1 = ($myscore /$stud_scores->count());
-                    $subsub->name = 'BASIC SCIENCE AND TECH';
-                    $stud = Student::find($student_id);
-                    $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-                    $subsub ->student_id = $student_id;
-                    $subsub ->term_id = $term_id;
-                    $subsub ->s5_class_id = $class_id;
-                    $subsub->save();
+    //             foreach($stud_scores as $item){
+    //                 $myscore += $item->CAT1;
+    //             }
+    //             if($x === 1){
+    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
+    //                 $subsub->name = 'BASIC SCIENCE AND TECH';
+    //                 $stud = Student::find($student_id);
+    //                 $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
+    //                 $subsub ->student_id = $student_id;
+    //                 $subsub ->term_id = $term_id;
+    //                 $subsub ->s5_class_id = $class_id;
+    //                 $subsub->save();
     
                     
-                }
-                if($x === 2){
-                    $subsub->cat_1 = ($myscore /$stud_scores->count());
-                    $subsub->name = 'CULTURAL AND CREATIVE ART';
-                                $stud = Student::find($student_id);
-                $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-                $subsub ->student_id = $student_id;
-                $subsub ->term_id = $term_id;
-                $subsub ->s5_class_id = $class_id;
-                $subsub->save();
+    //             }
+    //             if($x === 2){
+    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
+    //                 $subsub->name = 'CULTURAL AND CREATIVE ART';
+    //                             $stud = Student::find($student_id);
+    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
+    //             $subsub ->student_id = $student_id;
+    //             $subsub ->term_id = $term_id;
+    //             $subsub ->s5_class_id = $class_id;
+    //             $subsub->save();
     
-                }
-                if($x === 3){
-                    $subsub->cat_1 =($myscore /$stud_scores->count());
-                    $subsub->name = 'ENGLISH STUDIES';
-                              $stud = Student::find($student_id);
-                $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-                $subsub ->student_id = $student_id;
-                $subsub ->term_id = $term_id;
-                $subsub ->s5_class_id = $class_id;
-                $subsub->save();
+    //             }
+    //             if($x === 3){
+    //                 $subsub->cat_1 =($myscore /$stud_scores->count());
+    //                 $subsub->name = 'ENGLISH STUDIES';
+    //                           $stud = Student::find($student_id);
+    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
+    //             $subsub ->student_id = $student_id;
+    //             $subsub ->term_id = $term_id;
+    //             $subsub ->s5_class_id = $class_id;
+    //             $subsub->save();
       
-                }
-                if($x === 4){
-                    $subsub->cat_1 = ($myscore /$stud_scores->count());
-                    $subsub->name = 'PREVOCATIONAL STUDIES';
-                               $stud = Student::find($student_id);
-                $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-                $subsub ->student_id = $student_id;
-                $subsub ->term_id = $term_id;
-                $subsub ->s5_class_id = $class_id;
-                $subsub->save();
+    //             }
+    //             if($x === 4){
+    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
+    //                 $subsub->name = 'PREVOCATIONAL STUDIES';
+    //                            $stud = Student::find($student_id);
+    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
+    //             $subsub ->student_id = $student_id;
+    //             $subsub ->term_id = $term_id;
+    //             $subsub ->s5_class_id = $class_id;
+    //             $subsub->save();
      
-                }
-                if($x === 5){
-                    $subsub->cat_1 = ($myscore /$stud_scores->count());
-                    $subsub->name = 'NATIONAL VALUES';
-                    $stud = Student::find($student_id);
-                $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-                $subsub ->student_id = $student_id;
-                $subsub ->term_id = $term_id;
-                $subsub ->s5_class_id = $class_id;
-                $subsub->save();
+    //             }
+    //             if($x === 5){
+    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
+    //                 $subsub->name = 'NATIONAL VALUES';
+    //                 $stud = Student::find($student_id);
+    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
+    //             $subsub ->student_id = $student_id;
+    //             $subsub ->term_id = $term_id;
+    //             $subsub ->s5_class_id = $class_id;
+    //             $subsub->save();
       
-                }
-            }
-            foreach($score as $item){
-            $subsub->cat_1 = $item->CAT1;
-            $subsub->name = $item->subname;
-            $subsub ->student_id = $student_id;
-            $subsub ->term_id = $term_id;
-            $subsub ->s5_class_id = $class_id;
-            $subsub->save();
+    //             }
+    //         }
+    //         foreach($score as $item){
+    //         $subsub->cat_1 = $item->CAT1;
+    //         $subsub->name = $item->subname;
+    //         $subsub ->student_id = $student_id;
+    //         $subsub ->term_id = $term_id;
+    //         $subsub ->s5_class_id = $class_id;
+    //         $subsub->save();
 
-            }
-        }
+    //         }
+    //     }
        
         
        
-    }
+    // }
 
     
 }

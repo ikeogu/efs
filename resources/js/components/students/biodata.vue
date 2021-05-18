@@ -148,7 +148,7 @@
                     <div class="card-body">
                       <h5 class="card-title" style=" font-size:12px;">{{term.name}}</h5>
                       <p class="card-text" style=" font-size:12px;">{{term.session}}</p>
-                      <a :href="'https://efs.ishlp.com/api/my_subjects/'+logged_in.id+'/class/'+class_id+'/term/'+term.id" class="btn btn-success btn-sm"  >view</a>
+                      <a :href="'/api/my_subjects/'+logged_in.id+'/class/'+class_id+'/term/'+term.id" class="btn btn-success btn-sm"  >view</a>
                     </div>
                   </div>
                 </div>
@@ -166,7 +166,7 @@
 </template>
 
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {

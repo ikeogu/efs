@@ -198,7 +198,7 @@
                                     <th scope="col">GRADE</th>
                                 </tr>
                             </thead>
-                            @if($class_->name == 'PLAYGROUP')
+                            @if($class_->name == 'PLAYGROUP' && $term->name === 'Term I')
                             <tbody>
                                 @php
                                 $total = 0;
@@ -394,7 +394,7 @@
                                   
                                 @endforeach
                                </tbody>
-                            @elseif($class_->name == 'KINDERGARTEN')
+                            @elseif($class_->name == 'KINDERGARTEN'&& $term->name === 'Term I')
                             <tbody>
                                 @php
                                 $total = 0;
@@ -598,7 +598,7 @@
                                   
                                 @endforeach
                                </tbody>
-                             @elseif($class_->name == 'PRE-KINDERGARTEN')
+                             @elseif($class_->name == 'PRE-KINDERGARTEN' && $term->name === 'Term I')
                             <tbody>
                                 @php
                                 $total = 0;
@@ -824,6 +824,604 @@
                                   
                                 @endforeach
                                </tbody>
+                            @elseif($class_->name == 'PLAYGROUP' && $term->name === 'Term II')
+                            <tbody>
+                                @php
+                                $total = 0;
+                                @endphp
+                             {{--figure out for early years result  --}}
+                                @foreach ($scores->sortBy('subname') as $key=> $item)
+                                
+                                     @if ($item->subname == 'COGNITIVE SKILLS')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+
+                                    
+                                    @elseif ($item->subname == 'CREATIVE ART')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>• Can make beautiful collages using beads and shredded cardboard paper. </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Able to make beautiful print using poster colours.
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                      
+                                    @elseif ($item->subname == 'DISCOVERY SCIENCE')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Identifies some birds (owl, dove, chicken, pigeon and vulture)
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Can mention some water animals (octopus, hippopotamus, crocodile, fish, frog) etc.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Identifies sinking and floating objects</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                            <td>• Can identify and mention some objects used to care for our body and space.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                       
+                                   @elseif($item->subname == 'LANGUAGE ART')
+                                    <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Rote sounds single sounds /a/-/u/.
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Able to sing Jolly Phonics songs and do actions for sounds /a/-/u/.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Recites sound formations/ a/ -/u/</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Identifies objects associated with sounds /a/-/u/.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                   @elseif($item->subname == 'NUMBER WORK')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Rote counts numbers 1-50
+
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Able to trace  numbers  1-20</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Identifies some basic shapes and colors </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                         <tr>
+                                            <td>•	Can differentiate objects (big and small, fat and thin, tall and short) etc.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>•	Attempt to write numbers 1-4.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                         <tr>
+                                            <td>•	Identifies numbers 1-5 in and out of sequence.  </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                         
+                                  @endif 
+                                  
+                                @endforeach
+                               </tbody>
+                            @elseif($class_->name == 'KINDERGARTEN' && $term->name === 'Term II')
+                            <tbody>
+                                @php
+                                $total = 0;
+                                @endphp
+                             {{--figure out for early years result  --}}
+                                @foreach ($scores->sortBy('subname') as $key=> $item)
+                                
+                                     @if ($item->subname == 'COGNITIVE SKILLS')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                                                            
+                                    
+                                    @elseif ($item->subname == 'CREATIVE ART')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Able to draw and colour neatly Free Arts Expression </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Recognizes craft works. e.g Strawberry craft, Umbrella craft etc
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Can mention items needed in making a craft/collage</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                         <tr>
+                                            <td>•	Attempts making some craft using Art materials.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        
+
+                                        
+                                    @elseif ($item->subname == 'DISCOVERY SCIENCE')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Recognizes and differentiates tools used in professions. 
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Can identify the different stages in growth of a butterfly </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Able to mention planets in their order (1st – 8th) </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                            <td>•	Can differentiate between softcopy and hardcopy documents. </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                         
+                                   @elseif($item->subname == 'LANGUAGE ART')
+                                    <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Writes uppercase and lowercase alphabets Aa-Bb.
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Able to say the meaning of Nouns, Verbs, Pronouns, Adjectives and Prepositions.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Punctuates sentences correctly, using capital letters, full stop(.) and question mark(?).</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Can blend words and reads simple sentences.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        
+                                   @elseif($item->subname == 'NUMBER WORK')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Able to count and write numbers 1-200 from memory
+
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Can identify, read, spell and write number names One – Fifteen</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Ability to subtract numbers horizontally using number line </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                         <tr>
+                                            <td>•	Can differentiate between 2/3 dimensional shapes.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                       
+                                  @endif 
+                                  
+                                @endforeach
+                               </tbody>
+                             @elseif($class_->name == 'PRE-KINDERGARTEN' && $term->name === 'Term II')
+                            <tbody>
+                                @php
+                                $total = 0;
+                                @endphp
+                             {{--figure out for early years result  --}}
+                                @foreach ($scores->sortBy('subname') as $key=> $item)
+                                
+                                     @if ($item->subname == 'COGNITIVE SKILLS')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                                                            
+                                    
+                                    @elseif ($item->subname == 'CREATIVE ART')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Attempts making an umbrella craft using cardboard and carton. </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Can attempt making a “Fish Bone” craft using cotton bud and cardboard.
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Able to make a sand collage, using different colours of sand.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                         <tr>
+                                            <td>•	Able to use tissue cylinder in making circle shape, triangle shape, star shape and heart shape.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                         <tr>
+                                            <td>•	Able to colour sunflower using rainbow colours.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                         <tr>
+                                            <td>•	Attempts making a paper jewelry (Bracelet) Using paper beads and strings.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+
+                                        
+                                    @elseif ($item->subname == 'DISCOVERY SCIENCE')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Able to Describes a Butterfly
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Able to identify some Insects and Birds</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Recognizes an Astronaut  </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                            <td>•	Able to identify Harmful Objects and Substances </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>•	Attempts to say the Life Cycle of a Chicken</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>•	Can identify and name parts of a computer.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                         
+                                         
+                                   @elseif($item->subname == 'LANGUAGE ART')
+                                    <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Reads two (2) letter words e.g am, an, if etc.
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Attempts to read three (3) letter words with vowel sounds /a/ and /e/ e.g pat, pen, cat e.t.c</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>• Reads digraphs with actions e.g sh, ch, th, e.t.c.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Able to read some sight words e.g the, our, she e.t.c</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td> •	Able to associate lower case to upper case Alphabets.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                   @elseif($item->subname == 'NUMBER WORK')
+                                        <tr scope="row">
+                                            <td><strong>{{$item->subname}} </strong></td>
+                                            <td>{{$item->TCA}}</td>
+                                            <td>{{$item->Exam}}</td>
+                                            <td>{{$item->GT}}</td>
+
+                                            <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                •	Able to add simple sums with and without pictures
+
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Attempts solving simple subtraction with pictures</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td>•	Attempts to spell number names one - five. </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                         <tr>
+                                            <td>•	Can identify basic number work signs e.g +, =, >, <, _ etc.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>•	Able to count and identify numbers 1-100.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                         <tr>
+                                            <td>•	Can independently write numbers 1-100.</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                         
+                                  @endif 
+                                  
+                                @endforeach
+                               </tbody>
                             @endif
                         </table>
                     </div>
@@ -917,7 +1515,13 @@
                     <!-- school fees -->
                     <div class="remarks-box school-fees">
                         <span class="remarks-heading d-block">school fees amount</span>
-                        <p>₦ {{number_format($term->fee_e)}}</p>
+                        <p>₦ 
+                            @if($class_->name == 'KINDERGARTEN'|| $class_->name == 'KINDERGARTEN')
+                                115,000
+                            @else
+                            {{number_format($term->fee_e)}}
+                            @endif
+                        </p>
                     </div>
                     <div class="py-4 mb-2 d-flex justify-content-center">
                       <img src="/img/logo2.png" height="60" width="auto">

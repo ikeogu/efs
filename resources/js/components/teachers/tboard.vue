@@ -11,10 +11,133 @@
         </div>
       </div>
       <div class="col-12 full" >
-        <!-- Button trigger modal -->
+        <div class="col-md-6 mb-4 full">
+            <div class="card shadow mb-4">
+              <div class="card-header py-2">
+                <h6 class="m-0 font-weight-bold text-success">Subjects You Teach</h6>
+              </div>
+              <div class="card-body">          
+                <div class="col-12">
 
-        <!-- Modal -->
-          <div class="col-md-6 mb-4 full" id="div2">
+                  <div v-for="cla in mySubjects"  :key="cla.id" class="card"  >
+                  
+                    
+                    <a href="#" class="btn btn-warning"  
+                      v-bind:id="cla.id" data-toggle="modal"
+                      v-on:click="getSubjectId(cla.id)" 
+                      data-target="#exampleModalCenter">{{cla.name}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-12 full">
+        <div class="col-lg-12 mb-4 full">
+
+          <!-- Project Card Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-2">
+              <h6 class="m-0 font-weight-bold text-success">Subject Offered By Students in {{class_.name}} {{class_.description}}</h6>
+            </div>
+            <div class="card-body">          
+              <div class="col-12 table-responsive" v-if="class_.status =='Year School' ||class_.status =='Early Years'" >
+                <table  class="table" id="hide" v-if="seen">
+                  <thead >
+                    <th scope="col">Student</th>
+                    <th scope="col">Subject</th>
+                      <th scope="col">Hw</th>
+                      <th scope="col">CW</th>
+                      <th scope="col">HA</th>
+                      <th scope="col">FT</th>
+                      <th scope="col">S.T 1</th>
+                      <th scope="col">S.T 2</th>
+                      <th scope="col">TCA</th>
+                      <th scope="col">Exam</th>
+                      <th scope="col">Grand Total</th>
+                      <th scope="col">Action</th>  
+                  </thead>
+                  <tbody v-if="student_mark != ''">
+                    
+                    <tr  v-for="marks in student_mark" :key="marks.id" :subject_id="marks.subject_id">
+                        <td> {{marks.student}}</td>
+                        <td> {{marks.subject}}</td>
+                        <td>{{marks.HW}}</td>
+                        <td>{{marks.CW}}</td>
+                        <td>{{marks.HA}}</td>
+                          <td>{{marks.FT}}</td>
+                          <td>{{marks.summative_1}}</td>
+                          <td>{{marks.summative_test}}</td>
+                          <td>{{marks.TCA}}</td>
+                          <td>{{marks.Exam}}</td>
+                          <td>{{marks.GT}}</td>
+
+
+                        <td>  
+                          <a href="#"
+                            v-on:click="editScore(marks.id)"
+                              data-target="#exampleModalEdit"
+                              data-toggle="modal"
+                              v-bind:title="marks.id"
+                              class="btn btn-success">Edit
+                          </a> 
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                  <span v-else> Students has not been assigned Your Subject.<br>Kindly meet The Class Teacher to assign your subject to students.</span>
+                </table>
+              </div>
+             
+              <div class="col-12 table-responsive" v-if="class_.status =='Junior High School' || class_.status =='Senior High School'" >
+                <table  class="table" id="hide" v-if="seen">
+                  <thead >
+                    <th scope="col">Student</th>
+                    <th scope="col">Subject</th>
+                      <th scope="col">C.A.T 1</th>
+                      <th scope="col">C.A.T 2</th>
+                      <th scope="col">MSC</th>
+                      <th scope="col">TCA</th>
+                      <th scope="col">Exam</th>
+                      <th scope="col">Grand Total</th>
+                      <th scope="col">Action</th>  
+                  </thead>
+                  <tbody v-if="student_mark != ''">
+                    
+                    <tr  v-for="marks in student_mark" :key="marks.id" :subject_id="marks.subject_id">
+                        <td> {{marks.student}}</td>
+                        <td> {{marks.subject}}</td>
+                        <td>{{marks.CAT1}}</td>
+                        <td>{{marks.CAT2}}</td>
+                        <td>{{marks.MSC}}</td>
+                        <td>{{marks.TCA}}</td>
+                        <td>{{marks.Exam}}</td>
+                        <td>{{marks.GT}}</td>
+                          
+                        <td >  
+                          <a href="#"
+                            v-on:click="editScore(marks.id)"
+                              data-target="#exampleModalEdit"
+                              data-toggle="modal"
+                              v-bind:title="marks.id"
+                              class="btn btn-success">Edit
+                          </a> 
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                  <span v-else> Students has not been assigned Your Subject.<br>Kindly meet The Class Teacher to assign your subject to students.</span>
+                </table>
+              </div>
+              
+           </div>
+          </div>
+        </div>
+            
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4 full" id="div2">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-success">Biodata</h6>
@@ -68,211 +191,6 @@
           <h3>Show profile</h3>
           </div>
           <button id="preview" class="btn-success">Click Me</button>
-
-          <div class="col-md-6 mb-4 full">
-            <div class="card shadow mb-4">
-              <div class="card-header py-2">
-                <h6 class="m-0 font-weight-bold text-success">Subjects You Teach</h6>
-              </div>
-              <div class="card-body">          
-                <div class="col-12">
-
-                  <div v-for="cla in mySubjects"  :key="cla.id" class="card"  >
-                  
-                    
-                    <a href="#" class="btn btn-warning"  
-                      v-bind:id="cla.id" data-toggle="modal"
-                      v-on:click="getSubjectId(cla.id)" 
-                      data-target="#exampleModalCenter">{{cla.name}}</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-12 full">
-        <div class="col-lg-12 mb-4 full">
-
-          <!-- Project Card Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-2">
-              <h6 class="m-0 font-weight-bold text-success">Subject Offered By Students in {{class_.name}} {{class_.description}}</h6>
-            </div>
-            <div class="card-body">          
-              <div class="col-12 table-responsive" v-if="class_.status =='Year School'" >
-                <table  class="table" id="hide" v-if="seen">
-                  <thead >
-                    <th scope="col">Student</th>
-                    <th scope="col">Subject</th>
-                      <th scope="col">Hw</th>
-                      <th scope="col">CW</th>
-                      <th scope="col">HA</th>
-                      <th scope="col">FT</th>
-                      <th scope="col">S.T</th>
-                      <th scope="col">TCA</th>
-                      <th scope="col">Exam</th>
-                      <th scope="col">Grand Total</th>
-                      <th scope="col">Action</th>  
-                  </thead>
-                  <tbody v-if="student_mark != ''">
-                    
-                    <tr  v-for="marks in student_mark" :key="marks.id" :subject_id="marks.subject_id">
-                        <td> {{marks.student}}</td>
-                        <td> {{marks.subject}}</td>
-                        <td>{{marks.HW}}</td>
-                        <td>{{marks.CW}}</td>
-                        <td>{{marks.HA}}</td>
-                          <td>{{marks.FT}}</td>
-                          <td>{{marks.summative_test}}</td>
-                          <td>{{marks.TCA}}</td>
-                          <td>{{marks.Exam}}</td>
-                          <td>{{marks.GT}}</td>
-
-
-                        <td>  
-                          <a href="#"
-                            v-on:click="editScore(marks.id)"
-                              data-target="#exampleModalEdit"
-                              data-toggle="modal"
-                              v-bind:title="marks.id"
-                              class="btn btn-success">Edit
-                          </a> 
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                  <span v-else> Students has not been assigned Your Subject.<br>Kindly meet The Class Teacher to assign your subject to students.</span>
-                </table>
-              </div>
-              <div class="col-12 table-responsive" v-if="class_.status =='Early Years'" >
-                <table  class="table" id="hide" v-if="seen">
-                  <thead >
-                    <th scope="col">Student</th>
-                    <th scope="col">Subject</th>
-                      <th scope="col">Hw</th>
-                      <th scope="col">CW</th>
-                      <th scope="col">HA</th>
-                      <th scope="col">FT</th>
-                      <th scope="col">S.T</th>
-                      <th scope="col">TCA</th>
-                      <th scope="col">Exam</th>
-                      <th scope="col">Grand Total</th>
-                      <th scope="col">Action</th>  
-                  </thead>
-                  <tbody v-if="student_mark != ''">
-                    
-                    <tr  v-for="marks in student_mark" :key="marks.id" :subject_id="marks.subject_id">
-                        <td> {{marks.student}}</td>
-                        <td> {{marks.subject}}</td>
-                        <td>{{marks.HW}}</td>
-                        <td>{{marks.CW}}</td>
-                        <td>{{marks.HA}}</td>
-                          <td>{{marks.FT}}</td>
-                          <td>{{marks.summative_test}}</td>
-                          <td>{{marks.TCA}}</td>
-                          <td>{{marks.Exam}}</td>
-                          <td>{{marks.GT}}</td>
-                          
-                        <td>  
-                          <a href="#"
-                            v-on:click="editScore(marks.id)"
-                              data-target="#exampleModalEdit"
-                              data-toggle="modal"
-                              v-bind:title="marks.id"
-                              class="btn btn-success">Edit
-                          </a> 
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                  <span v-else> Students has not been assigned Your Subject.<br>Kindly meet The Class Teacher to assign your subject to students.</span>
-                </table>
-              </div>
-              <div class="col-12 table-responsive" v-if="class_.status =='Junior High School'" >
-                <table  class="table" id="hide" v-if="seen">
-                  <thead >
-                    <th scope="col">Student</th>
-                    <th scope="col">Subject</th>
-                      <th scope="col">C.A.T 1</th>
-                      <th scope="col">C.A.T 2</th>
-                      <th scope="col">MSC</th>
-                      <th scope="col">TCA</th>
-                      <th scope="col">Exam</th>
-                      <th scope="col">Grand Total</th>
-                      <th scope="col">Action</th>  
-                  </thead>
-                  <tbody v-if="student_mark != ''">
-                    
-                    <tr  v-for="marks in student_mark" :key="marks.id" :subject_id="marks.subject_id">
-                        <td> {{marks.student}}</td>
-                        <td> {{marks.subject}}</td>
-                        <td>{{marks.CAT1}}</td>
-                        <td>{{marks.CAT2}}</td>
-                        <td>{{marks.MSC}}</td>
-                        <td>{{marks.TCA}}</td>
-                        <td>{{marks.Exam}}</td>
-                        <td>{{marks.GT}}</td>
-                          
-                        <td >  
-                          <a href="#"
-                            v-on:click="editScore(marks.id)"
-                              data-target="#exampleModalEdit"
-                              data-toggle="modal"
-                              v-bind:title="marks.id"
-                              class="btn btn-success">Edit
-                          </a> 
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                  <span v-else> Students has not been assigned Your Subject.<br>Kindly meet The Class Teacher to assign your subject to students.</span>
-                </table>
-              </div>
-              <div class="col-12 table-responsive" v-if="class_.status =='Senior High School'" >
-
-                <table  class="table" id="hide" v-if="seen">
-                  <thead >
-                    <th scope="col">Student</th>
-                    <th scope="col">Subject</th>
-                      <th scope="col">C.A.T 1</th>
-                      <th scope="col">C.A.T 2</th>
-                      <th scope="col">MSC</th>
-                      <th scope="col">TCA</th>
-                      <th scope="col">Exam</th>
-                      <th scope="col">Grand Total</th>
-                      <th scope="col">Action</th>  
-                  </thead>
-                  <tbody v-if="student_mark != ''">
-                    
-                    <tr  v-for="marks in student_mark" :key="marks.id" :subject_id="marks.subject_id">
-                        <td> {{marks.student}}</td>
-                        <td> {{marks.subject}}</td>
-                        <td>{{marks.CAT1}}</td>
-                        <td>{{marks.CAT2}}</td>
-                        <td>{{marks.MSC}}</td>
-                        <td>{{marks.TCA}}</td>
-                        <td>{{marks.Exam}}</td>
-                        <td>{{marks.GT}}</td>
-                          
-                        <td>  
-                          <a href="#"
-                            v-on:click="editScore(marks.id)"
-                              data-target="#exampleModalEdit"
-                              data-toggle="modal"
-                              v-bind:title="marks.id"
-                              class="btn btn-success">Edit
-                          </a> 
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                  <span v-else> Students has not been assigned Your Subject.<br>Kindly meet The Class Teacher to assign your subject to students.</span>
-                </table>
-              </div>
-           </div>
-          </div>
-        </div>
-            
       </div>
     </div>    
             
@@ -340,7 +258,7 @@
                           </button>
               </div>
               <div class="modal-body">
-                <form method="post" name="updatescore" id="updatescore" action="#" @submit.prevent="updateScore" v-if="logged_in.level == 'Senior High School'">
+                <form method="post" name="updatescore" id="updatescore" action="#" @submit.prevent="updateScore" v-if="logged_in.level == 'Senior High School' || logged_in.level ==='Junior High School'">
 
                    <div class="form-group">
                     <label for="roll_no">CAT 1</label>
@@ -364,30 +282,7 @@
                     <button class="btn btn-success">Update</button>
                   </div>
                 </form>
-                <form method="post" name="updatescore" id="updatescore" action="#" @submit.prevent="updateScore" v-if="logged_in.level ==='Junior High School'">
-
-                   <div class="form-group">
-                    <label for="roll_no">CAT 1</label>
-                    <input type="text" name="CAT1"  class="form-control" placeholder="Enter CAT 1 Score" v-model="student_mark.CAT1" />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="roll_no">CAT 2</label>
-                    <input type="number" name="CAT2" class="form-control" placeholder="Enter CAT 2 Score" v-model="student_mark.CAT2" />
-                  </div>
-                  <div class="form-group">
-                    <label for="contact">MSC</label>
-                    <input type="number" name="MSC"  class="form-control" placeholder="Enter MSC Score" v-model="student_mark.MSC" />
-                  </div>
-                  <div class="form-group">
-                    <label for="contact">Exam</label>
-                    <input type="number" name="exam"  class="form-control" placeholder="Enter MSC Score" v-model="student_mark.Exam" />
-                  </div>
-
-                  <div class="form-group text-center">
-                    <button class="btn btn-success">Update</button>
-                  </div>
-                </form>
+                
                  <form v-if="logged_in.level ==='Year School'" method="post" name="updatescore" id="updatescore" action="#" @submit.prevent="updateScore">
 
                    <div class="form-group">
@@ -406,8 +301,12 @@
                     <label for="roll_no">Holiday Assignment</label>
                     <input type="number" name="HA"  class="form-control"  v-model="student_mark.HA" />
                   </div>
+                  <div class="form-group" >
+                    <label for="roll_no">Summative Test 1</label>
+                    <input type="number" name="summative_1" class="form-control"  v-model="student_mark.summative_1" >
+                  </div>
                   <div class="form-group">
-                    <label for="roll_no">Summative Test</label>
+                    <label for="roll_no">Summative Test 2</label>
                     <input type="number" name="summative_test" class="form-control"  v-model="student_mark.summative_test" >
                   </div>
                   
@@ -420,7 +319,7 @@
                     <button class="btn btn-success">Update</button>
                   </div>
                 </form>
-                 <form v-if="logged_in.level ==='Early Years'" method="post" name="updatescore" id="updatescore" action="#" @submit.prevent="updateScore">
+                <form v-if="logged_in.level ==='Early Years'" method="post" name="updatescore" id="updatescore" action="#" @submit.prevent="updateScore">
 
                    <div class="form-group">
                     <label for="roll_no">Home Work</label>
@@ -438,8 +337,9 @@
                     <label for="roll_no">Holiday Assignment</label>
                     <input type="number" name="HA"  class="form-control"  v-model="student_mark.HA" />
                   </div>
+                 
                   <div class="form-group">
-                    <label for="roll_no">Summative Test</label>
+                    <label for="roll_no">Summative Test </label>
                     <input type="number" name="summative_test" class="form-control"  v-model="student_mark.summative_test" >
                   </div>
                   
@@ -452,8 +352,7 @@
                     <button class="btn btn-success">Update</button>
                   </div>
                 </form>
-               
-               
+                            
               </div>
 
             </div>
@@ -481,7 +380,7 @@
 });
 </script>
 <script>
-  const BASE_URL = 'https://efs.ishlp.com';
+  const BASE_URL = window.location.origin;
  
   export default {
     data() {
@@ -523,6 +422,7 @@
           HW:'',
           FT:'',
           summative_test:'',
+          summmative_1:'',
           CAT1:'',
           CAT2:'',
           Exam:'',
@@ -621,6 +521,7 @@
           this.student_mark.CW = data.data.data.CW
           this.student_mark.FT = data.data.data.FT
           this.student_mark.HA = data.data.data.HA
+          this.student_mark.summative_1 = data.data.data.summative_1
           this.student_mark.summative_test = data.data.data.summative_test
           this.student_mark.CAT1 = data.data.data.CAT1
           this.student_mark.CAT2 = data.data.data.CAT2
@@ -640,6 +541,7 @@
               CW:this.student_mark.CW,
               HW:this.student_mark.HW,
               FT:this.student_mark.FT,
+              summative_1:this.student_mark.summative_1,
               summative_test:this.student_mark.summative_test,
               CAT1:this.student_mark.CAT1,
               CAT2:this.student_mark.CAT2,
@@ -663,6 +565,7 @@
             this.student_mark.CAT1= '';
             this.student_mark.CAT2= '';
             this.student_mark.Exam= '';
+            this.student_mark.summative_1= '';
             var self = this
             setTimeout(function() {
               self.succmsg = true

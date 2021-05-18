@@ -1,8 +1,8 @@
-@extends('layouts.dashboard')
+@extends('layouts.tdashboard')
 
 @section('title', 'Student Result C.A.T 1')
 
-@section('content')
+@section('tboard')
 
 
 <div class="container-fluid">
@@ -130,9 +130,9 @@
                                          @endphp
                                     @endif
                                     @if($item->status ==5)
-                                        <td> {{round($sum/2)}}</td>
+                                        <td> {{round($sum/3)}}</td>
                                          @php
-                                         $total_sum =round($sum/2);
+                                         $total_sum =round($sum/3);
                                          
                                          @endphp
                                     @endif
@@ -187,7 +187,7 @@
                         @endforeach
                         @php
                             if($h == 2){
-                            $cnt = 9;
+                                $cnt = 9;
                             }else{
                                  $cnt = count($status);
                             }
@@ -216,7 +216,7 @@
                      <tr>
                         <td></td>
                         <th>Total</th>
-                        @for ($i = 1; $i <= $cnt; $i++)
+                        @for ($i = 1; $i <= 10; $i++)
                         <td>{{ round(App\Student::subject_total_jcat1($i,$class_->id,$term->id))}} </td>
                         @endfor
                         <td>{{$sum_total}}</td>
@@ -227,7 +227,7 @@
                     <tr>
                         <td></td>
                         <th>Max Score</th>
-                        @for ($i = 1; $i <= $cnt; $i++)
+                        @for ($i = 1; $i <= 10; $i++)
                         <td>{{round(App\Student::max_score_jcat1($i,$class_->id,$term->id))}}</td>
                         @endfor
                         
@@ -235,7 +235,7 @@
                     <tr>
                         <td></td>
                         <th>Min Score</th>
-                        @for ($i = 1; $i <= $cnt; $i++)
+                        @for ($i = 1; $i <= 10; $i++)
                              <td>{{round(App\Student::min_score_jcat1($i,$class_->id,$term->id))}}</td>
                         @endfor
                         
@@ -243,8 +243,8 @@
                     <tr>
                         <td></td>
                         <th>Class Average</th>
-                        @for ($i = 1; $i <= $cnt; $i++)
-                        <td>{{App\Student::average(App\Student::subject_total_jcat1($i,$class_->id,$term->id),$students->count())}}</td>
+                        @for ($i = 1; $i <= 10; $i++)
+                        <td>{{App\Student::average(App\Student::subject_total_jcat1($i,$class_->id,$term->id),App\Student::checkNoJStudent($i,$term->id,$class_->id,2))}}</td>
                         @endfor
                         
                        
@@ -252,10 +252,10 @@
                     <tr>
                         <td></td>
                         <th>Class Performance (%)</th>
-                        @for ($i = 1; $i <= $cnt; $i++)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total_jcat1($i,$class_->id,$term->id),($TCA_score * $students->count())))}}</td>
+                        @for ($i = 1; $i <= 10; $i++)
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_jcat1($i,$class_->id,$term->id),($TCA_score * App\Student::checkNoJStudent($i,$term->id,$class_->id,2))))}}</td>
                         @php
-                            $cl_av += App\Student::average_per(App\Student::subject_total_jcat1($item->id,$class_->id,$term->id),($TCA_score * $students->count()));
+                            $cl_av += App\Student::average_per(App\Student::subject_total_jcat1($item->id,$class_->id,$term->id),($TCA_score * App\Student::checkNoJStudent($i,$term->id,$class_->id,2)))
                         @endphp
                         @endfor
                         {{-- <td>{{App\Student::average($cl_av,$subject->count())}}</td>
@@ -266,8 +266,8 @@
                     <tr>
                         <td></td>
                         <th>Remarks</th>
-                        @for ($i = 1; $i <= $cnt; $i++)
-                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_jcat1($i,$class_->id,$term->id),($TCA_score * $students->count())),$grades)}}</td>
+                        @for ($i = 1; $i <= 10; $i++)
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_jcat1($i,$class_->id,$term->id),($TCA_score * App\Student::checkNoJStudent($i,$term->id,$class_->id,2))),$grades)}}</td>
                         @endfor
                         
                         
@@ -366,7 +366,7 @@
                         <td></td>
                         <th>Class Average</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::average(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),$students->count())}}</td>
+                        <td>{{App\Student::average_(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,4)}}</td>
                         @endforeach
                         
                        
@@ -375,9 +375,9 @@
                         <td></td>
                         <th>Class Performance (%)</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score * $students->count())))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))))}}</td>
                         @php
-                            $cl_av += App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score * $students->count()));
+                            $cl_av += App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4)));
                         @endphp
                         @endforeach
                         {{-- <td>{{App\Student::average($cl_av,$subject->count())}}</td>
@@ -389,11 +389,11 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score * $students->count())),$grades)}}</td>
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))),$grades)}}</td>
                         @endforeach
                         
                         
-                    </tr>   
+                    </tr> 
                   </tbody>
                 </table>
                 @endif

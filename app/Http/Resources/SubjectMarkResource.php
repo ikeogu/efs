@@ -37,6 +37,7 @@ class SubjectMarkResource extends JsonResource
             'FT' =>$this->FT,
             'HA' =>$this->HA,
             'summative_test' =>$this->summative_test,
+            'summative_1'=>$this->summative_1,
             'Exam' =>$this->Exam,
             'MSC' =>$this->MSC,
             'GT'=>$this->GT,

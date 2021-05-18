@@ -8,7 +8,7 @@
         <div class="card-body">
         <h5 class="card-title">{{term.name}}</h5>
         <p class="card-text">{{term.session}}</p>
-        <a :href="'https://efs.ishlp.com/api/' + term.id" class="btn btn-success">view</a>
+        <a :href="'/api/' + term.id" class="btn btn-success">view</a>
         </div>
       </div>
         
@@ -34,7 +34,7 @@
                      <!-- Nested Row within Card Body -->
                     <div class="row p-5 mt-3">
                         
-                        <div class="row" v-if="logged_in.level == 'Senior High School' || 'Junior High School' ">
+                        <div class="row" v-if="logged_in.level == 'Senior High School' || logged_in.level =='Junior High School' ">
                             
                           <div class="col-12 table-responsive">
                             <table  class="table-wrapper" >
@@ -63,7 +63,7 @@
                             </table>
                             </div>
                         </div> 
-                        <div class="row" v-if="logged_in.level === 'Year School'">
+                        <div class="row" v-if="logged_in.level === 'Year School'|| logged_in.level === 'Early Years'">
                            
                             <div class="col-8">
                             <table  class="" >
@@ -95,39 +95,7 @@
                             </table>
                             </div>
                         </div> 
-                        <div class="row" v-if="logged_in.level === 'Early Years'">
-                           
-                            <div class="col-8">
-                            <table  class="" >
-                                <thead >
-                                  <th>Subject</th>
-                                    <th>Hw</th>
-                                    <th>CW</th>
-                                    <th>HA</th>
-                                    <th>FT</th>
-                                    <th>S.T</th>
-                                    <th>TCA</th>
-                                    <th>Exam</th>
-                                    <th>Grand Total</th>
-                                    
-                                </thead>
-                                <tbody>
-                                <tr v-for="marks in scores" :key="marks.id" :subject_id="marks.subject_id">
-                                    <td>{{marks.subject.name}}</td>
-                                    <td>{{marks.HW}}</td>
-                                    <td>{{marks.CW}}</td>
-                                    <td>{{marks.HA}}</td>
-                                        <td>{{marks.FT}}</td>
-                                        <td>{{marks.Summative_test}}</td>
-                                        <td>{{marks.FT + marks.Summative_test +marks.HA + marks.CW +marks.HW}}</td>
-                                        <td>{{marks.Exam}}</td>
-                                        <td>{{marks.GT}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div> 
-           
+                                 
                     </div>
                 </div>
             
@@ -140,7 +108,7 @@
 </template>
 
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {

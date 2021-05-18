@@ -11,6 +11,13 @@
     color: #eee;
     background: linear-gradient(to right, green 40%, yellow 70%);
 }
+header{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 footer{
     height: 12px;
     color: #eee;
@@ -275,4 +282,15 @@ body{
     
 }
 
+.t{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+td,th{
+    border: 2px solid black !important;
+}
 

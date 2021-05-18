@@ -12,7 +12,6 @@ class Term extends Model
         'session',
         'description',
         'status',
-        'fee_h',
         'fee_y',
         'fee_e',
         'resumption_date',
@@ -20,9 +19,10 @@ class Term extends Model
         'h_cat2',
         'y_summative',
         'e_summative',
+        'msc',
         'fee_1_2',
         'fee_3',
-        'fee_s1',
+        'fee_s1_2',
         'fee_s3'
     ];
 

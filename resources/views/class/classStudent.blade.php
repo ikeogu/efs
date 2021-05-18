@@ -20,11 +20,17 @@
         </div>
         <div class="row mt-5">
             <div class="col-md-3">
-                <a href="{{route('summative',[$t->id,$class_->id])}}"  class="btn btn-success">Summative BroadSheet</a>
+                <a href="{{route('summative1',[$t->id,$class_->id])}}"  class="btn btn-success">Summative 1</a>
+            </div>
+            <div class="col-md-3">
+                <a href="{{route('summative',[$t->id,$class_->id])}}"  class="btn btn-success">Summative 2 </a>
             </div>
             <div class="col-md-3">
                 <a href="{{route('tca',[$t->id,$class_->id])}}"  class="btn btn-success">TCA BroadSheet</a>
             </div>
+            
+        </div>
+        <div>
             <div class=" col-md-3 py-3">
                 <a href="{{route('exam',[$t->id,$class_->id])}}"  class="btn btn-success">Exam BroadSheet</a>
             </div>

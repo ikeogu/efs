@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('jhschool_students', 'StudentController@jhschool')->name('jhschool');
     //  Get Broad Sheet Ready
     Route::get('summative_test/{term}/class/{class}','StudentController@summative')->name('summative');
+    
+    Route::get('summative_test1/{term}/class/{class}','StudentController@summative_1')->name('summative1');
     Route::get('exam/{term}/class/{class}','StudentController@exam')->name('exam');
     Route::get('cat1s/{term}/class/{class}','StudentController@cat1s')->name('cat1s');
     Route::get('cat2s/{term}/class/{class}','StudentController@cat2s')->name('cat2s');
@@ -54,6 +56,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('stud_in_class', 'TeacherController@sub_class')->name('stud_in_class');
 
     Route::get('summative/stud/{student}/term/{term}/class/{class}','StudentController@summative_sheet')->name('sum');
+    // route to summaive_test 1 and 2
+    Route::get('summative1/stud/{student}/term/{term}/class/{class}','StudentController@summative_sheet1')->name('sum1');
+
     Route::get('cat/stud/{student}/term/{term}/class/{class}','StudentController@cat1')->name('cat1');
     Route::get('cat2/stud/{student}/term/{term}/class/{class}','StudentController@cat2')->name('cat2');
     // Route::get('msc/stud/{student}/term/{term}/class/{class}','StudentController@msc')->name('msc');
@@ -62,9 +67,12 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::view('high_sch', 'results.h_result')->name('res');
     Route::get('download_summative/{student}/term/{term}/class/{class}','StudentController@download_summative')->name('ds');
     Route::get('download_cat1/{student}/term/{term}/class/{class}','StudentController@download_cat1')->name('dcat1');
+    Route::get('download_cat2/{student}/term/{term}/class/{class}','StudentController@download_cat2')->name('dcat2');
     Route::get('download_result/{student}/term/{term}/class/{class}','StudentController@download_result')->name('dr');
     // because of class teachers oooo
     Route::get('ct_summative_test/{term}/class/{class}','StudentController@summative_ct')->name('summative_ct');
+    
+    Route::get('ct_summative_test1/{term}/class/{class}','StudentController@summative1_ct')->name('summative1_ct');
     Route::get('ct_exam/{term}/class/{class}','StudentController@exam_ct')->name('exam_ct');
     Route::get('ct_cat1s/{term}/class/{class}','StudentController@cat1s_ct')->name('cat1s_ct');
     Route::get('ct_cat2s/{term}/class/{class}','StudentController@cat2s_ct')->name('cat2s_ct');
@@ -73,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ct_tca/{term}/class/{class}','StudentController@tca_ct')->name('tca_ct');
     //  students individual result
     Route::get('ct_summative/stud/{student}/term/{term}/class/{class}','StudentController@summative_sheet_ct')->name('sum_ct');
+    Route::get('ct_summative1/stud/{student}/term/{term}/class/{class}','StudentController@summative_sheet1_ct')->name('sum_ct1');
     Route::get('ct_cat/stud/{student}/term/{term}/class/{class}','StudentController@cat1_ct')->name('cat1_ct');
     Route::get('ct_cat2/stud/{student}/term/{term}/class/{class}','StudentController@cat2_ct')->name('cat2_ct');
     // Route::get('msc/stud/{student}/term/{term}/class/{class}','StudentController@msc')->name('msc');
@@ -81,12 +90,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('download_summative_test/{term}/class/{class}','StudentController@download_summative_sheet')->name('dsum');
     // Alll broadsheet 
     Route::get('cordinators_braodsheet/{teacher}','TeacherController@allbroadsheet')->name('broad');
+    Route::get('finds_braodsheet/','TeacherController@allbroadsheet2')->name('broad2');
+    
     Route::post('allbroadsheet', 'StudentController@allbroadsheet')->name('class_broad');
+    Route::post('admin_allbroadsheet2', 'StudentController@broadsheet2')->name('class_broad2');
     Route::post('class_student', 'StudentController@class_student')->name('class_student');
     Route::post('import_student', 'StudentController@import_student')->name('import_student');
-    Route::get('unlock_all_studens','StudentController@unlockall')->name('unlock');
-    Route::get('lock_all_studens','StudentController@lockall')->name('lock');
+    Route::get('unlock_all_studensh','StudentController@unlockallh')->name('unlockh');
+    Route::get('lock_all_studensh','StudentController@lockallh')->name('lockh');
+    
+     Route::get('unlock_all_studensy','StudentController@unlockally')->name('unlocky');
+    Route::get('lock_all_studensy','StudentController@lockally')->name('locky');
+    
+     Route::get('unlock_all_studense','StudentController@unlockalle')->name('unlocke');
+    Route::get('lock_all_studense','StudentController@lockalle')->name('locke');
+    
     Route::get('no_result_yet','StudentController@no_result')->name('no_result');
     Route::get('individual_result','StudentController@i')->name('ind');
     Route::get('import_students','StudentController@import_')->name('import');
+    // increase subject point
+    
+     Route::post('subject_point', 'StudentController@subject_point')->name('subject_point');
+     Route::get('sub_point','StudentController@sub_point')->name('sub_point');
+    
 });

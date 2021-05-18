@@ -1,8 +1,8 @@
-@extends('layouts.dashboard')
+@extends('layouts.tdashboard')
 
 @section('title', 'CAT 2 BROADSHEET')
 
-@section('content')
+@section('tboard')
 
 
 <div class="container-fluid">
@@ -244,7 +244,7 @@
                         <td></td>
                         <th>Class Average</th>
                         @for ($i = 1; $i <= $cnt; $i++)
-                        <td>{{App\Student::average(App\Student::subject_total_jcat2($i,$class_->id,$term->id),App\Student::checkNoStudent($term->id,$class_->id,$item->id,2))}}</td>
+                        <td>{{App\Student::average(App\Student::subject_total_jcat2($i,$class_->id,$term->id),App\Student::checkNoJStudent($i,$term->id,$class_->id,3))}}</td>
                         @endfor
                         
                        
@@ -253,9 +253,9 @@
                         <td></td>
                         <th>Class Performance (%)</th>
                         @for ($i = 1; $i <= $cnt; $i++)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total_jcat2($i,$class_->id,$term->id),($TCA_score * App\Student::checkNoStudent($term->id,$class_->id,$item->id,2))))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_jcat2($i,$class_->id,$term->id),($TCA_score * App\Student::checkNoJStudent($i,$term->id,$class_->id,3))))}}</td>
                         @php
-                            $cl_av += App\Student::average_per(App\Student::subject_total_jcat2($item->id,$class_->id,$term->id),($TCA_score * App\Student::checkNoStudent($term->id,$class_->id,$item->id,2)))
+                            $cl_av += App\Student::average_per(App\Student::subject_total_jcat2($item->id,$class_->id,$term->id),($TCA_score * App\Student::checkNoJStudent($i,$term->id,$class_->id,3)))
                         @endphp
                         @endfor
                         {{-- <td>{{App\Student::average($cl_av,$subject->count())}}</td>
@@ -267,7 +267,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @for ($i = 1; $i <= $cnt; $i++)
-                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_jcat2($i,$class_->id,$term->id),($TCA_score * App\Student::checkNoStudent($term->id,$class_->id,$item->id,2))),$grades)}}</td>
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_jcat2($i,$class_->id,$term->id),($TCA_score * App\Student::checkNoJStudent($i,$term->id,$class_->id,3))),$grades)}}</td>
                         @endfor
                         
                         

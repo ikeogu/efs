@@ -1,8 +1,7 @@
-@extends('layouts.dashboard')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title', 'Student Result')
-@section('style')
-
+	<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
@@ -15,6 +14,14 @@
 			font-weight:bolder;
 			color:black;
 		}
+		table {
+    border:solid #000 !important;
+    border-width:1px 0 0 1px !important;
+        }
+        th, td {
+            border:solid #000 !important;
+            border-width:0 1px 1px 0 !important;
+        }
         .rotate {
          transform: rotate(-90deg);
      
@@ -40,14 +47,16 @@
 		}
    
     .header th {
-				line-height: 130px;
-				font-size: 8px;
+				line-height: 120px;
+				font-size: 9px;
 				font-weight: bolder;
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 		
 				padding: 0px !important;
+				border: 3px solid black;
+				width:aut0;
              
             }
 
@@ -58,43 +67,56 @@
         font-size: 11px;
         font-weight: bolder;
         text-align: center;
+        
+         border:3px solid black
+        
+    }
+     @media print {
+      #printPageButton,#back {
+        display: none;
+      }
     }
 </style>
-@endsection  
-@section('content')
+	</head>
+<body> 
 
     <!-- details table -->
+	<div class="d-flex justify-content-end">
+        <button onclick="goBack()" class=" btn btn-warning text-white btn-block btn-sm"id="back"> Go Back</button>
+        <form>
+         <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
+      </form>   
+    </div>
   <section class="container my-5 p-1">
-    {{-- <div class="d-flex justify-content-end">
-			<a href="{{route('dr',[$student->id,$term->id,$class_->id])}}" type="button" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
-		</div> --}}
+    
     <!-- main result table -->
-    <div class="card" >
-        <div class="d-flex justify-content-center py-4 mb-2"><img src="{{asset('img/logo2.png')}}" height="90" width="auto"></div>
-		<div class="col-12 col-md-12 my-4 mx-auto p-0 card-body">
+    <div class="card " style="border: 2px solid black;">
+      <div class="d-flex justify-content-center py-4 mb-2"><img src="{{asset('img/logo2.png')}}" height="90" width="auto"></div>
+			<div class="col-12 col-md-12 my-4 mx-auto p-0 card-body">
 				<div >
-					<div class="d-flex justify-content-center" style="border: 1px solid black;"> 
+					<div class="d-flex justify-content-center" style="border: 2px solid black;"> 
 							<h3 class="text-uppercase text-bold">EmeraldField High School</h3>
 					</div>
-					<div class="d-flex justify-content-center" style="border: 1px solid black;"> 
+					<div class="d-flex justify-content-center" style="border:2px solid black;"> 
 							<h3 class="text-uppercase text-bold">report sheet</h3>
 					</div>
 					<div class="row" style=""> 
 						<div class="col-3">	
-							<p class="text-uppercase text-bold">student's name :</p>
+							<p class="text-uppercase text-bold">student's name:</p>
 						</div>
 						<div class="col-4">
 							<p class="text-uppercase text-bold"> {{$student->name}}  {{$student->oname}} {{$student->surname}}</p>
 						</div>
-						<div class="col-2">
-							<p class="text-uppercase text-bold " style="font-size:10px;">Academic<br> year:</p>
-						</div>
 						<div class="col-3">
-							<h6 class="text-uppercase text-bold" style="font-size:10px;">{{$term->session}}</h6>
+							<p class="text-uppercase text-bold " style="font-size:10px;">Academic year:</p>
+						</div>
+						<div class="col-2">
+							<p class="text-uppercase text-bold" style="font-size:10px;">{{$term->session}}</p>
 						</div>
 					</div>
-					<hr>
-					<div class="row p-0"> 
+					<hr style="border-top: 2px solid black;">
+					<div class="row" > 
+					
 							<div class="col-3">	
 								<p class="text-uppercase text-bold">Class:</p>
 							</div>
@@ -110,20 +132,23 @@
 							<div style="border: 1px solid black; font-size: 10px; font-weight: bolder;">
 									<p class=""> ACADEMIC PROGRESS REPORT, SUMMARY AND TEST</p>
 							</div>
-							<div class=" table table-responsive">
-								<table class="table-md table table-bordered table-hover table-condensed table-stripped">
+							<div class=" table">
+								<table class="table-md table-bordered table-stripped" cellpadding="0" cellspacing="0">
 									<thead class="header word">
 										
 												
-												<th class="rotate"></th>  
-												<th class="rotate text-uppercase" > cat 1 ({{$cat1}}%)</th> 
-												<th class="rotate text-uppercase" >cat 2 ({{$cat2}}%)</th>
-												<th class="rotate text-uppercase" >MSC score ({{$msc}}%)</th> 
-												<th class="rotate text-uppercase">Exam score ({{$exam}}%)</th> 
-												<th class="rotate text-uppercase" >Total score (100%)</th> 
-												<th class="rotate text-uppercase" >Class highest score (100%)</th> 
-												<th class="rotate text-uppercase" >Class lowest score (100%)</th> 
-												<th class="rotate text-uppercase">Remarks</th>
+												<th class="text-uppercase text-center">Subject</th>
+											    <th class="rotate text-uppercase  text-bold" style="font-size:">cat 1 {{$cat1}}%</th> 
+												<th class="rotate text-uppercase  text-bold">cat 2 {{$cat2}}%</th>
+												<th class="rotate text-uppercase  text-bold">MSC score {{$msc}}%</th> 
+												<th class="rotate text-uppercase  text-bold">Exam score {{$exam}}%</th> 
+												<th class="rotate text-uppercase  text-bold">Total score 100%</th> 
+												<th class="rotate text-uppercase  text-bold" >highest score</th> 
+												<th class="rotate text-uppercase  text-bold" >lowest score</th> 
+												<th class="rotate text-uppercase  text-bold" >Remarks</th>
+											
+												
+												
 											
 									</thead>
 									@if ($class_->status == 'Junior High School')
@@ -311,7 +336,7 @@
 											
 									
 											<tr>
-												<td class="text-uppercase text-left">Student Total Score</td>
+												<td class="text-uppercase text-left">Student's Total Score</td>
 												<td colspan="8">{{$total}}</td>	
 														
 											</tr>
@@ -325,17 +350,13 @@
 												
 											
 										</tr>
-
-										<tr>
-											<td></td>
-										</tr>
 										<tr>
 											<td style="border: hidden;" class="text-uppercase text-bold text-left" colspan="5">Class teacher's remark:</td>
 										</tr>
 										<tr style="">
 											<td colspan="8">
 												@if($comment != null)
-													<h5>{{$comment->comment}}</h5>
+													<p>{{$comment->comment}}</p>
 												@endif
 											</td>	
 										</tr>
@@ -346,14 +367,9 @@
 										<tr style="border-right: hidden;">
 												<td colspan="8" >
 													@if($comment != null)
-													<h5>{{$comment->hcomment}}</h5>
+													<p>{{$comment->hcomment}}</p>
 													@endif
 												</td>	
-										</tr>
-										
-										<tr style="border-right: hidden;">
-												<td colspan="8" >
-												</td>
 										</tr>
 										
 										
@@ -369,6 +385,7 @@
 										@endphp
 											
 												@foreach ($scores as $item)
+												
 													@if($item->CAT1 != null)
 													<tr>	
 														<td class="text-uppercase text-bold text-left">{{$item->subname}}</td>
@@ -387,14 +404,15 @@
 														<td>{{App\Student::h_min_score($item->subject_id,$class_->id,$term->id)}}</td>
 														<td>{{App\Student::h_grade($item->GT,$grades)}}</td>
 													</tr>
-													@endif	
+													@endif
+													
 												@endforeach
 													
 											
 											
 									
 											<tr>
-												<td class="text-uppercase text-left">Student Total Score</td>
+												<td class="text-uppercase text-left">Student's Total Score</td>
 												<td colspan="8">{{$total}}</td>	
 														
 											</tr>
@@ -409,16 +427,14 @@
 											
 										</tr>
 
-										<tr>
-											<td></td>
-										</tr>
+
 										<tr>
 											<td style="border: hidden;" class="text-uppercase text-bold text-left" colspan="5">Class teacher's remark:</td>
 										</tr>
 										<tr style="">
 												<td colspan="8">
 													@if($comment != null)
-														<h5>{{$comment->comment}}</h5>
+														<p>{{$comment->comment}}</p>
 													@endif
 												</td>	
 										</tr>
@@ -429,7 +445,7 @@
 										<tr style="border-right: hidden;">
 												<td colspan="8" >
 													@if($comment != null)
-													<h5>{{$comment->hcomment}}</h5>
+													<p>{{$comment->hcomment}}</p>
 													@endif
 												</td>
 										</tr>
@@ -711,6 +727,13 @@
 				</div>
 				
 			</div>
-	</div>	
+		</div>	
 	</section>
-@endsection
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+ 
+</body>
+</html>

@@ -113,6 +113,8 @@ Route::namespace('Api')->group(function () {
         Route::get('unblock_student/{student}','StudentController@unblock_student');
         Route::post('block_teacher','TeacherController@lockTeacher');
         Route::post('unblock_teacher','TeacherController@unlockTeacher');
+        Route::post('activate','TeacherController@activate');
+        Route::post('deactivate','TeacherController@deactivate');
         Route::post('import_students','StudentController@import_students');
         Route::get('lockedteacher/{teacher}/term/{term}','TeacherController@lockedTeacher');
     Route::middleware('auth:api', 'throttle:60,1')->group(function () {

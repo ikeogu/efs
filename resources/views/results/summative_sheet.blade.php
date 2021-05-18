@@ -20,11 +20,11 @@
     <!-- details table -->
         <section class="container my-5">
             <div class="d-flex justify-content-end">
-                <a href="{{route('ds',[$student->id,$term->id,$class_->id])}}" type="button" class="btn btn-outline-danger"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
+                <a href="{{route('ds',[$student->id,$term->id,$class_->id])}}" type="button" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
             </div>
             <div class="d-flex justify-content-center py-4 mb-2"><img src="{{asset('img/logo2.png')}}" height="90" width="auto"></div>
             <strong class="d-flex justify-content-center">EMERALDFIELD SCHOOLS</strong>
-            <strong class="d-flex justify-content-center ">SUMMATIVE TEST RESULT</strong>
+            <strong class="d-flex justify-content-center ">SUMMATIVE TEST II RESULT </strong>
            
             <div class="col-12 col-md-8 p-0 table-responsive">
                 <table class="details-table table-sm ">

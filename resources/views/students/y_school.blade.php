@@ -1,41 +1,50 @@
-@extends('layouts.studentboard')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title', 'Student Result')
-@section('style')
-
+	<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{asset('css/result.css')}}">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-@endsection  
-@section('content')
+</head>
+<body>
 
-    <div class="d-flex justify-content-end">
-        <a href="{{route('dr',[$student->id,$term->id,$class_->id])}}" type="button" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
-    </div>
+    
     
     <!-- top-left table -->
+    <button onclick="goBack()" class=" btn btn-warning text-white btn-block btn-sm">Go Back</button>
     <div class="container mt-5">
+        
         <header >
             <div class="row">
                 <div class="col-8 yellow ">
-                  <img src="/img/header.png" height="120" width="650">
+                  <img src="/img/header.png" height="120" width="650" class="img img-responsive">
                 </div>
                 <div class="col-4 yellow" >
                     
-                        <strong class="text-dark font-weight-bold">YEAR CLASSES</strong><br>
-                        <strong class="text-dark font-weight-bold">REPORT CARD</strong><br>
-                    <strong class="text-danger font-weight-bold text-uppercase "> {{$term->name}}</strong>
+                    <strong class="text-dark font-weight-bold">{{$class_->name}}</strong><br>
+                    <strong class="text-dark font-weight-bold">REPORT CARD</strong><br>
+                    <strong class="text-danger font-weight-bold text-uppercase ">TERM 
+
+                        @if($term->name === 'Term I')
+                                I
+                            @elseif($term->name === 'Term II')
+                                II
+                            @else
+                                III
+                            @endif
+                    </strong>
                    
                 </div>
             </div>
         </header>
         <div class="row top-section">
             
-            <div class="col-12 col-md-12 col-lg-7 p-0 left-col">
+            <div class="col-sm-8 col-md-8 col-lg-7 p-0 left-col">
                 <!-- table heading -->
                 <h6 class="lt-heading text-uppercase font-weight-bold">pupil's data</h6>
                 <hr>
@@ -49,14 +58,14 @@
                                 <!-- pupil name -->
                                 <tr class="table-row pupil-name">
                                     <th>CHILD'S NAME</th>
-                                    <td class="pl-3">{{$student->name}} {{$student->surname}}</td>
+                                    <td class="pl-3">{{$student->name}} {{$student->oname}} {{$student->surname}}</td>
                                 </tr>
                                 <!-- date of birth -->
                                 <tr class="table-row pupil-dob">
                                     <th>DATE OF BIRTH</th>
                                     <td class="pl-2">
                                         <ul>
-                                            <li>{{date("j F, Y",strtotime($student->dob))}}</li>
+                                            <li>{{date("jS F, Y",strtotime($student->dob))}}</li>
                                             <li class="gender">gender</li>
                                         <li>
                                             @if ($student->gender ==1 )
@@ -116,28 +125,86 @@
                         </table>
                     </div>
                 </div>
+                <div class=" bottom-left-col p-3 pt-5">
+                    <h6 class="assessment-heading text-uppercase text-success font-weight-bold text-sm-center pt-sm-5">Continuous ASSESSMENT AND OBSERVATION SUMMARY</h6>
+                    <div class="bottom-left-card">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead class="text-black" style="background:green !important; color:white !important;">
+                                    <tr>
+                                        <th scope="col">SUBJECT</th>
+                                        <th scope="col">CONTINUOUS ASSESSMENT 50%</th>
+                                        <th scope="col">EXAMINATION 50%</th>
+                                        <th scope="col">GRAND TOTAL 100%</th>
+                                        <th scope="col">GRADE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                    $total = 0;
+                                    @endphp
+                                    
+                                    @foreach ($scores->sortBy('subname') as $item)
+                                        <tr scope="row">
+                                        <td><strong>{{$item->subname}} </strong></td>
+                                        <td>{{$item->TCA}}</td>
+                                        <td>{{$item->Exam}}</td>
+                                        <td>{{$item->GT}}</td>
+    
+                                        <td>{{App\Student::grade($item->GT,$grades)}}</td>
+                                    </tr> 
+                                    @endforeach
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="summary d-flex justify-content-between mb-4">
+                        <ul class="list-group left-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h5>Highest Average:</h5>
+                                <span>{{App\Student::h_aver($class_->id,$term->id)}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h5>Child's Average:</h5>
+                                <span>{{number_format(App\Average::child_average($student->id,$term->id,$class_->id))}}</span>
+                            </li>
+                        </ul>
+                        <ul class="list-group right-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h5>Class Average:</h5>
+                                <span>{{App\Student::total_GT($class_->id,$term->id)}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                            <h5>Grade:</h5>
+                            <span>{{App\Student::grade(App\Average::child_average($student->id,$term->id,$class_->id),$grades)}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <!-- top right table -->
-            <div class="col-12 col-md-12 col-lg-5 p-0 right-col">
-                <h6 class="rt-heading text-uppercase text-center font-weight-bold">pupil's exam result status</h6>
+            <div class="col-sm-4 col-md-4 col-lg-5 p-3 right-col">
+                <h6 class="rt-heading text-center font-weight-bold">Pupil's Exam Result Status</h6>
                 <hr>
                 <small class="px-1">Tick the appropriate columns</small>
                 <div class="right-table-card">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-sm right-table">
+                        <table class="table table-bordered table-sm right-table table-condensed">
                             <thead class="thead-light" >
                                 <tr>
-                                    <th scope="col">DEVELOPMENT</th>
-                                    <th scope="col">OUTSTANDING</th>
-                                    <th scope="col">VERY GOOD</th>
-                                    <th scope="col">GRADE</th>
-                                    <th scope="col">PERFORMANCE</th>
+                                    <th scope="col">Development</th>
+                                    <th scope="col">Outstanding</th>
+                                    <th scope="col">Very Good</th>
+                                    <th scope="col">Good</th>
+                                    <th scope="col">Needs Improvement</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if($behave != null)
                                 <tr>
-                                    <td scope="row">Participates in class</td>
+                                    <td scope="row">Participates in Class</td>
                                      {{App\Student::behave($behave->pic)}}
                            
                                 </tr>
@@ -146,23 +213,23 @@
                                     {{App\Student::behave($behave->la)}}
                                 </tr>
                                 <tr>
-                                    <td scope="row">Follows instrunction First time </td>
+                                    <td scope="row">Follows Instructions First Time </td>
                                     {{App\Student::behave($behave->fift)}}
                                 </tr>
                                 <tr>
-                                    <td scope="row">Completes work on time</td>
+                                    <td scope="row">Completes Work on Time</td>
                                     {{App\Student::behave($behave->cwot)}}
                                 </tr>
                                 <tr>
-                                    <td scope="row">Accepts new Challenges and persist with activities </td>
+                                    <td scope="row">Accepts New Challenges and Persists with Activities </td>
                                     {{App\Student::behave($behave->anc)}}
                                 </tr>
                                 <tr>
-                                    <td scope="row">Expresses feelings and Opinions </td>
+                                    <td scope="row">Expresses Feelings and Opinions Articulately. </td>
                                     {{App\Student::behave($behave->efao)}}
                                 </tr>
                                 <tr>
-                                    <td scope="row">Shows respect and Kidness to all </td>
+                                    <td scope="row">Shows Respect and Kindness to All </td>
                                     {{App\Student::behave($behave->srk)}}
                                 </tr>
                                 @endif
@@ -170,152 +237,93 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row bottom-section">
-            <div class="col-12 col-md-12 col-lg-7 bottom-left-col p-0">
-                <h6 class="assessment-heading text-uppercase text-success font-weight-bold">ASSESSMENT AND OBSERVATION SUMMARY</h6>
-                <div class="bottom-left-card">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-sm">
-                            <thead class="bg-success text-light">
-                                <tr>
-                                    <th scope="col">SUBJECT</th>
-                                    <th scope="col">CONTINUOS ASSESSMENT 50%</th>
-                                    <th scope="col">EXAMINATION 50%</th>
-                                    <th scope="col">GRAND TOTAL 100%</th>
-                                    <th scope="col">GRADE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                $total = 0;
-                                @endphp
+                <div class=" bottom-right p-0 ">
+                    <div class="bottom-right-card">
+                        <div class="">
+                            <table class="table  bottom-right-table table-bordered text-center" style="background:green !important; color:white !important;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4">GRADE KEY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>A+</td>
+                                        <td>95 - 100%</td>
+                                        <td>C+</td>
+                                        <td>75 - 79%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A</td>
+                                        <td>90 - 94%</td>
+                                        <td>C</td>
+                                        <td>61 - 74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>B+</td>
+                                        <td>85 - 89%</td>
+                                        <td>D</td>
+                                        <td>50 - 60%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>B</td>
+                                        <td>80 - 84%</td>
+                                        <td>Needs Improvement</td>
+                                        <td>49% below</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- teacher remarks -->
+                        <div class="remarks-box teacher-remarks">
+                            <span class="remarks-heading d-block ">class teacher's remarks</span>
+                            <p>
+                                @if ($comment != null)
+                                {{$comment->comment}}
+                                @endif
                                 
-                                @foreach ($scores as $item)
-                                    <tr scope="row">
-                                    <td><strong>{{$item->subname}} </strong></td>
-                                    <td>{{$item->TCA}}</td>
-                                    <td>{{$item->Exam}}</td>
-                                    <td>{{$item->GT}}</td>
-
-                                    <td>{{App\Student::grade($item->GT,$grades)}}</td>
-                                </tr> 
-                                @endforeach
-                                
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="summary d-flex justify-content-between mb-4">
-                    <ul class="list-group left-list my-2">
-                        <li class="list-group-item d-flex justify-content-between">
-                            <h5>Highest Average:</h5>
-                            <span>{{App\Student::h_aver($class_->id,$term->id)}}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <h5>Child's Average:</h5>
-                            <span>{{number_format(App\Average::where('student_id',$student->id)->where('s5_class_id',$class_->id)->where('term_id',$term->id)->first()->aver_)}}</span>
-                        </li>
-                    </ul>
-                    <ul class="list-group right-list my-2">
-                        <li class="list-group-item d-flex justify-content-between">
-                            <h5>Class Average:</h5>
-                            <span>{{App\Student::total_GT($class_->id,$term->id)}}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                        <h5>Grade:</h5>
-                        <span>{{App\Student::grade(number_format(App\Average::where('student_id',$student->id)->where('s5_class_id',$class_->id)->where('term_id',$term->id)->first()->aver_),$grades)}}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-5 bottom-right p-0">
-                <div class="bottom-right-card">
-                    <div class="table-responsive">
-                        <table class="table  bottom-right-table table-bordered bg-success text-light text-center">
-                            <thead>
-                                <tr>
-                                    <th colspan="4">GRADE KEY</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>A+</td>
-                                    <td>95 - 100%</td>
-                                    <td>C+</td>
-                                    <td>75 - 79%</td>
-                                </tr>
-                                <tr>
-                                    <td>A</td>
-                                    <td>90 - 94%</td>
-                                    <td>C</td>
-                                    <td>61 - 74%</td>
-                                </tr>
-                                <tr>
-                                    <td>B+</td>
-                                    <td>85 - 89%</td>
-                                    <td>D</td>
-                                    <td>50 - 60%</td>
-                                </tr>
-                                <tr>
-                                    <td>B</td>
-                                    <td>80 - 84%</td>
-                                    <td>Needs Improvement</td>
-                                    <td>49% below</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- teacher remarks -->
-                    <div class="remarks-box teacher-remarks">
-                        <span class="remarks-heading d-block">class teacher remarks</span>
-                        <p>
-                            @if ($comment != null)
-                            {{$comment->comment}}
-                            @endif
-                            
-                        </p>
-                    </div>
-                    <!-- class register remark -->
-                    <div class="remarks-box register-remarks">
-                        <span class="remarks-heading d-block">class master remarks</span>
-                        <p>
-                            @if ($comment != null)
-                            {{$comment->hcomment}}
-
-                            @endif
-
-                        </p>
-                    </div>
-                    <!-- resumption date -->
-                    <div class="remarks-box resumption-date">
-                        <span class="remarks-heading d-block">school resumption date</span>
-                        <p>{{date('j F, Y',strtotime($term->resumption_date))}}</p>
-                    </div>
-                    <!-- school fees -->
-                    <div class="remarks-box school-fees">
-                        <span class="remarks-heading d-block">school fees amount</span>
-                        <p>{{$term->fee_}}</p>
-                    </div>
-                    <div class="py-4 mb-2 d-flex justify-content-center">
-                      <img src="/img/logo2.png" height="190" width="auto">
-                    </div>
-                </div>
-                   
-            </div>
-               <div class="row">
-                   <div class="">
-                    <img src="/img/footer.png" height="30" width="1090">
-                    </div>
-                </div>
-            </div>  
-        </div>
-        
-    </div>
- </div> 
+                            </p>
+                        </div>
+                        <!-- class register remark -->
+                        <div class="remarks-box register-remarks">
+                            <span class="remarks-heading d-block">head academic's remarks</span>
+                            <p>
+                                @if ($comment != null)
+                                {{$comment->hcomment}}
     
-@endsection
+                                @endif
+    
+                            </p>
+                        </div>
+                        <!-- resumption date -->
+                        <div class="remarks-box resumption-date">
+                            <span class="remarks-heading d-block">school resumption date</span>
+                            <p>{{date('l, jS F, Y',strtotime($term->resumption_date))}}</p>
+                        </div>
+                        <!-- school fees -->
+                        <div class="remarks-box school-fees">
+                            <span class="remarks-heading d-block">school fees amount</span>
+                            <p> ₦{{number_format($term->fee_y)}}</p>
+                        </div>
+                        <div class="py-4 mb-2 d-flex justify-content-center">
+                          <img src="/img/logo2.png" height="90" width="auto">
+                        </div>
+                    </div>
+                       
+                </div>
+            </div>
+            
+        </div>
+        <div class="row bottom-section">
+            <img src="/img/footer.png" height="30" width="1080">
+        </div>
+    </div>
+
+ <script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>

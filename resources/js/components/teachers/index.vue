@@ -168,6 +168,56 @@
             </div>
           </div>
         </div>
+        <!-- Model to Activate or deactivate a teacher -->
+         <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Activate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <p>Are you sure want to activate teacher? </p>
+                </div>
+                <div class="form-group text-center">
+                  <button class="btn btn-success" v-on:click="hideModal()">Cancel</button>
+                </div>
+                <div class="form-group text-center">
+                  <button class="btn btn-success" v-on:click="activate()">Ok</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+         <div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Deactivate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <p>Are you sure want to deactivate teacher? </p>
+                </div>
+                <div class="form-group text-center">
+                  <button class="btn btn-success" v-on:click="hideModal()">Cancel</button>
+                </div>
+                <div class="form-group text-center">
+                  <button class="btn btn-success" v-on:click="deactivate()">Ok</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
 <!-- Modal to assign Subjeco teacher  -->
           <div class="modal fade"
              id="exampleModal12"
@@ -188,9 +238,9 @@
                 <form v-if="this.unassignedSubjects.length > 0" method="post" name="assignsubjects" id="assignsubjects" action="#" @submit.prevent="assignSubject(teacher_id, subject_id)">
 
                   <div class="form-group">
-                    <label for="gender">Assigned Subjects</label>
+                    <label for="gender">Assign Subjects</label>
                     <select class="form-control" name="subject" id="subject" v-model="subject_id">
-                          <option v-for="subject in unassignedSubjects"  :key="subject.id" v-bind:value="subject.id">{{ subject.name }}</option>
+                          <option v-for="subject in unassignedSubjects"  :key="subject.id" v-bind:value="subject.id">{{ subject.name }} | {{ subject.description }}</option>
                     </select>
                   </div>
 
@@ -299,14 +349,23 @@
                         <a href="#" class="btn btn-danger text-white" data-target="#exampleModal4" v-on:click="deleteId(teacher.id)" 
                       data-toggle="modal" v-bind:id="id">unlock</a>
                     </td>
+                     <td>
+                       <a href="#" class="btn btn-info text-white btn-block py-2 mb-2"
+                        v-on:click="deleteId(teacher.id)"
+                        data-target="#exampleModal5"
+                        data-toggle="modal"
+                        v-bind:title="teacher.name" >Activate</a>
+                        <a href="#" class="btn btn-danger text-white" data-target="#exampleModal6" v-on:click="deleteId(teacher.id)" 
+                      data-toggle="modal" v-bind:id="id">Deactivate</a>
+                    </td>
                     </tr>
                 </tbody>
               
              </table>
-                <pagination :data="laravelData" :limit="2" @pagination-change-page="teacherLists">
+                <!-- <pagination :data="laravelData" :limit="3" @pagination-change-page="teacherLists">
                 <span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span>
-                </pagination>
+                </pagination> -->
           </div>
         </div>
         </div>
@@ -484,7 +543,7 @@
 </template>
 
 <script>
-  const BASE_URL = 'https://efs.ishlp.com';
+  const BASE_URL = window.location.origin;
   export default {
     data() {
       return {
@@ -497,7 +556,7 @@
 
           
         },
-        laravelData: {},
+        laravelData: [],
        classLists:{
           //  id:'',
           // name:'',
@@ -652,6 +711,7 @@
             .removeClass()
             .removeAttr('style')
           $('.modal-backdrop').remove()
+           this.teacherLists(this.pagenumber)
         })
       },
       lockTeacher() {
@@ -694,6 +754,51 @@
           this.actionmsg = 'Teacher unLocked successfully'
           this.teacherLists(this.pagenumber)
           $('#exampleModal4').modal('hide')
+          $('body')
+            .removeClass()
+            .removeAttr('style')
+          $('.modal-backdrop').remove()
+        })
+      },
+
+      activate() {
+        this.$http.post(BASE_URL + '/api/activate',{
+            
+            teacher_id: this.id,
+            
+          }).then(data => {
+          this.succmsg = false
+          var self = this
+          this.term__id=''
+          setTimeout(function() {
+            self.succmsg = true
+          }, 3000)
+
+          this.actionmsg = 'Teacher Activated successfully'
+          this.teacherLists(this.pagenumber)
+          $('#exampleModal5').modal('hide')
+          $('body')
+            .removeClass()
+            .removeAttr('style')
+          $('.modal-backdrop').remove()
+        })
+      },
+      deactivate() {
+        this.$http.post(BASE_URL + '/api/deactivate',{
+            
+            teacher_id: this.id,
+            
+          }).then(data => {
+          this.succmsg = false
+          var self = this
+          this.term__id=''
+          setTimeout(function() {
+            self.succmsg = true
+          }, 3000)
+
+          this.actionmsg = 'Teacher Deactivated successfully'
+          this.teacherLists(this.pagenumber)
+          $('#exampleModal6').modal('hide')
           $('body')
             .removeClass()
             .removeAttr('style')
@@ -795,6 +900,7 @@
             .removeAttr('style')
           $('.modal-backdrop').remove()
         })
+         this.teacherLists(this.pagenumber)
     
       },
       deleteSubject(teaid, subid){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,12 @@ class HomeController extends Controller
                return redirect(route('term')); 
             }
              if(Auth::user()->isAdmin == 3){
-                return redirect(route('teacher.dashboard'));
+                 $t = Teacher::find(Auth::user()->teacher_id);
+                if($t->active == 1 || $t->active == null){
+                    return redirect(route('teacher.dashboard'));
+                }elseif($t->active == 2){
+                    return view('deactive');
+                }
             }
             if(Auth::user()->isAdmin == 4 && Auth::user()->vr == 1){
                 return redirect(route('student.dashboard'));

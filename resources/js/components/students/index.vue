@@ -272,34 +272,37 @@
             </div>
           </div>
         </div>
-
-        <div class="card shadow mb-4">
-          <form method="post" name="addStudent" id="addStudent" action="#" @submit.prevent="addStudent"
+          <div class="card shadow mb-4">
+            <form method="post" name="addStudent" id="addStudent" action="#" @submit.prevent="addStudent"
               class="form-inline d-flex justify-content-center md-form form-sm mt-0">
-              
+                 <div>
                   <input class="form-control" type="hidden" placeholder="Search" aria-label="Search">
-                   <i class="fas fa-search" aria-hidden="true"></i>
-                  <input class="form-control  form-control-sm ml-3 w-7" type="text" placeholder="search Student's name" aria-label="Search" v-model="query" 
-                  v-on:keyup="autoComplete">
-                  <div class="panel-footer "  style="position:relative; z-index:1000; background-color:white;" v-for="s in results" v-bind:key="s.id">
-                   <div class="row ">
-                      <div class="col-md-6 ">
+                   
+                  <input class="form-control  form-control-lg ml-3 w-7" type="text" placeholder="search Student's name" aria-label="Search" v-model="query" 
+                  v-on:keyup="autoComplete"><br>
+                </div>
+                  <div class="row card"  style="position:relative; z-index:1000; background-color:white;" v-for="s in results" v-bind:key="s.id">
+                   <div class=" fill card-body">
+                      <div class="col-lg-6 ">
                         <b>{{s.name}} {{s.oname}} {{s.surname}}</b> 
                       </div>
-                      <div class="col-md-6 ">
+                      <div class="col-lg-6 ">
                         <a href="#"
                        v-on:click="editStudent(s.id)"
                        data-target="#exampleModal1"
                        data-toggle="modal"
                        v-bind:title="s.name" class="btn btn-info text-white ">Edit</a>
                        <a href="#" data-target="#exampleModal2" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-danger text-white">Delete</a>
-                      <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-danger text-white">Block</a>
-                      <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-secondary text-white">Unblock</a>
+                        <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-danger text-white">Block</a>
+                        <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-secondary text-white">Unblock</a>
                   
                       </div>
                    </div>
-                  </div>         
-              </form> 
+                  </div>  <br>       
+          </form> 
+          </div>
+        <div class="card shadow mb-4">
+          
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-success"> {{(laravelData.data).length}} Students Record</h6>
           </div>
@@ -360,7 +363,7 @@
 </template>
 
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {
@@ -388,6 +391,7 @@
         pagenumber: 1,
         actionmsg: '',
         results:'',
+        query:'',
       }
     },
     ready: function() {

@@ -211,7 +211,7 @@ class Student extends Model
         return SubjectMark::where('subject_id',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->max('CAT1');
         
     }
-     public static function c1_jmax_score($id,$class_id,$term_id){
+    public static function c1_jmax_score($id,$class_id,$term_id){
          $scores = SubjectMark::where('status',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->get();
         $students =[];
         $score_list = [];
@@ -223,6 +223,43 @@ class Student extends Model
         $class_students= Student::whereIn('id',$students)->get();
         foreach($class_students as $student){
             $sum = SubjectMark::where('status',$id)->where('term_id',$term_id)->where('student_id',$student->id)->where('s5_class_id',$class_id)->sum('CAT1');
+            if ($id ==1){
+                array_push($score_list,$sum/2);
+            }
+            elseif ($id == 2){
+                array_push($score_list,$sum/4);
+            }
+            elseif ($id ==3){
+                array_push($score_list, $sum/2);
+            }
+            elseif ($id ==4){
+               array_push($score_list,$sum/2);
+            }
+            elseif ($id == 5){
+                array_push($score_list, $sum/3);
+            }else{
+                array_push($score_list,$sum);
+            }
+        
+            
+        }
+        if(count($score_list) > 1){
+          return max($score_list) ; 
+        }
+        
+    }
+     public static function c2_jmax_score($id,$class_id,$term_id){
+         $scores = SubjectMark::where('status',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->get();
+        $students =[];
+        $score_list = [];
+        $sum = 0;
+        foreach ($scores as  $value) {
+            # code...
+            array_push($students,$value->student_id);
+        }
+        $class_students= Student::whereIn('id',$students)->get();
+        foreach($class_students as $student){
+            $sum = SubjectMark::where('status',$id)->where('term_id',$term_id)->where('student_id',$student->id)->where('s5_class_id',$class_id)->sum('CAT2');
             if ($id ==1){
                 array_push($score_list,$sum/2);
             }
@@ -509,7 +546,8 @@ class Student extends Model
         
         if(count($arr) > 1){
         
-          return min($arr) ; 
+         $arr_filtered = array_values(array_filter( $arr ));
+        return min($arr_filtered);
         }
         
     }
@@ -523,6 +561,28 @@ class Student extends Model
         }   
             
     }
+    // private static function closestToZero(array $ts)
+    // {
+    //     if (count($ts) === 0) return 0;
+        
+    //     $closest = $ts[0];
+    
+    //     foreach ($ts as $d) 
+    //     {
+    //         $absD = abs($d);
+    //         $absClosest = abs($closest);
+    //         if ($absD < $absClosest) 
+    //         {
+    //             $closest = $d;
+    //         } 
+    //         else if ($absD === $absClosest && $closest < 0) 
+    //         {
+    //             $closest = $d;
+    //         }
+    //     }
+        
+    //     return $closest;
+    // }
     private static function jcheck($id,$term_id,$class_id,$wtc){
         $scores = SubjectMark::where('status',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->get();
         $students =[];
@@ -674,4 +734,7 @@ class Student extends Model
         $students = Student::whereIn('id',$ids)->orderBy('name', 'ASC')->get();
         return ['term'=>$term,'class_T'=>$class_T,'students'=>$students];
       }
+     public static function me($id){
+         return Student::find($id)->name.' '.Student::find($id)->surname;
+     }
 }

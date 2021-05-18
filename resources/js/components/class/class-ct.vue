@@ -188,7 +188,7 @@
                             
                    <td>
 
-                            <a :href="'https://efs.ishlp.com/api/studentSubject_ct/'+st.id+'/term/'+T_id.id+'/class/'+myId.id" 
+                            <a :href="'/api/studentSubject_ct/'+st.id+'/term/'+T_id.id+'/class/'+myId.id" 
                             class="btn btn-warning text-white  ">View Subjects</a>
                           </td>
                   <td><a href="#" class="btn btn-success text-white"
@@ -524,7 +524,7 @@
           </div>
         </div>
 
-        <div  v-if="myId.status === 'Senior High School'" :key="myId.id" class="modal fade" id="exampleModbev" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+        <div  v-if="myId.status === 'Senior High School' || myId.status === 'Junior High School'" :key="myId.id" class="modal fade" id="exampleModbev" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -780,262 +780,7 @@
 
           </div>
         </div>
-        <div  v-if="myId.status === 'Junior High School'" :key="myId.id" class="modal fade" id="exampleModbev" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">High School Behavioural Chart</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-              </div>
-              <div class="modal-body">
-                 <form  method="post" name="updateBehaviour" id="updateBehaviour" action="#" @submit.prevent="updateBehaviour">
-
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Home Work Culture</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="hwc" id="subject" v-model="behaviour.hwc">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Class Attendance</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="catt" id="subject" v-model="behaviour.catt">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Care (School property)</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="care" id="subject" v-model="behaviour.care">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Responsibility</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="res" id="subject" v-model="behaviour.res">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Honesty</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="Hon" id="subject" v-model="behaviour.Hon">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Initiative</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="init" id="subject" v-model="behaviour.init">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Leadership Role</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="lead" id="subject" v-model="behaviour.lead">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Dress Code</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="dressc" id="subject" v-model="behaviour.dressc">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                  <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Obedience</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="obey" id="subject" v-model="behaviour.obey">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                  <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Politiness</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="pol" id="subject" v-model="behaviour.pol">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                  <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Team Spirit</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="team" id="subject" v-model="behaviour.team">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Socialbility</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="soc" id="subject" v-model="behaviour.soc">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                 <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">PSYCHOMOTOR SKILLS
-                &  PHYSICAL SKILLS</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="psy" id="subject" v-model="behaviour.psy">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Sport</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="sport" id="subject" v-model="behaviour.sport">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Note Completion</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="notec" id="subject" v-model="behaviour.notec">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Spoken English</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="spoken" id="subject" v-model="behaviour.spoken">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Musical Skill</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="mus" id="subject" v-model="behaviour.mus">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-8">
-                    <label for="name">Craft</label>
-                  </div>
-                  <div class="col-4">
-                    <select class="form-control" name="craft" id="subject" v-model="behaviour.craft">
-                      <option value="1"> A</option>
-                      <option value="2"> B</option>
-                      <option value="3"> C</option>
-                      <option value="4"> D</option>
-                    </select>
-                  </div>
-                </div>
-                  <div class="form-group text-center">
-                    <button class="btn btn-success">Submit</button>
-                  </div>
-                </form>
-              </div>
-              </div>
-
-          </div>
-        </div>
+        
         <div  v-if="myId.status === 'Year School'" :key="myId.id" class="modal fade" id="exampleModbev" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -1490,7 +1235,7 @@
 </template>
 
 <script>
-  const BASE_URL = 'https://efs.ishlp.com';
+  const BASE_URL =  window.location.origin;
 
 
   export default {
@@ -1591,7 +1336,11 @@
             .removeClass()
             .removeAttr('style')
           $('.modal-backdrop').remove()
-        
+            this.studentLists()
+            this.fetchComment()
+            this.fetchBehave() 
+            this.fetchAttend()
+            this.studentLists()
           })
       },
       
@@ -1638,6 +1387,9 @@
               self.succmsg = true
             }, 3000)
             this.actionmsg = 'All Subjects assigned successfully!'
+            this.fetchComment()
+            this.fetchBehave() 
+            this.fetchAttend()
           })
       },
        removeSubjectToMyStudents(){
@@ -1728,6 +1480,9 @@
               .removeAttr('style')
             $('.modal-backdrop').remove()
           })
+          this.fetchComment()
+          this.fetchBehave() 
+          this.fetchAttend()
       },
       removeStudent() {
         this.$http.delete(BASE_URL + '/api/remove_stud_in_class/student/'+this.id+'/class/'+this.myId.id+'/term/'+this.T_id.id).then(data => {
@@ -1746,6 +1501,9 @@
             .removeAttr('style')
           $('.modal-backdrop').remove()
           this.studentLists(this.pagenumber)
+            this.fetchComment()
+          this.fetchBehave() 
+          this.fetchAttend()
         })
       },
       hideModal() {
@@ -1829,6 +1587,9 @@
               .removeAttr('style')
             $('.modal-backdrop').remove()
             this.studentLists();
+            this.fetchComment()
+            this.fetchBehave() 
+            this.fetchAttend()
           })
       },
 
@@ -1859,6 +1620,9 @@
               .removeAttr('style')
             $('.modal-backdrop').remove()
             this.studentLists();
+            this.fetchComment()
+            this.fetchBehave() 
+            this.fetchAttend()
           })
       },
       getSubjComment(term_id,class_id){

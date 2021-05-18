@@ -152,7 +152,7 @@
         </div>
 
         <div class="card">
-          <div class="card-header">Class List</div>
+          <div class="card-header bg-success">Class List</div>
           <div class="card-body">
             <div class="table-responsive">
             
@@ -175,7 +175,7 @@
                   <td>{{ las.status }}</td>
                   <td>
                     
-                    <a :href="'https://efs.ishlp.com/api/class_terms/' + las.id" class="btn btn-info text-white ">More</a>
+                    <a :href="'/api/class_terms/' + las.id" class="btn btn-info text-white ">More</a>
                   </td>
                   <!-- link to student in a class -->
                   <td><a href="#"
@@ -204,7 +204,7 @@
 </template>
 
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL =  window.location.origin;
   export default {
     data() {
       return {

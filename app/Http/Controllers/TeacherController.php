@@ -54,4 +54,13 @@ class TeacherController extends Controller
         }
         return back()->with('success','Oops!! Not a Cordinator!');
     }
+     public function allbroadsheet2(){
+    
+        if(auth()->user()->isAdmin==1){
+            $term = Term::all();
+            $class_ = S5Class::all();
+            return view('allbroadsheet',['term'=>$term, 'class_'=>$class_]);
+        }
+        
+     }
 }

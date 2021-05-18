@@ -20,6 +20,7 @@ class CreateTeachersTable extends Migration
             $table->string('email')->unique();
             $table->string('status');
             $table->string('level');
+            $table->integer('cord');  
             $table->timestamps();
         });
     }

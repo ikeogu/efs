@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');  
             $table->integer('isAdmin');   
+            $table->integer('vr');  
             $table->integer('student_id')->nullable(); 
             $table->integer('teacher_id')->nullable();        
             $table->rememberToken();

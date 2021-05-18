@@ -1,8 +1,8 @@
-@extends('layouts.dashboard')
+@extends('layouts.tdashboard')
 
 @section('title', 'Class Broadsheet')
 
-@section('content')
+@section('tboard')
 
 
 <div class="container-fluid">

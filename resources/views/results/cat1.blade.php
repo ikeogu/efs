@@ -15,7 +15,9 @@
 
         <section class="container my-5">
             <div class="d-flex justify-content-end">
-            <!--<a href="{{route('dcat1',[$student->id,$term->id,$class_->id])}}" type="hidden" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i>Download</a>-->
+                <form>
+                    <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
+                </form>
             </div>
             <div class="d-flex justify-content-center "><img src="{{asset('img/logo2.png')}}" height="80" width="auto"></div>
             <strong class="d-flex justify-content-center">EMERALDFIELD SCHOOLS</strong>
@@ -84,7 +86,7 @@
                         
                         @endphp  
                         <tbody>
-                            @foreach ($scores as $key=> $item)
+                            @foreach ($scores->sortBy('status') as $key=> $item)
                              
                             <tr>
                                
@@ -97,8 +99,8 @@
                                           
                                         @endphp
                                     
-                                    @if($item->status ==1 )
-                                        <td>5</td>
+                                    @if($item->status == 1 )
+                                        <td>1</td>
                                         <td class="">ENGLISH STUDIES</td>
                             
                                     <td>{{round($sum/2)}}</td>
@@ -108,7 +110,7 @@
                                          @endphp
                                     @endif
                                     @if($item->status == 2)
-                                        <td>{{$key +1}}</td>
+                                        <td>2</td>
                                          <td class="">BASIC SCIENCE AND TECH</td>
                             
                                          <td>{{round($sum/4)}}</td>
@@ -118,7 +120,7 @@
                                          @endphp
                                     @endif
                                     @if($item->status == 3)
-                                            <td>{{$key +1}}</td>
+                                            <td>3</td>
                                             <td class="">PREVOCATIONAL STUDIES</td>
                             
                                          <td>{{round($sum/2)}}</td>
@@ -139,7 +141,7 @@
                                          @endphp
                                     @endif
                                     @if($item->status ==5)
-                                        <td>{{$key}}</td>
+                                        <td>5</td>
                                             <td class="">CULTURAL & CREATIVE ART</td>
                             
                                         <td> {{round($sum/3)}}</td>
@@ -150,7 +152,7 @@
                                     @endif
                                     
                                     @if($item->status ==6)
-                                        <td>3</td>
+                                        <td>6</td>
                                         <td class="">BUSINESS STUDIES</td>
                             
                                         <td> {{$item->CAT1}}</td>
@@ -160,7 +162,7 @@
                                          @endphp
                                     @endif
                                      @if($item->status ==7)
-                                        <td>{{$key}}</td>
+                                        <td>7</td>
                                         <td class="">FRENCH</td>
                             
                                         <td> {{$item->CAT1}}</td>
@@ -170,7 +172,7 @@
                                          @endphp
                                     @endif
                                     @if($item->status ==8)
-                                        <td>{{$key - 3}}</td>
+                                        <td>8</td>
                                             <td class="">MATHEMATICS</td>
                             
                                         <td> {{$item->CAT1}}</td>
@@ -181,7 +183,7 @@
                                     @endif
                                      @if($item->status ==9)
                                             
-                                            <td>{{$key -6}}</td>
+                                            <td>9</td>
                                             <td class="">RELIGIOUS STUDIES</td>
                                 
                                             <td> {{$item->CAT1}}</td>
@@ -193,17 +195,11 @@
                                              @endphp
                                     @endif
                                      @if($item->status ==10)    
-                                        @if($class_->name =='JSS 3') 
-                                        <td>{{$key - 9}}</td>
-                                        @else
-                                        <td>{{$key - 6}}</td>
-                                        @endif
+                                        <td>10</td>
                                         <td>HANDWRITING</td>
-                                        
                                         <td> {{$item->CAT1}}</td>
                                          @php
-                                         $total_sum =$item->CAT1;
-                                         
+                                             $total_sum =$item->CAT1;
                                          @endphp
                                     @endif
                                     

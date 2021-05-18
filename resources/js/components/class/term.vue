@@ -63,15 +63,18 @@
                   </div>
                   
                   <div class="form-group">
-                    <label for="name">Fee Shedule (High School)</label>
-                    <input type="number" name="fee_h" id="session" class="form-control" placeholder="" v-model="term.fee_h" />
+                    <label for="name">Fee Schedule (High School)</label>
+                    <input type="number" name="fee_1_2" id="session" class="form-control" placeholder="Jss1- 2" v-model="term.fee_1_2" />
+                    <input type="number" name="fee_3" id="session" class="form-control" placeholder="Jss 3" v-model="term.fee_3" />
+                    <input type="number" name="fee_s1_2" id="session" class="form-control" placeholder="SSS 1 - 2" v-model="term.fee_s1_2" />
+                    <input type="number" name="fee_s3" id="session" class="form-control" placeholder="SSs3" v-model="term.fee_s3" />
                   </div>
                   <div class="form-group">
-                    <label for="name">Fee Shedule (Year School)</label>
+                    <label for="name">Fee Schedule (Year School)</label>
                     <input type="number" name="fee_y" id="session" class="form-control" placeholder="" v-model="term.fee_y" />
                   </div>
                   <div class="form-group">
-                    <label for="name">Fee Shedule (Early Years)</label>
+                    <label for="name">Fee Schedule (Early Years)</label>
                     <input type="number" name="fee_e" id="session" class="form-control" placeholder="" v-model="term.fee_e" />
                   </div>
                   <div class="form-group">
@@ -114,6 +117,10 @@
                   <div class="form-group">
                     <label for="name">C.A.T 2</label>
                     <input type="number" name="h_cat2" id="session" class="form-control" placeholder="Mark for C.A.T.2" v-model="term.h_cat2" />
+                  </div>
+                  <div class="form-group">
+                    <label for="name">MSC</label>
+                    <input type="number" name="msc" id="session" class="form-control" placeholder="Mark for MSC" v-model="term.msc" />
                   </div>
                   
                   <div class="form-group">
@@ -175,15 +182,18 @@
                     <input type="text" name="session" id="session" class="form-control" placeholder="2019/2020" v-model="term.session" />
                   </div>
                   <div class="form-group">
-                    <label for="name">Fee Shedule (High School)</label>
-                    <input type="number" name="fee_h" id="session" class="form-control" placeholder="" v-model="term.fee_h" />
+                    <label for="name">Fee Schedule (High School)</label>
+                    <input type="number" name="fee_1_2" id="session" class="form-control" placeholder="Jss1- 2" v-model="term.fee_1_2" />
+                    <input type="number" name="fee_3" id="session" class="form-control" placeholder="Jss 3" v-model="term.fee_3" />
+                    <input type="number" name="fee_s1_2" id="session" class="form-control" placeholder="SSS 1 - 2" v-model="term.fee_s1_2" />
+                    <input type="number" name="fee_s3" id="session" class="form-control" placeholder="SSs3" v-model="term.fee_s3" />
                   </div>
                   <div class="form-group">
-                    <label for="name">Fee Shedule (Year School)</label>
+                    <label for="name">Fee Schedule (Year School)</label>
                     <input type="number" name="fee_y" id="session" class="form-control" placeholder="" v-model="term.fee_y" />
                   </div>
                   <div class="form-group">
-                    <label for="name">Fee Shedule (Early Years)</label>
+                    <label for="name">Fee Schedule (Early Years)</label>
                     <input type="number" name="fee_e" id="session" class="form-control" placeholder="" v-model="term.fee_e" />
                   </div>
                   <div class="form-group">
@@ -281,6 +291,10 @@
             </div>
           </div>
         </div>
+        <div>
+          <div v-show="active"  class="card shadow mb-4">Show</div>
+                  
+        </div>
 
         <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -295,7 +309,7 @@
                     <th>Description</th>
                     <th>Session</th>
                     
-                    <th colspan="3">Fee Shedule</th>
+                    <th colspan="6">Fee Schedule</th>
                     <th>Resumption</th>
                     <th>Details</th>
                     <th colspan="4">Action</th>
@@ -307,13 +321,16 @@
                     <td>{{ term.description }}</td>
                     <td>{{ term.session }}</td>
                     
-                    <td>₦ {{ term.fee_h }} </td>
+                    <td>₦ {{ term.fee_1_2 }} </td>
+                    <td>₦ {{ term.fee_3 }} </td>
+                    <td>₦ {{ term.fee_s1_2 }} </td>
+                    <td>₦ {{ term.fee_s3 }} </td>
                     <td>₦ {{ term.fee_y }}</td>
                     <td>₦ {{ term.fee_e }}</td>
                     <td>{{ term.resumption_date }}</td>
                     
                     <td>
-                      <a :href="'https://efs.ishlp.com/api/terms_classes/'+term.id" class="btn btn-success text-white">view Classes</a>
+                      <a :href="'/api/terms_classes/'+term.id" class="btn btn-success text-white">view Classes</a>
                     </td>
                     <!-- link to student in a class -->
                     <td>
@@ -332,13 +349,17 @@
 
                         
                       </td>
-                      <td>  
+                      <td> 
+
                          <a class="btn btn-info text-white" 
                         v-on:click="getTerm(term.id)"
                         data-target="#exampleModalScore"
                         data-toggle="modal"
-                        v-bind:title="term.name" > Fix point</a>
+                        v-bind:title="term.name"> Fix point</a>
+                        <span v-tooltip.right="'CAT1 ------ ' + term.h_cat1+ ' CAT2 -------- '+ term.h_cat2 + ' MSC-------- '+ term.msc +' Summative (YS)-------- '+ term.y_summative +' Summative (EY)------- '+term.e_summative" class="btn btn-info btn-sm"> >></span>
+ 
                       </td>
+                
 
                     <td>
                         <a href="#" data-target="#exampleMod" v-on:click="deleteId(term.id)" data-toggle="modal"
@@ -361,12 +382,13 @@
     
 </template>
 
+
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {
-           
+           hover: false,
            terms:{},
            assignedClasses: [],
            unassignedClasses: [],
@@ -394,7 +416,8 @@
         succmsg: true,
         showmodal: false,
         pagenumber: 1,
-        actionmsg: ''
+        actionmsg: '',
+        active:false
       }
     },
     methods: {
@@ -410,7 +433,9 @@
               
       },
         
-      
+      mouseOver: function(){
+            this.active = !this.active;   
+        },
       getText () {
         var values = this.options.map(function(o) { return o.value })
         var index = values.indexOf(this.selected) 
@@ -423,7 +448,10 @@
             name: this.term.name,
             description: this.term.description,
             session: this.term.session,
-            fee_h:this.term.fee_h,
+            fee_3:this.term.fee_3,
+            fee_1_2:this.term.fee_1_2,
+            fee_s3:this.term.fee_s3,
+            fee_s1_2:this.term.fee_s1_2,
             fee_y:this.term.fee_y,
             fee_e:this.term.fee_e,
             resumption_date:this.term.resumption_date
@@ -453,7 +481,10 @@
           this.term.name = data.data.data.name
           this.term.description = data.data.data.description,
           this.term.session = data.data.data.session
-          this.term.fee_h = data.data.data.fee_h,
+          this.term.fee_1_2 = data.data.data.fee_1_2,
+          this.term.fee_s3 = data.data.data.fee_s3,
+          this.term.fee_s1_2 = data.data.data.fee_s1_2,
+          this.term.fee_3 = data.data.data.fee_3,
           this.term.fee_y = data.data.data.fee_y,
           this.term.fee_e = data.data.data.fee_e,
           this.term.resumption_date = data.data.data.resumption_date
@@ -467,7 +498,10 @@
             name: this.term.name,
             description:this.term.description,
             session:this.term.session,
-            fee_h:this.term.fee_h,
+            fee_3:this.term.fee_3,
+            fee_1_2:this.term.fee_1_2,
+            fee_s3:this.term.fee_s3,
+            fee_s1_2:this.term.fee_s1_2,
             fee_y:this.term.fee_y,
             fee_e:this.term.fee_e,
             resumption_date:this.term.resumption_date
@@ -503,6 +537,7 @@
             term_id:this.id_,
             h_cat1: this.term.h_cat1,
             h_cat2:this.term.h_cat2,
+            msc:this.term.msc,
             y_summative:this.term.y_summative,
             e_summative:this.term.e_summative,
              
@@ -516,6 +551,7 @@
             this.term.y_summative = ''
             this.term.e_summative = ''
             this.id_ = ''
+            this.term.msc=''
             
             
             var self = this

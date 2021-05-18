@@ -28,7 +28,7 @@ class TeacherController extends Controller
     public function index()
     {
         //
-        return TeacherResource::collection(Teacher::paginate(80));
+        return TeacherResource::collection(Teacher::all());
     }
 
     /**
@@ -220,6 +220,20 @@ class TeacherController extends Controller
   public function lockedteacher($teacherid, $term_id){
     $lock = LockTeacher::where('teacher_id',$teacherid)->where('term_id',$term_id)->first();
     return  new LockTeacherResource($lock);
+  }
+
+  public function activate(Request $request){
+    $teacher = Teacher::find($request->teacher_id);
+    $teacher->active = 1;
+    $teacher->save();
+    return TeacherResource::collection(Teacher::all());
+  }
+
+  public function deactivate(Request $request){
+    $teacher = Teacher::find($request->teacher_id);
+    $teacher->active = 2;
+    $teacher->save();
+    return TeacherResource::collection(Teacher::all());
   }
  
 }

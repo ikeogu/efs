@@ -27,10 +27,17 @@
                     <td>{{$item->oname}}</td>
                     <td>{{$item->surname}}</td>
                     @if(auth()->user()->teacher_id != null)
-                        @if ($class_->status =='Early Years'|| $class_->status == 'Year School')
+                        @if ($class_->status =='Early Years')
                             <td>
                                 <a href="{{route('sum_ct',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative</a>
                             </td>
+                        @elseif($class_->status == 'Year School')
+                        <td>
+                            <a href="{{route('sum_ct1',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative 1</a>
+                        </td>
+                        <td>
+                            <a href="{{route('sum_ct',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative 2</a>
+                        </td>
                         @else
                             <td>
                                 <a href="{{route('cat1_ct',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">C.A.T 1</a>
@@ -45,10 +52,17 @@
                         </td>
                     @else
                     
-                        @if ($class_->status =='Early Years'|| $class_->status == 'Year School')
+                       @if ($class_->status =='Early Years')
                             <td>
-                                <a href="{{route('sum',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative</a>
+                                <a href="{{route('sum_ct',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative</a>
                             </td>
+                        @elseif($class_->status == 'Year School')
+                        <td>
+                            <a href="{{route('sum_ct1',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative 1</a>
+                        </td>
+                        <td>
+                            <a href="{{route('sum_ct',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">Summative 2</a>
+                        </td>
                         @else
                             <td>
                                 <a href="{{route('cat1',[$item->id,$term->id,$class_->id])}}" class="btn btn-success">C.A.T 1</a>

@@ -30,6 +30,7 @@ use App\Http\Resources\SubjectMarkCollection;
 use App\Http\Resources\Subject as SubjectResource;
 
 use App\Http\Resources\Student as StudentResource;
+use App\Http\Resources\StudentTermResource;
 use Illuminate\Database\Eloquent\Collection;
 
 class TermController extends Controller
@@ -77,10 +78,7 @@ class TermController extends Controller
         $term->description = $request->description;
         $term->session = $request->session;
         $term->status= 1;
-        $term->fee_h = $request->fee_h;
-        $term->fee_y = $request->fee_y;
-        $term->fee_e = $request->fee_e;
-        $term->resumption_date = $request->resumption_date;
+       
 
         if($term->save()){
             return new TermResource($term);
@@ -124,7 +122,7 @@ class TermController extends Controller
      */
     public function update(Request $request)
     {
-     $terms= Term::whereId($request->term_id)->update($request->except(['_method','_token','term_id']));
+     Term::whereId($request->term_id)->update($request->except(['_method','_token','term_id']));
       // return new TermResource($terms);
 
     }
@@ -265,7 +263,7 @@ private function getStudentsInClass($id,$class_id){
           $behaviour->save();
           $comment->save();
         }
-        return $studentTerm;
+        return new StudentTermResource($studentTerm);
       }else{
         $data = ['message', 'Student has been assigned to class Already!'];
         return response()->json($data,204);
@@ -282,7 +280,7 @@ private function getStudentsInClass($id,$class_id){
     $student = Student::find($studid);
     $class_ = S5Class::find($classid);
     $term = Term::find($termid);
-    $studTerm = StudentTerm::where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
+    $studTerm = StudentTerm::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $comment = Comment::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $att = Attendance::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $behave = BehaviourChart::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();

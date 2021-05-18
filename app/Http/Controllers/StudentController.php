@@ -12,7 +12,7 @@ use App\Student;
 use App\Subject;
 use App\SubSubject;
 use App\User;
-use App\StudentTermClass;
+use App\StudentTerm;
 use App\Term;
 use App\S5Class;
 use App\SubjectMark;
@@ -32,14 +32,54 @@ class StudentController extends Controller
         return redirect(route('login'));
     }
     
-    public function lockall(){
-        if(User::where('student_id', '!=',null)->update(array('vr' => 2)))
-             return back()->with('success',' Students Logged');
+       public function lockallh(){
+      $stud=  Student::where('level','Junior High School')->orwhere('level','Senior High School')->get();
+       foreach($stud as $it){
+          User::where('student_id', $it->id)->update(array('vr' => 2)) ;
+       }
+       return back()->with('success','High School Students Locked');
         
     }
-    public function unlockall(){
-        if(User::where('student_id', '!=',null)->update(array('vr' => 1)))
-             return back()->with('success',' Students unLogged');
+    public function unlockallh(){
+         $stud=  Student::where('level','Junior High School')->orwhere('level','Senior High School')->get();
+           foreach($stud as $it){
+              User::where('student_id', $it->id)->update(array('vr' => 1)) ;
+           }
+        
+        
+             return back()->with('success','High School Students unLocked');
+        
+    }
+     public function lockally(){
+        $stud=  Student::where('level','Year School')->get();
+       foreach($stud as $it){
+          User::where('student_id', $it->id)->update(array('vr' => 2)) ;
+       }
+             return back()->with('success','Year School Students Locked');
+        
+    }
+    public function unlockally(){
+         $stud=  Student::where('level','Year School')->get();
+       foreach($stud as $it){
+          User::where('student_id', $it->id)->update(array('vr' => 1)) ;
+       }
+             return back()->with('success','Year School Students unLocked');
+        
+    }
+     public function lockalle(){
+       $stud=  Student::where('level','Early Years')->get();
+       foreach($stud as $it){
+          User::where('student_id', $it->id)->update(array('vr' => 2)) ;
+       }
+             return back()->with('success',' Early years Students Locked');
+        
+    }
+    public function unlockalle(){
+         $stud=  Student::where('level','Early Years')->get();
+       foreach($stud as $it){
+          User::where('student_id', $it->id)->update(array('vr' => 1)) ;
+       }
+             return back()->with('success','Early years Students unLocked');
         
     }
     public function no_result(){
@@ -106,6 +146,20 @@ class StudentController extends Controller
         return back()->with('success', 'No class'); 
         
     }
+    public function summative_1($term_id,$class_1){
+        $dets = $this->details($term_id,$class_1);
+       
+        if($dets['class_']->status == 'Year School') {
+            $SMT_1 = 10;
+            
+            return view('results.summative1',['students'=>$dets['students'], 'subject'=>$dets['subject'],
+            'SMT_1'=>$SMT_1,'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_']]);
+       
+        } 
+        
+        return back()->with('success', 'No class'); 
+        
+    }
     
     public function exam($term_id,$class_1){
         $dets = $this->details($term_id,$class_1);
@@ -156,6 +210,20 @@ class StudentController extends Controller
        
         
     }
+    public function summative_sheet1($student_id,$term_id,$class_id){
+        $dets = $this->det($student_id,$term_id,$class_id);
+        
+        if($dets['class_']->status == 'Year School'){
+            $SMT_score = 10;
+            
+            return view('results.summative-1',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],
+            'scores'=>$dets['scores'],'users'=>$dets['users'],'SMT_1'=>$SMT_score,
+            'grades'=>$dets['grades']]);
+        }
+        
+       
+        
+    }
     
     public function cat1($student_id,$term_id,$class_id){
          
@@ -184,7 +252,7 @@ class StudentController extends Controller
         $dets = $this->det($student_id,$term_id,$class_id);
         $CAT1 = $dets['term']->h_cat1;
         $CAT2 = $dets['term']->h_cat2;
-        $MSC = 20;
+        $MSC = 10;
         $exam = 50;
         if ($dets['class_']->status == 'Year School') {
             # code...
@@ -196,6 +264,11 @@ class StudentController extends Controller
             return view('results.e_years',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
         'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend']]);
 
+        }
+         if($dets['class_']->id == 9){
+             return view('results.sstermii',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
+        'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend'],'cat1'=>$CAT1,'cat2'=>$CAT2,
+        'msc'=>$MSC,'exam'=>$exam]);
         }
         return view('results.h_result',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
         'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend'],'cat1'=>$CAT1,'cat2'=>$CAT2,
@@ -280,6 +353,21 @@ class StudentController extends Controller
         }   
         
     }
+    public function summative1_ct($term_id,$class_1){
+        $dets = $this->details($term_id,$class_1);
+        if($dets['class_']->status == 'Year School') {
+            $SMT_score = 10;
+            return view('teacher.summative-1',['students'=>$dets['students'], 'subject'=>$dets['subject'],
+            'SMT_1'=>$SMT_score,'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_']]);
+       
+        } 
+        // if($dets['class_']->status == 'Early Years') {
+        //     $SMT_score = $dets['term']->e_summative;
+        // return view('teacher.summative',['students'=>$dets['students'], 'subject'=>$dets['subject'],'SMT_score'=>$SMT_score,
+        // 'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_']]);
+        // }   
+        
+    }
     
     public function exam_ct($term_id,$class_1){
         $dets = $this->details($term_id,$class_1);
@@ -328,6 +416,23 @@ class StudentController extends Controller
        
 
     }
+    public function summative_sheet1_ct($student_id,$term_id,$class_id){
+        $dets = $this->det($student_id,$term_id,$class_id);
+        if($dets['class_']->status == 'Year School'){
+            $SMT_score = 10;
+            return view('teacher.summative-1',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],
+            'scores'=>$dets['scores'],'users'=>$dets['users'],'SMT_1'=>$SMT_score,
+            'grades'=>$dets['grades']]);
+        }
+        // if($dets['class_']->status == 'Early Years'){
+        //     $SMT_score = $dets['term']->e_summative;
+        //     return view('teacher.summative_sheet',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],
+        //     'scores'=>$dets['scores'],'users'=>$dets['users'],'SMT_score'=>$SMT_score,
+        //     'grades'=>$dets['grades']]);
+        // }
+       
+
+    }
     
     public function cat1_ct($student_id,$term_id,$class_id){
         $dets = $this->det($student_id,$term_id,$class_id);
@@ -351,7 +456,7 @@ class StudentController extends Controller
         $dets = $this->det($student_id,$term_id,$class_id);
         $CAT1 = $dets['term']->h_cat1;
         $CAT2 = $dets['term']->h_cat2;
-        $MSC = 20;
+        $MSC = 10;
         $exam = 50;
         
         if ($dets['class_']->status == 'Year School') {
@@ -364,6 +469,12 @@ class StudentController extends Controller
             return view('teacher.e_years',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
         'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend']]);
 
+        }
+        
+        if($dets['class_']->id == 9){
+             return view('results.sstermii',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
+        'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend'],'cat1'=>$CAT1,'cat2'=>$CAT2,
+        'msc'=>$MSC,'exam'=>$exam]);
         }
         return view('results.h_result',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
         'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend'],'cat1'=>$CAT1,'cat2'=>$CAT2,
@@ -379,12 +490,15 @@ class StudentController extends Controller
         
         
         $pdf = PDF::loadView('pdf.cat1',['data'=>$this->det($student_id,$term_id,$class_1),'TCA_score'=>$TCA_score]);        
-        return $pdf->download($data['student']->surname.'_'.$data['student']->name.'_'.$data['term']->name.'_'.$data['class_']->name.'.pdf');
+        return $pdf->download($data['student']->surname.'_'.$data['student']->name.'_'.$data['term']->name.'_'.$data['class_']->name.'_CAT1.pdf');
     }
     public function download_cat2($student_id,$term_id,$class_1){
         $data =$this->det($student_id,$term_id,$class_1);
-        $pdf = PDF::loadView('pdf.cat2',['data'=>$this->det($student_id,$term_id,$class_1)]);        
-        return $pdf->download($data['student']->surname.'_'.$data['student']->name.'_'.$data['term']->name.'_'.$data['class_']->name.'.pdf');
+        $dets = $this->det($student_id,$term_id,$class_1);
+        $TCA_score = $dets['term']->h_cat2;
+          
+        $pdf = PDF::loadView('pdf.cat2',['data'=>$this->det($student_id,$term_id,$class_1),'TCA_score'=>$TCA_score]);        
+        return $pdf->download($data['student']->surname.'_'.$data['student']->name.'_'.$data['term']->name.'_'.$data['class_']->name.'_CAT2.pdf');
     }
     public function download_summative($student_id,$term_id,$class_1){
         $data =$this->det($student_id,$term_id,$class_1);
@@ -402,7 +516,10 @@ class StudentController extends Controller
 
     public function download_result($student_id,$term_id,$class_1){
         $dets = $this->det($student_id,$term_id,$class_1);
-        
+        $CAT1 = $dets['term']->h_cat1;
+        $CAT2 = $dets['term']->h_cat2;
+        $MSC = 20;
+        $exam = 50;
         if ($dets['class_']->status == 'Year School') {
             # code...
          $pdf = PDF::loadView('pdf.y_result',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
@@ -417,7 +534,9 @@ class StudentController extends Controller
 
         }
         $pdf = PDF::loadView('pdf.h_result',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],'scores'=>$dets['scores'],'users'=>$dets['users'],
-        'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend']])->setPaper('a4', 'landscape');
+        'grades'=>$dets['grades'],'classTeacher'=>$dets['te'],'comment'=>$dets['comment'],'behave'=>$dets['behave'],'attend'=>$dets['attend'],
+        'cat1'=>$CAT1,'cat2'=>$CAT2,
+        'msc'=>$MSC,'exam'=>$exam])->setPaper('a4', 'landscape');
         return $pdf->download($dets['student']->surname.'_'.$dets['student']->name.'_'.$dets['term']->name.'_'.$dets['class_']->name.'.pdf');
 
     }
@@ -435,18 +554,7 @@ class StudentController extends Controller
             return $pdf->download($dets['class_']->name.'_'.$dets['term']->name.'_'.$dets['term']->session.'.pdf');
         }   
     }
-    public function download_tca_sheet($term_id, $class_id){
-        
-    }
-    public function download_cat1_sheet($term_id, $class_id){
-        
-    }
-    public function download_cat2_sheet($term_id, $class_id){
-        
-    }
-    public function download_gt_sheet($term_id, $class_id){
-        
-    }
+    
 
     // check any broadsheet
     public function allbroadsheet(Request $request){
@@ -468,10 +576,13 @@ class StudentController extends Controller
         }elseif($bdsht == 7){
            return  $this->grandTotal_ct($request->term, $request->class_);
         }
+        elseif($bdsht == 8){
+            return  $this->summative1_ct($request->term, $request->class_);
+         }
        
         
     }
-     public function allbroadsheet2(Request $request){
+     public function broadsheet2(Request $request){
         
         $bdsht = $request->broadsheet;
         //dd($bdsht);
@@ -490,6 +601,9 @@ class StudentController extends Controller
         }elseif($bdsht == 7){
            return  $this->grandTotal($request->term, $request->class_);
         }
+        elseif($bdsht == 8){
+            return  $this->summative_1($request->term, $request->class_);
+         }
        
         
     }
@@ -502,7 +616,7 @@ class StudentController extends Controller
     public function class_student(Request $request){
         $t = Term::find($request->term);
         $c = S5Class::find($request->class_);
-          $students = StudentTermClass::where('term_id',$t->id)->where('s5_class_id',$c->id)->distinct()->get();
+          $students = StudentTerm::where('term_id',$t->id)->where('s5_class_id',$c->id)->distinct()->get();
         $ids = [];
         
         foreach ($students as $stud) {
@@ -515,8 +629,34 @@ class StudentController extends Controller
     public function import_(){
         $terms = Term::all();
         $class_ = S5Class::all();
-        dd($terms,$class_);
         return view('students.import',['terms'=>$terms,'class_'=>$class_]);
     }
+    public function sub_point(){
+         $terms = Term::all();
+        $class_ = S5Class::all();
+        $subjects = Subject::all();
+
+        return view('subject_point',['terms'=>$terms,'class_'=>$class_,'subjects'=>$subjects]);
+    }
+    public function subject_point(Request $request){
+        $t = Term::find($request->term);
+        $c = S5Class::find($request->class_);
+        $s = Subject::find($request->subject);
+        $ids = [];
+         $scores = SubjectMark::with('student')->where('term_id',$t->id)->where('s5_class_id',$c->id)->where('subject_id',$s->id)->get();
+        if($scores !=null){
+           foreach ($scores as $item) {
+            $item->HW = round($item->summative_test * $request->mark) - $item->summative_test;
+            $item->TCA += $item->HW ;
+            $item->GT = $item->Exam + $item->TCA;
+            $item->save();
+          } 
+        return view('spo',['term'=>$t,'class_'=>$c,'scores'=>$scores]);
+        }
+       
+          
+
+    }
+    
 
 }

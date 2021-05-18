@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+  @laravelPWA
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,6 +30,17 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <style>
+      @media print {
+      #printPageButton,#back,#accordionSidebar {
+        display: none;
+      }
+      body {
+           transform: rotate(-90deg);
+      }
+    }
+    </style>
+    
     @yield('style')
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -109,7 +120,7 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route('term')}}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Create new Term</span></a>
+            <span>Create New Term</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('import')}}">
@@ -131,22 +142,22 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route('teachers.index')}}">
           <i class="fas fa-fw fa-user"></i>
-          <span>Teacher</span></a>
+          <span>Teachers</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('grades.index')}}">
             <i class="fas fa-fw fa-setting-o"></i>
             <span>Grade Settings</span></a>
       </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="{{route('sub')}}">
+       <li class="nav-item">
+        <a class="nav-link" href="{{route('broad2')}}">
             <i class="fas fa-fw fa-setting-o"></i>
-            <span>E.Y. Subj Comment</span></a>
-      </li>  --}}
+            <span>Broadsheets</span></a>
+      </li> 
       <li class="nav-item">
         <a class="nav-link" href="{{route('ind')}}">
             <i class="fas fa-fw fa-setting-o"></i>
-            <span>Individual result</span></a>
+            <span class="text-bolder h4">Individual Result</span></a>
       </li> 
      
       @elseif(auth()->check() && auth()->user()->isAdmin == 4)
@@ -288,14 +299,9 @@
   <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+  <script src="{{asset('js/sb-admin-2.js')}}"></script>
 
-  <!-- Page level plugins -->
-  <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
-  <script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
   
     <script>
       function goBack() {
