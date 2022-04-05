@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\SubjectMark;
 use App\SubSubject;
 use App\Student;
+use App\S5Class;
 class Subject extends Model
 {
     //
@@ -33,5 +34,14 @@ class Subject extends Model
     public function subsubject(){
         return $this->hasMany(SubSubject::class);
     }
-
+    public function assignment()
+    {
+        return $this->hasMany(Assignment::class);
+    }
+   public static function findClass($id){
+       return  S5Class::find($id)->name;
+   }
+   public static function findTerm($id){
+       return Term::find($id)->name;
+   }
 }

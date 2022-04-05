@@ -80,6 +80,10 @@ class Student extends Model
      public function subsubject(){
         return $this->belongsToMany(SubSubject::class);
     }
+    public function assignment()
+    {
+        return $this->belongsToMany(Assignment::class);
+    }
     
     public static function grade($val,$grades){
         $remarks = '';
@@ -142,6 +146,9 @@ class Student extends Model
         elseif($status == 7){
             return  count(SubjectMark::where('term_id','=',$term_id)->where('s5_class_id','=',$class_id)->where('subject_id',$subject_id)->where('GT','!=',null)->distinct()->get());
         }
+        elseif($status == 8){
+            return  count(SubjectMark::where('term_id','=',$term_id)->where('s5_class_id','=',$class_id)->where('subject_id',$subject_id)->where('summative_1','!=',null)->distinct()->get());
+        }
     }
     public static function checkNoStudent($term_id,$class_id,$subject_id,$status){
         if($status == 1){
@@ -159,6 +166,9 @@ class Student extends Model
         }
         elseif($status == 7){
             return  count(SubjectMark::where('term_id','=',$term_id)->where('s5_class_id','=',$class_id)->where('subject_id',$subject_id)->where('GT','!=',null)->distinct()->get());
+        }
+        elseif($status == 8){
+            return  count(SubjectMark::where('term_id','=',$term_id)->where('s5_class_id','=',$class_id)->where('subject_id',$subject_id)->where('summative_1','!=',null)->distinct()->get());
         }
     }
  public static function checkNoJStudent($i,$term_id,$class_id,$status){
@@ -205,6 +215,15 @@ class Student extends Model
     
     public static function max_score($id,$class_id,$term_id){
         return SubjectMark::where('subject_id',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->max('summative_test');
+       
+    }
+       public static function min_score_1($id,$class_id,$term_id){
+        return SubjectMark::where('subject_id',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->min('summative_1');
+       
+    }
+    
+    public static function max_score_1($id,$class_id,$term_id){
+        return SubjectMark::where('subject_id',$id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->max('summative_1');
        
     }
     public static function c1_max_score($id,$class_id,$term_id){
@@ -327,12 +346,21 @@ class Student extends Model
         return SubjectMark::where('subject_id',$subject_id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->sum('summative_test');
        
     }
+    public static function subject_total_summative_1($subject_id,$class_id,$term_id){
+        return SubjectMark::where('subject_id',$subject_id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->sum('summative_1');
+       
+    }
 
     public static function subAver($subject_id,$class_id,$term_id){
         return SubjectMark::where('subject_id',$subject_id)->where('term_id',$term_id)->where('s5_class_id',$class_id)->sum('CAT1');
     }
     public static function jsubAver($status,$class_id,$term_id){
         $sum = SubjectMark::where('status',$status)->where('term_id',$term_id)->where('s5_class_id',$class_id)->sum('CAT1');
+        return  static::checking($status,$sum);
+    
+    }
+     public static function jsubAver2($status,$class_id,$term_id){
+        $sum = SubjectMark::where('status',$status)->where('term_id',$term_id)->where('s5_class_id',$class_id)->sum('CAT2');
         return  static::checking($status,$sum);
     
     }
@@ -737,4 +765,36 @@ class Student extends Model
      public static function me($id){
          return Student::find($id)->name.' '.Student::find($id)->surname;
      }
+    //  check average
+    
+    public static function get_average($class,$status,$student_id,$t){
+        $terms = Term::where('status',$status)->get();
+       
+         foreach($terms as $term){
+                     
+            if($term->name=='Term I'){
+                $avg = Average::child_average($student_id,$term->id,$class);
+            }elseif($term->name=='Term II'){
+            
+            $avg2= Average::child_average($student_id,$term->id,$class);
+            }        
+       
+         }
+         if($t==1){
+              return $avg;
+          }elseif($t==2){
+            
+             return $avg2;
+          }        
+    }
+    public static function overAll($class,$status,$student_id){
+        $terms = Term::where('status',$status)->take(3)->get();
+        $avg = 0;
+        foreach($terms as $term){
+                     
+            $avg += Average::child_average($student_id,$term->id,$class);
+        
+         }
+         return round($avg /3,2);
+    }
 }

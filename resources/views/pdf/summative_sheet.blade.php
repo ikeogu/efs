@@ -1,147 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
-    <link rel="stylesheet" href="css/style.css">
-    
-    <title>Summative Test</title>
+       <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <style>
+   
+     body{
+         
+         padding :0 ;
+         margin:0 auto;
+     }
+   
+    th, td{
+         font-size:14.5px;
+         font-weight:bold;
+         
+         
+     }
 
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    th.rotated-text {
+    
+        white-space: nowrap;
+        padding: 0 !important;
+        font-size:11.5px;
+        
+    }
 
-        body{
-            font-family: 'Nunito sans', sans-serif;
-        }
+    th.rotated-text > div {
+        transform:
+            translate(13px, 0px)
+            rotate(-90deg);
+            text-align:center;
+            line-height: -160px;
+        /* width: 30px; */
+    }
 
-        header{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        header p{
-            line-height: 0.4;
-            font-size: 0.9em;
-            font-weight: 600;
-        }
-
-        .details-table{
-            width: 100%;
-        }
-
-        .details-table th{
-            width: 60px;  
-        }
-
-        .details-table ul{
-            border: 1px solid #ccc;
-            height: 40px;
-            display: flex;
-            justify-content: space-between;
-            margin: 0;
-        }
-
-        .details-table ul li{
-            list-style: none;
-            line-height: 2.5;
-            padding: 0 10px;
-            text-transform: uppercase;
-        }
-
-        .details-table ul li:nth-child(2){
-            border-left: 1px solid #ccc;
-            border-right: 1px solid #ccc;
-            /* padding: 0 20px; */
-            text-align: center;
-        }
-
-        .main-result-table th{
-            text-transform: uppercase;
-           
-        }
-        .main-result-table td{
-            text-transform: uppercase;
-            width: 100%;
-        }
-
-        .main-result-table td:nth-child(1){
-            width: 40%;
-            text-align: center;
-        }
-
-        .main-result-table td:nth-child(3){
-            text-align: center;
-        }
-
-        .main-result-table td:nth-child(4){
-            text-align: center;
-        }
-
-        .main-result-table td:nth-child(5){
-            text-align: center;
-        }
-
-        .average td:nth-child(1){
-            text-align: left;
-        }
-
-        .average td:nth-child(2){
-            text-align: center;
-        }
-
-        .remarks td:nth-child(1){
-            text-align: left;
-        }
-
-        .remarks td:nth-child(2){
-            text-align: center;
-        }
-        th, td{
-            font-size: 12px;
-            display: table-cell;
-            white-space:nowrap;
+    th.rotated-text > div > span {
+        /* padding: 5px 10px; */
+    }
+    table {
+        
+            table-layout : auto;
+            width:98%;
+            border-collapse:separate; 
+            border-spacing:0.1em;
+            padding:2px;
+            margin: 2px;
         }
     </style>
 </head>
 <body>
     
-     <div class="card">
-        <div class="card-header bg-success text-white">SUMMATIVE TEST {{$data['class_']->name}}| {{$data['class_']->description}}     {{$data['term']->name}} ||  {{$data['term']->session}}</div>
-        <div class="card-body">
-            <div class="col-12 table-responsive">
-                <table  class="table table-striped table-bordered  text-default">
-                <thead class="header">
-                    <th class="rotate">S/No</th>
-                    <th >Name</th>
-                    
-                    @foreach ($data['subject']->sortBy('name') as  $key => $item)
-                    <th class="rotate text-capitalize ">
-                        <div>{{$item->name}}</div>
-                    </th>   
-                    @endforeach
-                
-                
-                    
-                    <th class="rotate">Total</th>
-                    <th class="rotate">Average</th>  
-                    <th class="rotate">Average(%)</th> 
-                    <th class="rotate">Remarks</th> 
+        <div class="bg-success text-white">SUMMATIVE TEST 1 {{$data['class_']->name}}| {{$data['class_']->description}}     {{$data['term']->name}} ||  {{$data['term']->session}}</div>
+
+            <table  class="table-striped table-bordered">
+                <thead class="">
+                    <tr>
+                            <th scope="col">#</th>
+                            <th class="rotated" scope="col"><div><span>Name</span></div></th>
+                        
+                            @foreach ($data['subject']->sortBy('name') as  $key => $item)
+                                
+                            <th class="rotated" scope="col"><div><span>{{$item->name}}<</span></div></th>
+                            @endforeach
+                            <th class="rotate">Total</th>
+                            <th class="rotate">Average</th>  
+                            <th class="rotate">Average(%)</th> 
+                            <th class="rotate">Remarks</th> 
+                    </tr>
                 </thead>
                 <tbody>  
-                     @php
+                    @php
                         $total = 0;
                         $sum_total = 0;
                         $min_t = 0;
@@ -156,10 +90,10 @@
                         <td> {{$student->name}}  {{$student->oname}} {{$student->surname}}</td>                   
                         @foreach ($student->subjectMark as $key=>  $item)
                             @if($item->term_id == $data['term']->id && $item->s5_class_id == $data['class_']->id)                  
-                            <td>{{$item->summative_test}}</td>              
-                           
+                            <td>{{$item->summative_1}}</td>              
+                        
                             @php
-                                $total += $item->summative_test;
+                                $total += $item->summative_1;
                             @endphp  
                             @endif
                         @endforeach
@@ -177,21 +111,21 @@
                         @endphp
                         <td>{{App\Student::averPer($avg,$SMT_score)}} </td>
                         <td>{{App\Student::grade($avgPer,$data['grades'])}}  </td>
-                       
+                    
                         
                     </tr>
                     
                     @endforeach
                     
-                     <tr>
+                    <tr>
                         <th></th>
                     </tr> 
-                   
-                     <tr>
+                
+                    <tr>
                         <td></td>
                         <th>Total</th>
                         @foreach ($data['subject']->sortBy('name') as $item)
-                        <td>{{App\Student::subject_total($item->id,$data['class_']->id,$data['term']->id)}} </td>
+                        <td>{{App\Student::subject_total_summative_1($item->id,$data['class_']->id,$data['term']->id)}} </td>
                         @endforeach
                         <td>{{$sum_total}}</td>
                         <td>{{$min_t}}</td>
@@ -210,7 +144,7 @@
                         <td></td>
                         <th>Min Score</th>
                         @foreach ($data['subject']->sortBy('name') as $item)
-                             <td>{{App\Student::min_score($item->id,$data['class_']->id,$data['term']->id)}}</td>
+                            <td>{{App\Student::min_score($item->id,$data['class_']->id,$data['term']->id)}}</td>
                         @endforeach
                         
                     </tr> 
@@ -218,26 +152,26 @@
                         <td></td>
                         <th>Subject Average</th>
                         @foreach ($data['subject']->sortBy('name') as $item)
-                        <td>{{App\Student::average(App\Student::subject_total($item->id,$data['class_']->id,$data['term']->id),$data['students']->count())}}</td>
+                        <td>{{App\Student::average(App\Student::subject_total_summative_1($item->id,$data['class_']->id,$data['term']->id),$data['students']->count())}}</td>
                         @endforeach
                         
-                       
+                    
                     </tr> 
                     <tr>
                         <td></td>
                         <th>Subject Average (%)</th>
                         @foreach ($data['subject']->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total($item->id,$data['class_']->id,$data['term']->id),($SMT_score * $data['students']->count())))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_summative_1($item->id,$data['class_']->id,$data['term']->id),($SMT_score * $data['students']->count())))}}</td>
                         @endforeach
                         
-                       
+                    
                         
                     </tr> 
                     <tr>
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($data['subject']->sortBy('name') as $item)
-                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total($item->id,$data['class_']->id,$data['term']->id),($SMT_score * $data['students']->count())),$data['grades'])}}</td>
+                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total_summative_1($item->id,$data['class_']->id,$data['term']->id),($SMT_score * $data['students']->count())),$data['grades'])}}</td>
                         @endforeach
                         
                         
@@ -245,9 +179,8 @@
                     
                 </tbody>
                 
-                </table>
-            </div>
-        </div>
-    </div> 
+            </table>
+         
+        </div> 
 </body>
 </html>

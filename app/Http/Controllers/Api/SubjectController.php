@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class SubjectController extends Controller
-{   
+{
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +30,7 @@ class SubjectController extends Controller
     {
         return new SubjectCollection(Subject::paginate(70));
     }
-// attached terms and class IDs to subejct assignment
+    // attached terms and class IDs to subejct assignment
     /**
      * Store a newly created resource in storage.
      *
@@ -39,14 +39,14 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-                
+
         $subject = new Subject();
-        
-            $subject->name = $request->name;
-            $subject->description = $request->description;
-            $subject->level = $request->level;
-            
-        
+
+        $subject->name = $request->name;
+        $subject->description = $request->description;
+        $subject->level = $request->level;
+
+
 
         $subject->save();
 
@@ -73,8 +73,8 @@ class SubjectController extends Controller
      */
     public function update(Request $request)
     {
-        
-        Subject::whereId($request->subject_id)->update($request->except(['_method','_token','subject_id']));
+
+        Subject::whereId($request->subject_id)->update($request->except(['_method', '_token', 'subject_id']));
 
         // return new SubjectResource($subject);
     }
@@ -100,55 +100,58 @@ class SubjectController extends Controller
 
     public function subjectStudents(Subject $subject)
     {
-      // return new StudentCollection($subject->students);
-      $marks = [];
-      foreach ($subject->students as $student) {
-        $m = new \stdClass();
-        $m->student_id = $student->id;
-        $m->student_name = $student->name;
-        $m->student_roll_no = $student->roll_no;
-        $m->subject_id = $subject->id;
-        $r = Marks::where(['student_id' => $student->id, 'subject_id' => $subject->id])->first();
-        if (!empty($r)) {
-            $m->total_marks = $r->total_marks;
-            $m->obtain_marks = $r->obtain_marks;
-        }else {
-          $m->total_marks = '';
-          $m->obtain_marks = '';
+        // return new StudentCollection($subject->students);
+        $marks = [];
+        foreach ($subject->students as $student) {
+            $m = new \stdClass();
+            $m->student_id = $student->id;
+            $m->student_name = $student->name;
+            $m->student_roll_no = $student->roll_no;
+            $m->subject_id = $subject->id;
+            $r = Marks::where(['student_id' => $student->id, 'subject_id' => $subject->id])->first();
+            if (!empty($r)) {
+                $m->total_marks = $r->total_marks;
+                $m->obtain_marks = $r->obtain_marks;
+            } else {
+                $m->total_marks = '';
+                $m->obtain_marks = '';
+            }
+            array_push($marks, $m);
         }
-        array_push($marks, $m);
-      }
-      return $marks;
+        return $marks;
     }
     // functions return to students in class then opens their sheet.
-    public function studentsubjects($id,$term_id,$class_id){
-        
-        $marks = SubjectMark::where('student_id','=',$id)->where('s5_class_id',$class_id)->
-        where('term_id','=',$term_id)->with('subject')
-        ->get();
+    public function studentsubjects($id, $term_id, $class_id)
+    {
+
+        $marks = SubjectMark::where('student_id', '=', $id)->where('s5_class_id', $class_id)->where('term_id', '=', $term_id)->with('subject')
+            ->get();
         $student = Student::find($id);
         $term = Term::find($term_id);
-        $class_T = S5Class::find($class_id);   
-        
-        return  view('students/sheet',['student'=>$student , 'data'=>json_encode($marks),'term'=>$term,'class_T'=>$class_T]);
+        $class_T = S5Class::find($class_id);
+
+        return  view('students/sheet', ['student' => $student, 'data' => json_encode($marks), 'term' => $term, 'class_T' => $class_T]);
     }
-    public function studentsubjects_ct($id,$term_id,$class_id){
-        
-        $marks = SubjectMark::where('student_id','=',$id)->where('s5_class_id',$class_id)->
-        where('term_id','=',$term_id)->with('subject')
-        ->get();
+    public function studentsubjects_ct($id, $term_id, $class_id)
+    {
+
+        $marks = SubjectMark::where('student_id', '=', $id)->where('s5_class_id', $class_id)->where('term_id', '=', $term_id)->with('subject')
+            ->get();
         $student = Student::find($id);
         $term = Term::find($term_id);
-        $class_T = S5Class::find($class_id);          
-       return  view('teacher/sheet',['student'=>$student , 'data'=>json_encode($marks),'term'=>$term,'class_T'=>$class_T]);
-        
+        $class_T = S5Class::find($class_id);
+        return  view('teacher/sheet', ['student' => $student, 'data' => json_encode($marks), 'term' => $term, 'class_T' => $class_T]);
     }
 
-    public function my_subjects($id,$term_id,$class_id){
-        
-        $marks = SubjectMark::where('student_id','=',$id)->where('term_id','=',$term_id)->where('s5_class_id','=',$class_id)->with('subject')
-        ->get();
+    public function my_subjects($id, $term_id, $class_id)
+    {
+
+        $marks = SubjectMark::where('student_id', '=', $id)->where('term_id', '=', $term_id)->where('s5_class_id', '=', $class_id)->with('subject')
+            ->get();
         return  $marks;
-        
+    }
+    public function early_years_subject()
+    {
+        return Subject::where('level', '=', 'Early Years')->get();
     }
 }

@@ -13,10 +13,10 @@ class CreateLockTeachersTable extends Migration
      */
     public function up()
     {
-        Schema::create('lock_teachers', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        // Schema::create('lock_teachers', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->timestamps();
+        // });
     }
 
     /**

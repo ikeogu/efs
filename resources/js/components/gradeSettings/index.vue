@@ -173,7 +173,7 @@
                   <td>{{ gSetting.percentage }}</td>
                   <td>{{ gSetting.grade }}</td>
                   <td>{{ gSetting.description }}</td>
-                  <td>{{ gSetting.status }}</td>
+                  <td>{{ gSetting.status }}</td> 
                   <td><a href="#"
                        v-on:click="editGradeSetting(gSetting.id)"
                        data-target="#exampleModal1"

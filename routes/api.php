@@ -57,6 +57,8 @@ Route::namespace('Api')->group(function () {
         Route::get('subjectlist', 'SubjectController@subjectList');
         Route::get('subjectstudents/subject/{subject}', 'SubjectController@subjectStudents');
         Route::put('schclass/{key}','S5ClassController@store');
+        // get early years subject
+        Route::get('early-years-subject', 'SubjectController@early_years_subject');
 
         Route::get('my_subject/{id}/class/{class}/term/{term}','SubjectController@my_subjects');
          // term structuring
@@ -96,7 +98,7 @@ Route::namespace('Api')->group(function () {
         
         Route::get('students_in_term2/{term}/class/{class}', 'TermController@students_in_term2');
         
-        Route::get('s5class_term/{term}', 'S5ClassController@terms_class');
+        Route::get('s5class_term/{term}/student/{student}', 'S5ClassController@terms_class');
     
         Route::get('class_student/{class}/term/{term}', 'TermController@class_student');
         Route::get('myclass/{id}','StudentController@myClasses');
@@ -105,7 +107,7 @@ Route::namespace('Api')->group(function () {
         Route::get('studentSubject_ct/{id}/term/{term}/class/{class}','SubjectController@studentsubjects_ct');
         Route::get('my_subjects/{student}/class/{class}/term/{term}','StudentController@my_record');
         Route::delete('removeClassTeacher/{classteacher}','TeacherController@removeClassTeacher');
-        Route::post('assign_all_subjects_to_students/{term}/class/{class}','StudentController@assignSubjectToMyStudent');
+        Route::post('assign_all_subjects_to_students','StudentController@assignSubjectToMyStudent');
         
         Route::delete('remove_all_subjects_from_students/{term}/class/{class}','StudentController@removeSubjectToMyStudent');
         Route::get('Subjcomment/term/{term}/class/{class}','SubjCommentController@class_subj');
@@ -116,7 +118,17 @@ Route::namespace('Api')->group(function () {
         Route::post('activate','TeacherController@activate');
         Route::post('deactivate','TeacherController@deactivate');
         Route::post('import_students','StudentController@import_students');
+        Route::post('import_students_by_class', 'StudentController@import_students_by_class');
         Route::get('lockedteacher/{teacher}/term/{term}','TeacherController@lockedTeacher');
+
+    // subject comment
+    Route::get('subjComment/class/{id}/term/{term}', 'SubjCommentController@term_class_des');
+    Route::get('subjcomment_/class/{id}/term/{term}', 'SubjCommentController@fetchDescription');
+    Route::post('fix_early_years', 'SubjectMarkController@fix_subject');
+    Route::post('update-subjcomment', 'SubjCommentController@updateSubjCommentMark');
+   
+
+
     Route::middleware('auth:api', 'throttle:60,1')->group(function () {
        
         Route::get('results/students', 'ResultController@students');

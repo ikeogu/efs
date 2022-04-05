@@ -6,7 +6,9 @@
 
 <div class="container-fluid" > 
     <div class="d-flex justify-content-end">
-        
+        <form>
+            <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
+        </form>
     </div>
    <div class="card">
         <div class="card-header bg-success text-white">SUMMATIVE TEST I {{$class_->name}}| {{$class_->description}}     {{$term->name}} ||  {{$term->session}}</div>
@@ -82,7 +84,7 @@
                         <td></td>
                         <th>Total</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::subject_total($item->id,$class_->id,$term->id)}} </td>
+                        <td>{{App\Student::subject_total_summative_1($item->id,$class_->id,$term->id)}} </td>
                         @endforeach
                         <td>{{$sum_total}}</td>
                         <td>{{$min_t}}</td>
@@ -93,7 +95,7 @@
                         <td></td>
                         <th>Max Score</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::max_score($item->id,$class_->id,$term->id)}}</td>
+                        <td>{{App\Student::max_score_1($item->id,$class_->id,$term->id)}}</td>
                         @endforeach
                         
                     </tr>
@@ -101,7 +103,7 @@
                         <td></td>
                         <th>Min Score</th>
                         @foreach ($subject->sortBy('name') as $item)
-                             <td>{{App\Student::min_score($item->id,$class_->id,$term->id)}}</td>
+                             <td>{{App\Student::min_score_1($item->id,$class_->id,$term->id)}}</td>
                         @endforeach
                         
                     </tr> 
@@ -109,7 +111,7 @@
                         <td></td>
                         <th>Subject Average</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::average(App\Student::subject_total($item->id,$class_->id,$term->id),App\Student::checkNoStudent($term->id,$class_->id,$item->id,1))}}</td>
+                        <td>{{App\Student::average(App\Student::subject_total_summative_1($item->id,$class_->id,$term->id),App\Student::checkNoStudent($term->id,$class_->id,$item->id,8))}}</td>
                         @endforeach
                         
                        
@@ -118,7 +120,7 @@
                         <td></td>
                         <th>Subject Average (%)</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,1))))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_summative_1($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,8))))}}</td>
                         @endforeach
                         
                        
@@ -128,7 +130,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,1))),$grades)}}</td>
+                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total_summative_1($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,8))),$grades)}}</td>
                         @endforeach
                         
                         
@@ -143,7 +145,6 @@
 {{-- <summative-test :students="{{$students}}" :subject="{{$subject}}" :grades="{{$grades}}" :SMT_1="{{$SMT_1}}"></summative-test> --}}
 
 </div>
-
 @endsection
 <style>
  td {

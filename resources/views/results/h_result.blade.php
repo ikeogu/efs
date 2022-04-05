@@ -548,7 +548,7 @@
 												@endif
 											</tr>
 											<tr>
-												<td class=" text-uppercase text-left"> Politiness</td>
+												<td class=" text-uppercase text-left"> Politeness</td>
 												@if ($behave != null)
 												<h3 class="text-bold">	{{App\Student::h_behave($behave->pol)}}</h3>
 													
@@ -694,25 +694,58 @@
 												<td style="font-size: 10px;"></td>
 												
 											</tr>
-											<tr>
-												@if($class_->name == 'JSS 1' || $class_->name == 'JSS 2')
+										
+											    @if($term->session == '2020/2021' && $term->name == 'Term III')
+											     <tr>
+											     	@if($class_->name == 'J.S.S 1')
 												    <td colspan="5" class="text-left text-bold text-uppercase">
-													    School Fee: ₦{{number_format($term->fee_1_2)}}
+													    School Fee: ₦180,000
 												    </td>
-												@elseif($class_->name == 'JSS 3')
+    												@elseif($class_->name == 'J.S.S 2')
+    												<td colspan="5" class="text-left text-bold text-uppercase">
+    													School Fee: ₦260,000
+    												</td>
+    													@elseif($class_->name == 'S.S.S 1')
+    												    <td colspan="5" class="text-left text-bold text-uppercase">
+    												    	School Fee: ₦197,000
+    												    </td>
+    													@elseif($class_->name == 'S.S.S 2')
+    												    <td colspan="5" class="text-left text-bold text-uppercase">
+    												    	School Fee: ₦317,000
+    												    </td>
+    												@elseif($class_->name == 'S.S.S 3')
+    												    <td colspan="5" class="text-left text-bold text-uppercase">
+    													School Fee: ₦{{number_format($term->fee_s3)}}
+    												</td>
+    												@endif
+    										@else
+												@if($class_->name == 'J.S.S 1')
+												    <td colspan="5" class="text-left text-bold text-uppercase">
+													    School Fee: ₦{{number_format($term->jss1)}}
+												    </td>
+													@elseif($class_->name == 'J.S.S 2')
+												    <td colspan="5" class="text-left text-bold text-uppercase">
+													    School Fee: ₦{{number_format($term->jss2)}}
+												    </td>
+												@elseif($class_->name == 'J.S.S 3')
 												<td colspan="5" class="text-left text-bold text-uppercase">
-													School Fee: ₦{{number_format($term->fee_3)}}
+													School Fee: ₦{{number_format($term->jss3)}}
 												</td>
-												@elseif($class_->name == 'SSS 1' || $class_->name == 'SSS 2')
+													@elseif($class_->name == 'S.S.S 1')
 												    <td colspan="5" class="text-left text-bold text-uppercase">
-												    	School Fee: ₦{{number_format($term->fee_s1)}}
+												    	School Fee: ₦{{number_format($term->ss1)}}
 												    </td>
-												@elseif($class_->name == 'SSS 3')
+													@elseif($class_->name == 'S.S.S 2')
 												    <td colspan="5" class="text-left text-bold text-uppercase">
-													School Fee: ₦{{number_format($term->fee_s3)}}
+												    	School Fee: ₦{{number_format($term->ss2)}}
+												    </td>
+												@elseif($class_->name == 'S.S.S 3')
+												    <td colspan="5" class="text-left text-bold text-uppercase">
+													School Fee: ₦{{number_format($term->ss3)}}
 												</td>
 												@endif
 											</tr>
+											@endif
 											<tr>
 												<td colspan="5" class="text-left text-bold text-uppercase">
 													Next term Begins: {{date('l, jS F, Y',strtotime($term->resumption_date))}}

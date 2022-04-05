@@ -93,8 +93,8 @@
                                 $total += $item->summative_1;
                             @endphp 
                             
-                             <td>{{App\Student::max_score($item->subject_id,$class_->id,$term->id)}}</td>
-                            <td>{{App\Student::average(App\Student::subject_total($item->subject_id,$class_->id,$term->id),$users->count())}}</td>
+                             <td>{{App\Student::max_score_1($item->subject_id,$class_->id,$term->id)}}</td>
+                            <td>{{App\Student::average(App\Student::subject_total_summative_1($item->subject_id,$class_->id,$term->id),$users->count())}}</td>
                             </tr> 
                             @endforeach
                             <tr class="average">

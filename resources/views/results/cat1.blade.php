@@ -319,14 +319,15 @@
                         $total = 0;
                         $sum_total = 0; 
                         $no_of_subject = 0;
+                        $cnt = 0;
                         
                         @endphp  
                         <tbody>
-                            @foreach ($scores as $key=> $item)
+                            @foreach ($scores as  $item)
                             <tr>
                             
-                            @if($item->CAT1 != null)
-                            <td>{{$key + 1}}</td>
+                            @if(!empty($item->CAT1))
+                            <td>{{++$cnt}}</td>
                             <td class="">{{$item->subname}}</td>
                             
                             <td>{{$item->CAT1}}</td>

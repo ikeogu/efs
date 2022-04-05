@@ -63,19 +63,30 @@
                   </div>
                   
                   <div class="form-group">
-                    <label for="name">Fee Schedule (High School)</label>
-                    <input type="number" name="fee_1_2" id="session" class="form-control" placeholder="Jss1- 2" v-model="term.fee_1_2" />
-                    <input type="number" name="fee_3" id="session" class="form-control" placeholder="Jss 3" v-model="term.fee_3" />
-                    <input type="number" name="fee_s1_2" id="session" class="form-control" placeholder="SSS 1 - 2" v-model="term.fee_s1_2" />
-                    <input type="number" name="fee_s3" id="session" class="form-control" placeholder="SSs3" v-model="term.fee_s3" />
+                    <label for="name">Fee Schedule (Junior High School)</label>
+                    <input type="number" name="jss1" id="session" class="form-control" placeholder="Jss1" v-model="term.jss1" />
+                    <input type="number" name="jss2" id="session" class="form-control" placeholder="Jss2" v-model="term.jss2" />
+                    <input type="number" name="jss3" id="session" class="form-control" placeholder="Jss3" v-model="term.jss3" />
+                     <label for="name">Fee Schedule (Senior High School)</label>
+                    <input type="number" name="ss1" id="session" class="form-control" placeholder="SSS1" v-model="term.ss1" />
+                    <input type="number" name="ss2" id="session" class="form-control" placeholder="SSS2" v-model="term.ss2" />
+                    <input type="number" name="ss3" id="session" class="form-control" placeholder="SSS3" v-model="term.ss3" />
                   </div>
                   <div class="form-group">
                     <label for="name">Fee Schedule (Year School)</label>
-                    <input type="number" name="fee_y" id="session" class="form-control" placeholder="" v-model="term.fee_y" />
+                    <input type="number" name="y1" id="session" class="form-control" placeholder="Year1" v-model="term.y1" />
+                     <input type="number" name="y2" id="session" class="form-control" placeholder="Year 2 " v-model="term.y2" />
+                      <input type="number" name="y3" id="session" class="form-control" placeholder="Year3" v-model="term.y3" />
+                       <input type="number" name="y4" id="session" class="form-control" placeholder="Year4" v-model="term.y4" />
+                        <input type="number" name="y5" id="session" class="form-control" placeholder="Year5" v-model="term.y5" />
+                         <input type="number" name="y6" id="session" class="form-control" placeholder="Year6" v-model="term.y6" />
+                    
                   </div>
                   <div class="form-group">
                     <label for="name">Fee Schedule (Early Years)</label>
-                    <input type="number" name="fee_e" id="session" class="form-control" placeholder="" v-model="term.fee_e" />
+                    <input type="number" name="tulip" id="session" class="form-control" placeholder="Tulip" v-model="term.tulip" />
+                     <input type="number" name="prekin" id="session" class="form-control" placeholder="Pre-Kindertin" v-model="term.prekin" />
+                      <input type="number" name="kinda" id="session" class="form-control" placeholder="KIndergatin" v-model="term.kinda" />
                   </div>
                   <div class="form-group">
                     <label for="name">Resumption Date </label>
@@ -181,20 +192,31 @@
                     <label for="name">Session</label>
                     <input type="text" name="session" id="session" class="form-control" placeholder="2019/2020" v-model="term.session" />
                   </div>
-                  <div class="form-group">
-                    <label for="name">Fee Schedule (High School)</label>
-                    <input type="number" name="fee_1_2" id="session" class="form-control" placeholder="Jss1- 2" v-model="term.fee_1_2" />
-                    <input type="number" name="fee_3" id="session" class="form-control" placeholder="Jss 3" v-model="term.fee_3" />
-                    <input type="number" name="fee_s1_2" id="session" class="form-control" placeholder="SSS 1 - 2" v-model="term.fee_s1_2" />
-                    <input type="number" name="fee_s3" id="session" class="form-control" placeholder="SSs3" v-model="term.fee_s3" />
+                   <div class="form-group">
+                    <label for="name">Fee Schedule (Junior High School)</label>
+                    <input type="number" name="jss1" id="session" class="form-control" placeholder="Jss1" v-model="term.jss1" />
+                    <input type="number" name="jss2" id="session" class="form-control" placeholder="Jss2" v-model="term.jss2" />
+                    <input type="number" name="jss3" id="session" class="form-control" placeholder="Jss3" v-model="term.jss3" />
+                     <label for="name">Fee Schedule (Senior High School)</label>
+                    <input type="number" name="ss1" id="session" class="form-control" placeholder="SSS1" v-model="term.ss1" />
+                    <input type="number" name="ss2" id="session" class="form-control" placeholder="SSS2" v-model="term.ss2" />
+                    <input type="number" name="ss3" id="session" class="form-control" placeholder="SSS3" v-model="term.ss3" />
                   </div>
                   <div class="form-group">
                     <label for="name">Fee Schedule (Year School)</label>
-                    <input type="number" name="fee_y" id="session" class="form-control" placeholder="" v-model="term.fee_y" />
+                    <input type="number" name="y1" id="session" class="form-control" placeholder="Year1" v-model="term.y1" />
+                     <input type="number" name="y2" id="session" class="form-control" placeholder="Year 2 " v-model="term.y2" />
+                      <input type="number" name="y3" id="session" class="form-control" placeholder="Year3" v-model="term.y3" />
+                       <input type="number" name="y4" id="session" class="form-control" placeholder="Year4" v-model="term.y4" />
+                        <input type="number" name="y5" id="session" class="form-control" placeholder="Year5" v-model="term.y5" />
+                         <input type="number" name="y6" id="session" class="form-control" placeholder="Year6" v-model="term.y6" />
+                    
                   </div>
                   <div class="form-group">
                     <label for="name">Fee Schedule (Early Years)</label>
-                    <input type="number" name="fee_e" id="session" class="form-control" placeholder="" v-model="term.fee_e" />
+                    <input type="number" name="tulip" id="session" class="form-control" placeholder="Playgroup" v-model="term.tulip" />
+                     <input type="number" name="prekin" id="session" class="form-control" placeholder="Pre-Kindergartin" v-model="term.prekin" />
+                      <input type="number" name="kinda" id="session" class="form-control" placeholder="Kindergatin" v-model="term.kinda" />
                   </div>
                   <div class="form-group">
                     <label for="name">Resumption Date </label>
@@ -309,7 +331,7 @@
                     <th>Description</th>
                     <th>Session</th>
                     
-                    <th colspan="6">Fee Schedule</th>
+                    <th colspan="15">Fee Schedule</th>
                     <th>Resumption</th>
                     <th>Details</th>
                     <th colspan="4">Action</th>
@@ -321,12 +343,22 @@
                     <td>{{ term.description }}</td>
                     <td>{{ term.session }}</td>
                     
-                    <td>₦ {{ term.fee_1_2 }} </td>
-                    <td>₦ {{ term.fee_3 }} </td>
-                    <td>₦ {{ term.fee_s1_2 }} </td>
-                    <td>₦ {{ term.fee_s3 }} </td>
-                    <td>₦ {{ term.fee_y }}</td>
-                    <td>₦ {{ term.fee_e }}</td>
+                    <td>₦ {{ term.jss1 }} </td>
+                    <td>₦ {{ term.jss2}} </td>
+                    <td>₦ {{ term.jss3 }} </td>
+                      <td>₦ {{ term.ss1 }} </td>
+                      <td>₦ {{ term.ss2 }} </td>
+                      <td>₦ {{ term.ss3 }} </td>
+                    <td>₦ {{ term.y1 }} </td>
+                    <td>₦ {{ term.y2 }} </td>
+                    <td>₦ {{ term.y3 }} </td>
+                    <td>₦ {{ term.y4 }}</td>
+                    <td>₦ {{ term.y5 }}</td>
+                    <td>₦ {{ term.y6 }}</td>
+                    <td>₦ {{ term.tulip }}</td>
+                    <td>₦ {{ term.prekin }}</td>
+                    <td>₦ {{ term.kinda}}</td>
+                    
                     <td>{{ term.resumption_date }}</td>
                     
                     <td>
@@ -448,12 +480,22 @@
             name: this.term.name,
             description: this.term.description,
             session: this.term.session,
-            fee_3:this.term.fee_3,
-            fee_1_2:this.term.fee_1_2,
-            fee_s3:this.term.fee_s3,
-            fee_s1_2:this.term.fee_s1_2,
-            fee_y:this.term.fee_y,
-            fee_e:this.term.fee_e,
+            jss1:this.term.jss1,
+            jss2:this.term.jss2,
+            jss3:this.term.jss3,
+            ss1:this.term.ss1,
+            ss2:this.term.ss2,
+            ss3:this.term.ss3,
+            y1:this.term.y1,
+             y2:this.term.y2,
+              y3:this.term.y3,
+               y4:this.term.y4,
+                y5:this.term.y5,
+                 y6:this.term.y6,
+            tulip:this.term.tulip,
+            prekin:this.term.prekin,
+            kinda:this.term.kinda,
+            
             resumption_date:this.term.resumption_date
             
           })
@@ -481,12 +523,21 @@
           this.term.name = data.data.data.name
           this.term.description = data.data.data.description,
           this.term.session = data.data.data.session
-          this.term.fee_1_2 = data.data.data.fee_1_2,
-          this.term.fee_s3 = data.data.data.fee_s3,
-          this.term.fee_s1_2 = data.data.data.fee_s1_2,
-          this.term.fee_3 = data.data.data.fee_3,
-          this.term.fee_y = data.data.data.fee_y,
-          this.term.fee_e = data.data.data.fee_e,
+          this.term.ss1 = data.data.data.ss1,
+           this.term.ss2 = data.data.data.ss2,
+            this.term.ss3 = data.data.data.ss3,
+          this.term.jss1 = data.data.data.jss1,
+           this.term.jss2 = data.data.data.jss2,
+            this.term.jss3 = data.data.data.jss3,
+          this.term.y1 = data.data.data.y1,
+          this.term.y2 = data.data.data.y2,
+          this.term.y3 = data.data.data.y3,
+          this.term.y4 = data.data.data.y4,
+          this.term.y5 = data.data.data.y5,
+          this.term.y6 = data.data.data.y6,
+          this.term.tulip= data.data.data.tulip,
+          this.term.prekin = data.data.data.prekin,
+          this.term.kinda = data.data.data.kinda,
           this.term.resumption_date = data.data.data.resumption_date
           this.id = termid
         })
@@ -498,12 +549,21 @@
             name: this.term.name,
             description:this.term.description,
             session:this.term.session,
-            fee_3:this.term.fee_3,
-            fee_1_2:this.term.fee_1_2,
-            fee_s3:this.term.fee_s3,
-            fee_s1_2:this.term.fee_s1_2,
-            fee_y:this.term.fee_y,
-            fee_e:this.term.fee_e,
+            jss1:this.term.jss1,
+            jss2:this.term.jss2,
+            jss3:this.term.jss3,
+            ss1:this.term.ss1,
+            ss2:this.term.ss2,
+            ss3:this.term.ss3,
+            y1:this.term.y1,
+             y2:this.term.y2,
+              y3:this.term.y3,
+               y4:this.term.y4,
+                y5:this.term.y5,
+                 y6:this.term.y6,
+            tulip:this.term.tulip,
+            prekin:this.term.prekin,
+            kinda:this.term.kinda,
             resumption_date:this.term.resumption_date
             
           })

@@ -11,7 +11,7 @@
         <a href="{{route('dsum',[$term->id,$class_->id])}}" type="button" class="btn btn-outline-danger"><i class="fa fa-download" aria-hidden="true"></i>ExportTOPDF</a>
     </div>
    <div class="card">
-        <div class="card-header bg-success text-white">SUMMATIVE TEST {{$class_->name}}| {{$class_->description}}     {{$term->name}} ||  {{$term->session}}</div>
+        <div class="card-header bg-success text-white">SUMMATIVE TEST 1{{$class_->name}}| {{$class_->description}}     {{$term->name}} ||  {{$term->session}}</div>
         <div class="card-body">
             <div class="col-12 table-responsive">
                 <table  class="table table-striped table-bordered  text-default">

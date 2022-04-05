@@ -8,6 +8,7 @@
         </div>
       </div>
     </div>
+    <h6>Import students by Term</h6>
     <form method="post" name="importStudent" id="importstudent" action="#" @submit.prevent="importStudent">
         
         <div class="input-group mb-3">
@@ -38,8 +39,49 @@
         
         <button type="submit" class="btn btn-outline-success btn-md">Import</button>
     </form>
+    <hr>
+    <h6>Import students by Class</h6>
+     <form method="post" name="importStudentByClass" id="importstudentByClass" action="#" @submit.prevent="importStudentByClass">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Import From Old Term</label>
+            </div>
+             <select class="custom-select" id="inputGroupSelect01"  name="oldTerm" v-model="oldTerm">
+                <option v-for="oldTerm in terms__"  :key="oldTerm.id" v-bind:value="oldTerm.id">{{ oldTerm.name }} | {{oldTerm.session}}</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Import From Old Class</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01"  name="oldClass" v-model="oldClass">
+                <option v-for="oldClass in class__"  :key="oldClass.id" v-bind:value="oldClass.id">{{ oldClass.name }} | {{oldClass.description}}</option>
+            </select>
+        </div>
+
+         <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Import To New Term</label>
+            </div>
+             <select class="custom-select" id="inputGroupSelect01"  name="newTerm" v-model="newTerm">
+                <option v-for="newTerm in terms__"  :key="newTerm.id" v-bind:value="newTerm.id">{{ newTerm.name }} | {{newTerm.session}}</option>
+            </select>
+        </div>
+         <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Import To New Class</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01"  name="newClass" v-model="newClass">
+                <option v-for="newClass in class__"  :key="newClass.id" v-bind:value="newClass.id">{{ newClass.name }} | {{newClass.description}}</option>
+            </select>
+        </div>
+       
+        
+        <button type="submit" class="btn btn-outline-success btn-md">Import</button>
+    </form>
 
 </div>
+
 
 </template>
 <script>
@@ -52,6 +94,10 @@
                  term_to:'',
                  term:'',
                  sclass:'',
+                 newClass:'',
+                 oldClass:'',
+                 newTerm:'',
+                 oldTerm:'',
 
                 succmsg: true,
                 showmodal: false,
@@ -62,33 +108,64 @@
          },
          methods: {
              importStudent() {
-            this.$http
-                .post(BASE_URL + '/api/import_students', {
-            
-                sclass: this.sclass,
-                term: this.term,
-                term_to: this.term_to,
+                this.$http
+                    .post(BASE_URL + '/api/import_students', {
+                    
+                        sclass: this.sclass,
+                        term: this.term,
+                        term_to: this.term_to,
 
-          })
-          .then(data => {
-            this.succmsg = false
-            console.log(data)
-            this.sclass = ''
-            this.term = ''
-            this.term_to= ''
-            var self = this
-            setTimeout(function() {
-              self.succmsg = true
-            }, 3000)
-            this.actionmsg = 'Students imported and subjects assigned successfully'
-            
-            $('body')
-              .removeClass()
-              .removeAttr('style')
-            $('.modal-backdrop').remove()
-            
-          })
-      },
+                })
+                .then(data => {
+                    this.succmsg = false
+                    console.log(data)
+                    this.sclass = ''
+                    this.term = ''
+                    this.term_to= ''
+                    var self = this
+                    setTimeout(function() {
+                    self.succmsg = true
+                    }, 3000)
+                    this.actionmsg = 'Students imported and subjects assigned successfully'
+                    
+                    $('body')
+                    .removeClass()
+                    .removeAttr('style')
+                    $('.modal-backdrop').remove()
+                    
+                })
+            },
+
+            importStudentByClass() {
+                this.$http
+                    .post(BASE_URL + '/api/import_students_by_class', {
+                    
+                        newClass: this.newClass,
+                        oldClass: this.oldClass,
+                        newTerm: this.newTerm,
+                        oldTerm: this.oldTerm,
+
+                })
+                .then(data => {
+                    this.succmsg = false
+                    console.log(data)
+                    this.newClass = ''
+                     this.oldClass = ''
+                    this.newTerm = ''
+                    this.oldTerm= ''
+                    var self = this
+                    setTimeout(function() {
+                    self.succmsg = true
+                    }, 3000)
+                    this.actionmsg = 'Students imported and subjects assigned successfully'
+                    
+                    $('body')
+                    .removeClass()
+                    .removeAttr('style')
+                    $('.modal-backdrop').remove()
+                    
+                })
+            },
          },
          props:['terms','class_'],
          mounted(){

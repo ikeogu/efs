@@ -40,6 +40,7 @@
         </div>
 
     <class-student :students="{{$students}}" :t="{{$t}}" :class_T="{{$class_}}"></class-student>
+    
 
     </div>
 

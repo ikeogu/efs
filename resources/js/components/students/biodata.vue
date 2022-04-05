@@ -197,6 +197,7 @@
     methods: {
 
       fetchMyClass() {
+      
         this.$http.get(BASE_URL + '/api/myclass/' +this.logged_in.id ).then(response => {
           this.myClasses = response.data.data
         })
@@ -234,7 +235,7 @@
       
       ClassId(class_id){
         this.class_id = class_id,
-        this.$http.get(BASE_URL + '/api/s5class_term/' + class_id ).then(response => {
+        this.$http.get(BASE_URL + '/api/s5class_term/' + class_id + '/student/'+ this.logged_in.id).then(response => {
           this.terms = response.data.data
         })
       },

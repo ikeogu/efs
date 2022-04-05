@@ -6,9 +6,12 @@
 
 
 <div class="container-fluid">
+    <div class="row">
     <form>
-        <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
+        <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-sm"/>
     </form>
+    <a href="{{route('dGT_bs',[$term->id,$class_->id])}}" class="btn btn-success btn-sm">Export To PDF</a>
+    </div>
     <div class="card">
     <div class="card-header bg-success text-capitalize text-white">GRAND TOTAL BROADSHEET {{$class_->name}}|   {{$class_->description}}  | {{$term->name}}|  {{$term->session}}</div>
     <div class="col-12 table-responsive">
@@ -400,6 +403,7 @@
          </tbody>
        </table>
        @endif
+       
        
      </div>
     </div>

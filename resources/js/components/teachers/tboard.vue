@@ -136,7 +136,7 @@
             
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-6 mb-4 full" id="div2">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -191,7 +191,7 @@
           <h3>Show profile</h3>
           </div>
           <button id="preview" class="btn-success">Click Me</button>
-      </div>
+      </div> -->
     </div>    
             
       <!-- Button trigger modal -->
@@ -262,20 +262,20 @@
 
                    <div class="form-group">
                     <label for="roll_no">CAT 1</label>
-                    <input type="text" name="CAT1"  class="form-control" placeholder="Enter CAT 1 Score" v-model="student_mark.CAT1" />
+                    <input type="text" name="CAT1"  class="form-control" placeholder="Enter CAT 1 Score" v-model="editstudent_mark.CAT1" />
                   </div>
 
                   <div class="form-group">
                     <label for="roll_no">CAT 2</label>
-                    <input type="number" name="CAT2" class="form-control" placeholder="Enter CAT 2 Score" v-model="student_mark.CAT2" />
+                    <input type="number" name="CAT2" class="form-control" placeholder="Enter CAT 2 Score" v-model="editstudent_mark.CAT2" />
                   </div>
                   <div class="form-group">
                     <label for="contact">MSC</label>
-                    <input type="number" name="MSC"  class="form-control" placeholder="Enter MSC Score" v-model="student_mark.MSC" />
+                    <input type="number" name="MSC"  class="form-control" placeholder="Enter MSC Score" v-model="editstudent_mark.MSC" />
                   </div>
                   <div class="form-group">
                     <label for="contact">Exam</label>
-                    <input type="number" name="exam"  class="form-control" placeholder="Enter MSC Score" v-model="student_mark.Exam" />
+                    <input type="number" name="exam"  class="form-control" placeholder="Enter MSC Score" v-model="editstudent_mark.Exam" />
                   </div>
 
                   <div class="form-group text-center">
@@ -287,32 +287,32 @@
 
                    <div class="form-group">
                     <label for="roll_no">Home Work</label>
-                    <input type="number" name="HW"  class="form-control"  v-model="student_mark.HW" />
+                    <input type="number" name="HW"  class="form-control"  v-model="editstudent_mark.HW" />
                   </div>
                   <div class="form-group">
                     <label for="roll_no">Class Work</label>
-                    <input type="number" name="CW" class="form-control" placeholder="" v-model="student_mark.CW" />
+                    <input type="number" name="CW" class="form-control" placeholder="" v-model="editstudent_mark.CW" />
                   </div>
                   <div class="form-group">
                     <label for="contact">Friday Assignment</label>
-                    <input type="number" name="FT"  class="form-control" v-model="student_mark.FT" />
+                    <input type="number" name="FT"  class="form-control" v-model="editstudent_mark.FT" />
                   </div>
                   <div class="form-group">
                     <label for="roll_no">Holiday Assignment</label>
-                    <input type="number" name="HA"  class="form-control"  v-model="student_mark.HA" />
+                    <input type="number" name="HA"  class="form-control"  v-model="editstudent_mark.HA" />
                   </div>
                   <div class="form-group" >
                     <label for="roll_no">Summative Test 1</label>
-                    <input type="number" name="summative_1" class="form-control"  v-model="student_mark.summative_1" >
+                    <input type="number" name="summative_1" class="form-control"  v-model="editstudent_mark.summative_1" >
                   </div>
                   <div class="form-group">
                     <label for="roll_no">Summative Test 2</label>
-                    <input type="number" name="summative_test" class="form-control"  v-model="student_mark.summative_test" >
+                    <input type="number" name="summative_test" class="form-control"  v-model="editstudent_mark.summative_test" >
                   </div>
                   
                   <div class="form-group">
                     <label for="contact">Exam</label>
-                    <input type="number" name="exam"  class="form-control" v-model="student_mark.Exam"  value=""/>
+                    <input type="number" name="exam"  class="form-control" v-model="editstudent_mark.Exam"  value=""/>
                   </div>
 
                   <div class="form-group text-center">
@@ -323,29 +323,29 @@
 
                    <div class="form-group">
                     <label for="roll_no">Home Work</label>
-                    <input type="number" name="HW"  class="form-control"  v-model="student_mark.HW" />
+                    <input type="number" name="HW"  class="form-control"  v-model="editstudent_mark.HW" />
                   </div>
                   <div class="form-group">
                     <label for="roll_no">Class Work</label>
-                    <input type="number" name="CW" class="form-control" placeholder="" v-model="student_mark.CW" />
+                    <input type="number" name="CW" class="form-control" placeholder="" v-model="editstudent_mark.CW" />
                   </div>
                   <div class="form-group">
                     <label for="contact">Friday Assignment</label>
-                    <input type="number" name="FT"  class="form-control" v-model="student_mark.FT" />
+                    <input type="number" name="FT"  class="form-control" v-model="editstudent_mark.FT" />
                   </div>
                   <div class="form-group">
                     <label for="roll_no">Holiday Assignment</label>
-                    <input type="number" name="HA"  class="form-control"  v-model="student_mark.HA" />
+                    <input type="number" name="HA"  class="form-control"  v-model="editstudent_mark.HA" />
                   </div>
                  
                   <div class="form-group">
                     <label for="roll_no">Summative Test </label>
-                    <input type="number" name="summative_test" class="form-control"  v-model="student_mark.summative_test" >
+                    <input type="number" name="summative_test" class="form-control"  v-model="editstudent_mark.summative_test" >
                   </div>
                   
                   <div class="form-group">
                     <label for="contact">Exam</label>
-                    <input type="number" name="exam"  class="form-control" v-model="student_mark.Exam"  value=""/>
+                    <input type="number" name="exam"  class="form-control" v-model="editstudent_mark.Exam"  value=""/>
                   </div>
 
                   <div class="form-group text-center">
@@ -411,6 +411,25 @@
         class_:{},
         LockedTeacher:{},
         student_mark:{
+          student_id:'',
+          subname:'',
+          subject_id:'',
+          term_id:'',
+    
+          id:'',
+          HA:'',
+          CW:'',
+          HW:'',
+          FT:'',
+          summative_test:'',
+          summmative_1:'',
+          CAT1:'',
+          CAT2:'',
+          Exam:'',
+          MSC:'',
+          
+        }, 
+        editstudent_mark:{
           student_id:'',
           subname:'',
           subject_id:'',
@@ -511,61 +530,61 @@
       },
       
       editScore(markid) {
-        console.log(markid)
+       
         this.$http.get(BASE_URL + '/api/subjectMark/' + markid).then(data => {
           
-          this.student_mark.subject_id = data.data.data.subject_id
-          this.student_mark.student_id = data.data.data.student_id
-          this.student_mark.term_id= data.data.data.term_id,
-          this.student_mark.HW = data.data.data.HW
-          this.student_mark.CW = data.data.data.CW
-          this.student_mark.FT = data.data.data.FT
-          this.student_mark.HA = data.data.data.HA
-          this.student_mark.summative_1 = data.data.data.summative_1
-          this.student_mark.summative_test = data.data.data.summative_test
-          this.student_mark.CAT1 = data.data.data.CAT1
-          this.student_mark.CAT2 = data.data.data.CAT2
-          this.student_mark.MSC = data.data.data.MSC
-          this.student_mark.Exam = data.data.data.Exam
-          this.student_mark.id = markid
+          this.editstudent_mark.subject_id = data.data.data.subject_id
+          this.editstudent_mark.student_id = data.data.data.student_id
+          this.editstudent_mark.term_id= data.data.data.term_id,
+          this.editstudent_mark.HW = data.data.data.HW
+          this.editstudent_mark.CW = data.data.data.CW
+          this.editstudent_mark.FT = data.data.data.FT
+          this.editstudent_mark.HA = data.data.data.HA
+          this.editstudent_mark.summative_1 = data.data.data.summative_1
+          this.editstudent_mark.summative_test = data.data.data.summative_test
+          this.editstudent_mark.CAT1 = data.data.data.CAT1
+          this.editstudent_mark.CAT2 = data.data.data.CAT2
+          this.editstudent_mark.MSC = data.data.data.MSC
+          this.editstudent_mark.Exam = data.data.data.Exam
+          this.editstudent_mark.id= markid
         })
         
       },
       updateScore() {
         this.$http
-          .patch(BASE_URL + '/api/subjectMark/' + this.student_mark.id, {
-            student_id: this.student_mark.student_id,
-            subject_id: this.student_mark.subject_id,
-            term_id: this.student_mark.term_id,
-              HA:this.student_mark.HA,
-              CW:this.student_mark.CW,
-              HW:this.student_mark.HW,
-              FT:this.student_mark.FT,
-              summative_1:this.student_mark.summative_1,
-              summative_test:this.student_mark.summative_test,
-              CAT1:this.student_mark.CAT1,
-              CAT2:this.student_mark.CAT2,
-              MSC:this.student_mark.MSC,
+          .patch(BASE_URL + '/api/subjectMark/' + this.editstudent_mark.id, {
+            student_id: this.editstudent_mark.student_id,
+            subject_id: this.editstudent_mark.subject_id,
+            term_id: this.editstudent_mark.term_id,
+              HA:this.editstudent_mark.HA,
+              CW:this.editstudent_mark.CW,
+              HW:this.editstudent_mark.HW,
+              FT:this.editstudent_mark.FT,
+              summative_1:this.editstudent_mark.summative_1,
+              summative_test:this.editstudent_mark.summative_test,
+              CAT1:this.editstudent_mark.CAT1,
+              CAT2:this.editstudent_mark.CAT2,
+              MSC:this.editstudent_mark.MSC,
               
-              Exam:this.student_mark.Exam,
-              my_id:this.student_mark.id
+              Exam:this.editstudent_mark.Exam,
+              my_id:this.editstudent_mark.id
               
           })
           .then(data => {
             this.succmsg = false
            
-            this.student_mark.student_id = '';
-            this.student_mark.subject_id= '';
+            this.editstudent_mark.student_id = '';
+            this.editstudent_mark.subject_id= '';
             
-            this.student_mark.HA= '';
-            this.student_mark.CW= '';
-            this.student_mark.HW= '';
-            this.student_mark.FT= '';
-            this.student_mark.summative_test= '';
-            this.student_mark.CAT1= '';
-            this.student_mark.CAT2= '';
-            this.student_mark.Exam= '';
-            this.student_mark.summative_1= '';
+            this.editstudent_mark.HA= '';
+            this.editstudent_mark.CW= '';
+            this.editstudent_mark.HW= '';
+            this.editstudent_mark.FT= '';
+            this.editstudent_mark.summative_test= '';
+            this.editstudent_mark.CAT1= '';
+            this.editstudent_mark.CAT2= '';
+            this.editstudent_mark.Exam= '';
+            this.editstudent_mark.summative_1= '';
             var self = this
             setTimeout(function() {
               self.succmsg = true

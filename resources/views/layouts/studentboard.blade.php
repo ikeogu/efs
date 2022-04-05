@@ -38,7 +38,28 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     @yield('style')
-
+      <style>
+        body,
+            p,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            td,
+            th,
+            span,
+            .btn,
+            strong,
+            label,
+            option,
+            form,
+            select,
+            .input-group-text {
+                font-size: 0.8rem  !important;
+            }
+      </style>
 </head>
 
 <body id="page-top">
@@ -81,11 +102,17 @@
           
             <!-- Nav Item - Charts -->
             <li class="nav-item">
+            <a class="nav-link" href="{{route('studAss')}}">
+                  <i class="fas fa-fw fa-chart-area"></i>
+                  <span>Assignment</span></a>
+              </li>
+                      
+            <li class="nav-item">
             <a class="nav-link" href="{{route('student.dashboard')}}">
                   <i class="fas fa-fw fa-chart-area"></i>
                   <span>Biodata</span></a>
               </li>
-                        
+              
             
       
             <!-- Divider -->

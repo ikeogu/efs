@@ -31,4 +31,8 @@ class Teacher extends Model
         public function lockTeacher(){
             return $this->hasOne(LockTeacher::class);
         }
+
+        public function assignment(){
+            return $this->hasMany(Assignment::class);
+        }
 }

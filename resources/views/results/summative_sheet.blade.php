@@ -78,24 +78,31 @@
                         @php
                         $total = 0;
                         $sum_total = 0;
+                           $no_of_subject = 0;
                         
                         
                         
                     @endphp  
                         <tbody>
                             @foreach ($scores as $key=> $item)
+                        
+                        
                             <tr>
-                            <td>{{$key + 1}}</td>
-                            <td>{{$item->subname}}</td>
-                            
-                            <td>{{$item->summative_test}}</td>
-                            @php
-                                $total += $item->summative_test;
-                            @endphp 
-                            
-                             <td>{{App\Student::max_score($item->subject_id,$class_->id,$term->id)}}</td>
-                            <td>{{App\Student::average(App\Student::subject_total($item->subject_id,$class_->id,$term->id),$users->count())}}</td>
+                                <td>{{$key + 1}}</td>
+                                <td>{{$item->subname}}</td>
+                                
+                                <td>{{$item->summative_test}}</td>
+                                @php
+                                    $total += $item->summative_test;
+                                    if($item->summative_test != null){
+                                    $no_of_subject += 1;
+                                }
+                                @endphp 
+                                
+                                 <td>{{App\Student::max_score($item->subject_id,$class_->id,$term->id)}}</td>
+                                <td>{{App\Student::average(App\Student::subject_total($item->subject_id,$class_->id,$term->id),$users->count())}}</td>
                             </tr> 
+                            
                             @endforeach
                             <tr class="average">
                                 <td></td>
@@ -108,9 +115,9 @@
                             <tr class="average">
                                 <td></td>
                                 <td>average</td>
-                                <td>{{App\Student::average($total,$scores->count())}}</td>
+                                <td>{{App\Student::average($total,$no_of_subject)}}</td>
                                 @php
-                                    $avg = App\Student::average($total,$scores->count());
+                                    $avg = App\Student::average($total,$no_of_subject);
                                 @endphp
                                 <td></td>
                                 <td></td>

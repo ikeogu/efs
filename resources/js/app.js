@@ -42,7 +42,7 @@ import students from './components/students/index.vue';
  import Biodata from './components/students/biodata';
  import { AutoCompletePlugin } from '@syncfusion/ej2-vue-dropdowns';
  import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data';
- import SubjComment from './components/earlycomment/subcomment';
+import subcomment from './components/earlycomment/subcomment';
 //  Vue.prototype.$userId = document.querySelector("meta[name='user_id']").getAttribute('content');
 import moment from 'moment';
 import student_class_T from  './components/class/class-ct.vue';
@@ -131,7 +131,7 @@ new Vue({
         'class-student':classStudent,
         'summative-test':Summative,
         'class-ct':student_class_T,
-        'subcomment':SubjComment,
+        'subcomment':subcomment,
         'import_students':import_students
     },
     

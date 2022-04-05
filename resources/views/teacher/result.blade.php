@@ -198,6 +198,33 @@
                             </li>
                         </ul>
                     </div>
+                      <div class="summary d-flex justify-content-between mb-4 text-black">
+                        @if($term->name == 'Term III')
+                            <ul class="list-group left-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <p class="text-success text-bold">Term I Average:</p>
+                                <span>{{App\Student::get_average($class_->id,$term->status,$student->id,1)}}</span>
+                            </li>
+                            
+                        </ul>
+                        <ul class="list-group right-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <p class="text-success text-bold">Term II Average:</p>
+                                <span>{{App\Student::get_average($class_->id,$term->status,$student->id,2)}}</span>
+                            </li>
+                            
+                        </ul>
+                        <ul class="list-group right-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <p class="text-success text-bold">Overal Average:</p>
+                                <span>{{App\Student::overAll($class_->id,$term->status,$student->id)}}</span>
+                            </li>
+                            
+                        </ul>
+                            
+                        @endif
+                        
+                    </div>
                 </div>
             </div>
             <!-- top right table -->
@@ -319,7 +346,22 @@
                         <!-- school fees -->
                         <div class="remarks-box school-fees">
                             <span class="remarks-heading d-block">school fees amount</span>
-                            <p> ₦{{number_format($term->fee_y)}}</p>
+                            <p> ₦
+                                    @if($class_->name == 'YEAR 1' )
+                                    {{number_format($term->y1)}}
+                                    @elseif($class_->name == 'YEAR 2' )
+                                    {{number_format($term->y2)}}
+                                    @elseif($class_->name == 'YEAR 3' )
+                                    {{number_format($term->y3)}}
+                                    @elseif($class_->name == 'YEAR 4' )
+                                    {{number_format($term->y4)}}
+                                    @elseif($class_->name == 'YEAR 5' )
+                                    {{number_format($term->y5)}}
+                                    @elseif($class_->name == 'YEAR 6' )
+                                    {{number_format($term->y6)}}
+                            
+                                    @endif
+                            </p>
                             <img src="/img/logo2.png" height="50">
                         </div>
                        

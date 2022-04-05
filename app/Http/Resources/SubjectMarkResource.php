@@ -22,11 +22,9 @@ class SubjectMarkResource extends JsonResource
     //     $sub = SubjectResource::collection($this->whenLoaded('subject'));
         return [
             
-        'student' => Student::where('id', $this->student_id)->first()->surname.' '. Student::where('id', $this->student_id)->first()->name,
+        'student' => (Student::find($this->student_id)) ? (Student::find($this->student_id)->surname.' '. Student::find($this->student_id)->name) : '',
          'subject' => Subject::where('id', $this->subject_id)->first()->name,
-            // 'student_name' => $this->student->surname.$this->student->surname.,
-            // 'subject_name' => $sub,
-            // 'subject'=>$this->subject->name,
+       
             'id'=>$this->id,
             'student_id' => $this->student_id,
             'subject_id' => $this->subject_id,

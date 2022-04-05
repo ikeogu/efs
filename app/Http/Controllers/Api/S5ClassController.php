@@ -12,6 +12,9 @@ use App\Http\Resources\TermResourceCollection;
 use App\Http\Resources\S5ClassResourceCollection;
 use App\StudentsClass;
 use App\Student;
+use App\StudentTerm;
+use App\Term;
+use App\Http\Resources\TermResource;
 
 class S5ClassController extends Controller
 {   
@@ -117,10 +120,12 @@ class S5ClassController extends Controller
         return new S5ClassResource($s5Class);
     }
 
-    public function terms_class($id){
-        $class = S5Class::findOrFail($id);
-        return new TermResourceCollection($class->term);
-        //return view('students/studclass',['term_class'=>json_encode($class->term)]);
+    public function terms_class($id,$student){
+       $class_term = StudentTerm::select('term_id')->where('s5_class_id',$id)->where('student_id',$student)->get()->pluck('term_id')->unique();
+    
+        $class_ = Term::whereIn('id',$class_term)->get();
+       
+         return  TermResource::collection($class_);
     }
 
 

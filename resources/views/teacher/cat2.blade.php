@@ -220,7 +220,7 @@
                                     @endphp
                                 
                                  <td>{{round(App\Student::c2_jmax_score($item->status,$class_->id,$term->id))}}</td> 
-                                <td>{{App\Student::average(App\Student::jsubAver($item->status,$class_->id,$term->id),$users->count())}}</td>
+                                <td>{{App\Student::average(App\Student::jsubAver2($item->status,$class_->id,$term->id),$users->count())}}</td>
 
                             @endif
                              

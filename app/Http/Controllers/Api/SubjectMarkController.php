@@ -13,6 +13,8 @@ use App\SubSubject;
 use App\Student;
 use App\Term;
 use App\S5Class;
+use App\SubjComment;
+use App\SubjectMarkComment;
 
 class SubjectMarkController extends Controller
 {
@@ -167,12 +169,12 @@ class SubjectMarkController extends Controller
     public function update(SubjectMarkRequest $request)
     {
       
-        $subjectMarks=  SubjectMark::whereId($request->my_id)->update($request->except(['_method','_token','my_id']));
+         $subjectMarks =SubjectMark::whereId($request->my_id)->update($request->except('_token','_method','my_id'));
         $subjectMarks=  SubjectMark::find($request->my_id);
         $class__ = S5Class::find($subjectMarks->s5_class_id);
         if($class__->status === 'Year School' || $class__->status === 'Early Years'){
             $subjectMarks->summative_test = $request->summative_test;
-            $subjectMark->summative_1 = $request->summative_1;
+            $subjectMarks->summative_1 = $request->summative_1;
             $subjectMarks->TCA =  $request->HA + $request->HW + $request->CW + $request->FT + $request->summative_test + $request->summative_1;
             $subjectMarks->GT = $subjectMarks->TCA +$request->Exam;
             $subjectMarks->save();
@@ -180,6 +182,7 @@ class SubjectMarkController extends Controller
             $subjectMarks->CAT1 = $request->CAT1;
             $subjectMarks->CAT2 = $request->CAT2;
             $subjectMarks->MSC = $request->MSC;
+             $subjectMarks->Exam = $request->Exam;
             $subjectMarks->TCA =  $request->MSC + $request->CAT1 + $request->CAT2;
             $subjectMarks->GT = $subjectMarks->TCA + $request->Exam;
             
@@ -189,6 +192,7 @@ class SubjectMarkController extends Controller
             $subjectMarks->CAT1 = $request->CAT1;
             $subjectMarks->CAT2 = $request->CAT2;
             $subjectMarks->MSC = $request->MSC;
+            $subjectMarks->Exam = $request->Exam;
             $subjectMarks->TCA =  $request->MSC + $request->CAT1 + $request->CAT2;
             $subjectMarks->GT = $subjectMarks->TCA + $request->Exam;
             $subjectMarks->save();
@@ -241,95 +245,40 @@ class SubjectMarkController extends Controller
             }
     }
     
-    //  private function merge_sub($student_id, $term_id,$class_id){
-    //      $score = SubjectMark::where('student_id',$student_id)->where('term_id',$term_id)
-    //     ->where('s5_class_id',$class_id)->where('status',null)->get();
-    //     $subsub = SubSubject::where('student_id',$student_id)->where('term_id',$term_id)
-    //     ->where('s5_class_id',$class_id)->first();
-       
-    //     if(!$subsub){
-    //        $subsub = new SubSubject();
-    //         $myscore = 0;
-    //         $sum= 0;
-        
-    //         for($x =1; $x =5; $x++){
-    //              $stud_scores = SubjectMark::where('student_id',$student_id)->where('term_id',$term_id)
-    //             ->where('s5_class_id',$class_id)->where('status','=',$x)->get();
+    public function updateExam(){
+        $scores = SubjectMark::where('term_id',6)->get();
+        foreach($scores as $i){
+            $i->Exam = $i->GT - $i->TCA;
+            $i->save();
+        }
+    }
+    
+    public function fix_subject(Request $request){
+        $students = SubjectMark::where('s5_class_id',$request->s5_class_id)->where('term_id',$request->term_id)->get();
+        $subjectComments = SubjComment::where('s5_class_id', $request->s5_class_id)->where('term_id', $request->term_id)->get();
+        foreach($students as $s){
+            foreach($subjectComments as $f){
                 
-    //             foreach($stud_scores as $item){
-    //                 $myscore += $item->CAT1;
-    //             }
-    //             if($x === 1){
-    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
-    //                 $subsub->name = 'BASIC SCIENCE AND TECH';
-    //                 $stud = Student::find($student_id);
-    //                 $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-    //                 $subsub ->student_id = $student_id;
-    //                 $subsub ->term_id = $term_id;
-    //                 $subsub ->s5_class_id = $class_id;
-    //                 $subsub->save();
-    
-                    
-    //             }
-    //             if($x === 2){
-    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
-    //                 $subsub->name = 'CULTURAL AND CREATIVE ART';
-    //                             $stud = Student::find($student_id);
-    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-    //             $subsub ->student_id = $student_id;
-    //             $subsub ->term_id = $term_id;
-    //             $subsub ->s5_class_id = $class_id;
-    //             $subsub->save();
-    
-    //             }
-    //             if($x === 3){
-    //                 $subsub->cat_1 =($myscore /$stud_scores->count());
-    //                 $subsub->name = 'ENGLISH STUDIES';
-    //                           $stud = Student::find($student_id);
-    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-    //             $subsub ->student_id = $student_id;
-    //             $subsub ->term_id = $term_id;
-    //             $subsub ->s5_class_id = $class_id;
-    //             $subsub->save();
-      
-    //             }
-    //             if($x === 4){
-    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
-    //                 $subsub->name = 'PREVOCATIONAL STUDIES';
-    //                            $stud = Student::find($student_id);
-    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-    //             $subsub ->student_id = $student_id;
-    //             $subsub ->term_id = $term_id;
-    //             $subsub ->s5_class_id = $class_id;
-    //             $subsub->save();
-     
-    //             }
-    //             if($x === 5){
-    //                 $subsub->cat_1 = ($myscore /$stud_scores->count());
-    //                 $subsub->name = 'NATIONAL VALUES';
-    //                 $stud = Student::find($student_id);
-    //             $stud->subsubject()->attach($subsub->id,array('term_id' => $term_id,'s5_class_id'=>$class_id));
-    //             $subsub ->student_id = $student_id;
-    //             $subsub ->term_id = $term_id;
-    //             $subsub ->s5_class_id = $class_id;
-    //             $subsub->save();
-      
-    //             }
-    //         }
-    //         foreach($score as $item){
-    //         $subsub->cat_1 = $item->CAT1;
-    //         $subsub->name = $item->subname;
-    //         $subsub ->student_id = $student_id;
-    //         $subsub ->term_id = $term_id;
-    //         $subsub ->s5_class_id = $class_id;
-    //         $subsub->save();
+                if($s->subject_id === $f->subject_id){
+                    $sunbt = SubjectMarkComment::where('subj_comment_id', $f->id)->where('subject_mark_id',$s->id)->where('student_id', $s->student_id)->first();
+                
+                    if($sunbt=== null){
+                        SubjectMarkComment::create([
+                            'subj_comment_id' => $f->id,
+                            'subject_mark_id' => $s->id,
+                            'student_id' => $s->student_id,
+                            'acquired' => null,
+                            'emerging' => null,
 
-    //         }
-    //     }
-       
-        
-       
-    // }
+                        ]);
+                    }
+                   
+                }
+            }
+        }
+
+      
+    }
 
     
 }

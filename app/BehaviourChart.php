@@ -22,4 +22,33 @@ class BehaviourChart extends Model
     public function s5_class(){
         return $this->belongsTo(S5Class::class);
     }
+    public static function converter($alp){
+        switch ($alp) {
+            case  1:
+                # code...
+                return 'A';
+                break;
+            case 2:
+                # code...
+                return 'B';
+                break;
+            case 3:
+                # code...
+                return 'C';
+                break;
+            case 4:
+                # code...
+                return 'D';
+                break;
+            case 5:
+                # code...
+                return 'E';
+                break;
+            
+            default:
+                # code...
+                return '';
+                break;
+        }
+    }
 }

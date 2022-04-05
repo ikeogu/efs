@@ -39,4 +39,7 @@ class SubjectMark extends Model
     public function s5_class(){
         return $this->belongsTo(S5Class::class); 
     }
+    public function subjectcomment(){
+        return $this->belongsToMany(SubjComment::class);
+    }
 }

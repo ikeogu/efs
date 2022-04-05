@@ -6,6 +6,12 @@
 
 
 <div class="container-fluid">
+      <div class="row">
+    <form>
+        <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-sm"/>
+    </form>
+    <a href="{{route('dGT_bs',[$term->id,$class_->id])}}" class="btn btn-success btn-sm">Export To PDF</a>
+    </div>
     <div class="card">
     <div class="card-header bg-success text-capitalize text-white">GRAND TOTAL BROADSHEET {{$class_->name}}|   {{$class_->description}}  | {{$term->name}}|  {{$term->session}}</div>
     <div class="col-12 table-responsive">
@@ -365,7 +371,7 @@
                         <td></td>
                         <th>Class Average</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::average_(App\Student::subject_total_GT($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,4)}}</td>
+                        <td>{{App\Student::average_(App\Student::subject_total_GT($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,7)}}</td>
                         @endforeach
                         
                        
@@ -374,9 +380,9 @@
                         <td></td>
                         <th>Class Performance (%)</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,7))))}}</td>
                         @php
-                            $cl_av += App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4)));
+                            $cl_av += App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,7)));
                         @endphp
                         @endforeach
                         {{-- <td>{{App\Student::average($cl_av,$subject->count())}}</td>
@@ -388,7 +394,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))),$grades)}}</td>
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,7))),$grades)}}</td>
                         @endforeach
                         
                         
@@ -487,7 +493,7 @@
                         <td></td>
                         <th>Class Average</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::average_(App\Student::subject_total_GT($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,4)}}</td>
+                        <td>{{App\Student::average_(App\Student::subject_total_GT($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,7)}}</td>
                         @endforeach
                         
                        
@@ -496,9 +502,9 @@
                         <td></td>
                         <th>Class Performance (%)</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,7))))}}</td>
                         @php
-                            $cl_av += App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4)));
+                            $cl_av += App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,7)));
                         @endphp
                         @endforeach
                         {{-- <td>{{App\Student::average($cl_av,$subject->count())}}</td>
@@ -510,7 +516,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))),$grades)}}</td>
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_GT($item->id,$class_->id,$term->id),($GT_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,7))),$grades)}}</td>
                         @endforeach
                         
                         

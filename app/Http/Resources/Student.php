@@ -26,6 +26,7 @@ class Student extends JsonResource
             'reg_no' => $this->reg_no,
             'gender' => $this->gender,
             'contact' => $this->contact,
+            'photo' =>$this->photo,
             'dob' => $this->dob,
             'keep_track' => User::where('student_id',$this->id)->first()->keep_track ?? '',
             'address' => $this->address,

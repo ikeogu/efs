@@ -15,7 +15,7 @@
         margin:0;
     }
     td{
-        font-size: 10px !important;
+        font-size: 11px !important;
     }
     td,p,th{
         color: black !important;
@@ -183,28 +183,72 @@
                             </table>
                         </div>
                     </div>
-                    <div class="summary d-flex justify-content-between mb-4">
+                    <div class="summary d-flex justify-content-between mb-4 text-black">
                         <ul class="list-group left-list my-2">
                             <li class="list-group-item d-flex justify-content-between">
-                                <h5>Highest Average:</h5>
+                                <p class="text-success text-bold">Highest Average:</p>
                                 <span>{{App\Student::h_aver($class_->id,$term->id)}}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <h5>Child's Average:</h5>
+                                <p class="text-success text-bold">Child's Average:</p>
                                 <span>{{number_format(App\Average::child_average($student->id,$term->id,$class_->id))}}</span>
                             </li>
                         </ul>
                         <ul class="list-group right-list my-2">
                             <li class="list-group-item d-flex justify-content-between">
-                                <h5>Class Average:</h5>
+                                <p class="text-success text-bold">Class Average:</p>
                                 <span>{{App\Student::total_GT($class_->id,$term->id)}}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                            <h5>Grade:</h5>
+                            <p class="text-success text-bold">Grade:</p>
                             <span>{{App\Student::grade(App\Average::child_average($student->id,$term->id,$class_->id),$grades)}}</span>
                             </li>
                         </ul>
+                        </div>
+                         <div class="summary d-flex justify-content-between mb-4 text-black">
+                        @if($term->name == 'Term III')
+                            <ul class="list-group left-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <p class="text-success text-bold">Term I Average:</p>
+                                <span>{{App\Student::get_average($class_->id,$term->status,$student->id,1)}}</span>
+                            </li>
+                            
+                        </ul>
+                        <ul class="list-group right-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <p class="text-success text-bold">Term II Average:</p>
+                                <span>{{App\Student::get_average($class_->id,$term->status,$student->id,2)}}</span>
+                            </li>
+                            
+                        </ul>
+                        <ul class="list-group right-list my-2">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <p class="text-success text-bold">Overal Average:</p>
+                                <span>{{App\Student::overAll($class_->id,$term->status,$student->id)}}</span>
+                            </li>
+                            
+                        </ul>
+                            
+                        @endif
+                        
                     </div>
+                     <div class="summary d-flex justify-content-between mb-4 row" >
+                         <div class="col-lg-5 col-md-6">
+                             @if($student->photo != null)
+                         <img src="{{ asset('storage/Students/' . $student->photo)}}" alt="profile pic" height="250" width="250" style="box-shadow: 0 1px 8px rgb(0 0 0 / 30%); border: 1px solid #ffffff;" class="rounded-circle">
+                            @endif
+                         </div>
+                         <div class="col-lg-7 col-md-6">
+                              
+                        <address class="text-black">
+                            <p> Residential Address:<br> {{$student->address}}</p>
+                            
+                            </address>
+                         </div>
+                        
+                       
+                        
+                     </div>
                 </div>
             </div>
             <!-- top right table -->
@@ -326,7 +370,23 @@
                         <!-- school fees -->
                         <div class="remarks-box school-fees">
                             <span class="remarks-heading d-block">school fees amount</span>
-                            <p> ₦{{number_format($term->fee_y)}}</p>
+                            <p> ₦
+
+                                    @if($class_->name == 'YEAR 1' )
+                                    {{number_format($term->y1)}}
+                                    @elseif($class_->name == 'YEAR 2' )
+                                    {{number_format($term->y2)}}
+                                    @elseif($class_->name == 'YEAR 3' )
+                                    {{number_format($term->y3)}}
+                                    @elseif($class_->name == 'YEAR 4' )
+                                    {{number_format($term->y4)}}
+                                    @elseif($class_->name == 'YEAR 5' )
+                                    {{number_format($term->y5)}}
+                                    @elseif($class_->name == 'YEAR 6' )
+                                    {{number_format($term->y6)}}
+                            
+                                    @endif
+                            </p>
                             <img src="/img/logo2.png" height="50">
                         </div>
                        

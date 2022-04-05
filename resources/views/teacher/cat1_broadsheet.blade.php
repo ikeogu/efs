@@ -6,6 +6,14 @@
 
 
 <div class="container-fluid">
+   <div class="row">
+        
+    <form>
+      <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success  btn-sm"/>
+    </form>
+     
+        <a href="{{route('dcat1_bs',[$term->id,$class_->id])}}" type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-download" aria-hidden="true"></i>ExportTOPDF</a>
+    </div> 
     <div class="card">
     <div class="card-header bg-success text-capitalize text-white">C.A.T 1 {{$class_->name}}|   {{$class_->description}}  | {{$term->name}}|  {{$term->session}}</div>
         <div class="card-body">

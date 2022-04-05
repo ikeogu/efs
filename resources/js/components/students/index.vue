@@ -7,7 +7,7 @@
         <a href="#"
            data-target="#exampleModal"
            data-toggle="modal"
-           class="btn btn-success">Add Student</a>
+           class="btn btn-sm btn-success">Add Student</a>
       </div>
     </div>
 
@@ -39,7 +39,11 @@
               </div>
              
               <div class="modal-body">
-                <form method="post" name="addstudent" id="addstudent" action="#" @submit.prevent="addStudent">
+                <form method="post" name="addstudent" id="addstudent" action="#" @submit.prevent="addStudent" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Photo</label>
+                    <input type="file"  id="name" class="form-control" placeholder="Name" @change="onFileSelected" />
+                  </div>
                   <div class="form-group">
                     <label for="name">First Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Name" v-model="student.name" />
@@ -93,7 +97,7 @@
                 
 
                   <div class="form-group text-right">
-                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-sm btn-success">Submit</button>
                   </div>
                 </form>
               </div>
@@ -118,7 +122,11 @@
                           </button>
               </div>
               <div class="modal-body">
-                <form method="post" name="updatestudent" id="updatestudent" action="#" @submit.prevent="updateStudent">
+                <form method="post" name="updatestudent" id="updatestudent" action="#" @submit.prevent="updateStudent" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Photo</label>
+                    <input type="file"  id="name" class="form-control" placeholder="Name" @change="onFileSelected" />
+                  </div>
                   <div class="form-group">
                     <label for="name">First Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Name" v-model="student.name" />
@@ -191,7 +199,7 @@
                       <input type="text" name="identification_mark" id="email" class="form-control" placeholder="" v-model="student.identification_mark" />
                     </div> 
                   <div class="form-group text-right">
-                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-sm btn-success">Submit</button>
                   </div>
                 </form>
               </div>
@@ -214,10 +222,10 @@
                   <p>Are you sure want to delete the record? </p>
                 </div>
                 <div class="form-group text-center">
-                  <button class="btn btn-success" v-on:click="hideModal()">Cancel</button>
+                  <button class="btn btn-sm btn-success" v-on:click="hideModal()">Cancel</button>
                 </div>
                 <div class="form-group text-center">
-                  <button class="btn btn-success" v-on:click="deleteStudent()">Ok</button>
+                  <button class="btn btn-sm btn-success" v-on:click="deleteStudent()">Ok</button>
                 </div>
               </div>
 
@@ -238,10 +246,10 @@
                   <p>Are you sure want to block this child from seeing result? </p>
                 </div>
                 <div class="form-group text-center">
-                  <button class="btn btn-success" v-on:click="hideModal()">Cancel</button>
+                  <button class="btn btn-sm btn-success" v-on:click="hideModal()">Cancel</button>
                 </div>
                 <div class="form-group text-center">
-                  <button class="btn btn-success" v-on:click="blockStudent()">Ok</button>
+                  <button class="btn btn-sm btn-success" v-on:click="blockStudent()">Ok</button>
                 </div>
               </div>
 
@@ -262,10 +270,10 @@
                   <p>Are you sure want to unblock this child from seeing result? </p>
                 </div>
                 <div class="form-group text-center">
-                  <button class="btn btn-success" v-on:click="hideModal()">Cancel</button>
+                  <button class="btn btn-sm btn-success" v-on:click="hideModal()">Cancel</button>
                 </div>
                 <div class="form-group text-center">
-                  <button class="btn btn-success" v-on:click="unblockStudent()">Ok</button>
+                  <button class="btn btn-sm btn-success" v-on:click="unblockStudent()">Ok</button>
                 </div>
               </div>
 
@@ -291,10 +299,10 @@
                        v-on:click="editStudent(s.id)"
                        data-target="#exampleModal1"
                        data-toggle="modal"
-                       v-bind:title="s.name" class="btn btn-info text-white ">Edit</a>
-                       <a href="#" data-target="#exampleModal2" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-danger text-white">Delete</a>
-                        <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-danger text-white">Block</a>
-                        <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-secondary text-white">Unblock</a>
+                       v-bind:title="s.name" class="btn btn-sm btn-info text-white ">Edit</a>
+                       <a href="#" data-target="#exampleModal2" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-sm btn-danger text-white">Delete</a>
+                        <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-sm btn-danger text-white">Block</a>
+                        <a href="#" data-target="#exampleModal3" v-on:click="deleteId(s.id)" data-toggle="modal" v-bind:id="s.id" class="btn btn-sm btn-secondary text-white">Unblock</a>
                   
                       </div>
                    </div>
@@ -313,6 +321,7 @@
                 
                   <th>#</th>
                   <th>Reg.No</th>
+                  <th>Photo</th>
                   <th>First Name</th>
                    <th>Other name</th>
                   <th>Surame</th>
@@ -327,6 +336,15 @@
                 <tr v-for="(student,index) in laravelData.data" :key="student.id">
                   <th scope="row">{{ index + 1 }}</th>
                    <td>{{ student.reg_no }}</td>
+                    <td >
+                  
+                      <a>
+                    <img class="rounded-circle" alt="User Image"
+                          :src="'/storage/Students/' +student.photo"
+                          height="50" width="50"
+                          style="box-shadow: 0 1px 8px rgb(0 0 0 / 30%);border: 1px solid skyblue;" v-if="student.photo != null"/></a>
+                          
+                    </td>
                   <td>{{ student.name }}</td>
                   <td>{{ student.oname }}</td>
                   <td>{{ student.surname }}</td>
@@ -339,11 +357,11 @@
                        v-on:click="editStudent(student.id)"
                        data-target="#exampleModal1"
                        data-toggle="modal"
-                       v-bind:title="student.name" class="btn btn-info text-white ">Edit</a></td>
+                       v-bind:title="student.name" class="btn btn-sm btn-info text-white ">Edit</a></td>
                        
-                  <td><a href="#" data-target="#exampleModal2" v-on:click="deleteId(student.id)" data-toggle="modal" v-bind:id="id" class="btn btn-danger text-white">Delete</a></td>
-                  <td><a href="#" data-target="#exampleModal3" v-on:click="deleteId(student.id)" data-toggle="modal" v-bind:id="id" class="btn btn-danger text-white">Block</a></td>
-                  <td><a href="#" data-target="#exampleModal3" v-on:click="deleteId(student.id)" data-toggle="modal" v-bind:id="id" class="btn btn-secondary text-white">Unblock</a></td>
+                  <td><a href="#" data-target="#exampleModal2" v-on:click="deleteId(student.id)" data-toggle="modal" v-bind:id="id" class="btn btn-sm btn-danger text-white">Delete</a></td>
+                  <td><a href="#" data-target="#exampleModal3" v-on:click="deleteId(student.id)" data-toggle="modal" v-bind:id="id" class="btn btn-sm btn-danger text-white">Block</a></td>
+                  <td><a href="#" data-target="#exampleModal3" v-on:click="deleteId(student.id)" data-toggle="modal" v-bind:id="id" class="btn btn-sm btn-secondary text-white">Unblock</a></td>
                   
                 </tr>
               </tbody>
@@ -380,6 +398,7 @@
           s_class:'',
           term_id:'',
           dob:'',
+          photo:'',
           identification_mark:'',
         },
         laravelData: {},
@@ -432,9 +451,24 @@
           this.pagenumber = page
         })
       },
+       onFileSelected(e){
+          let files = e.target.files || e.dataTransfer.files;
+          if(!files.length)
+            return;
+        this.createImage(files[0]);
+      },
+      createImage(file){
+        let reader = new FileReader();
+        let vm = this;
+        reader.onload = (e)=>{
+         vm.selectedFile = e.target.result;
+        };
+        reader.readAsDataURL(file)
+      },
       addStudent() {
         this.$http
           .post(BASE_URL + '/api/students', {
+            photo: this.selectedFile,
             name: this.student.name,
             oname: this.student.oname,
             reg_no: this.student.reg_no,
@@ -453,6 +487,7 @@
           .then(data => {
             this.succmsg = false
             console.log(data)
+            this.selectedFile=''
             this.student.name = ''
             this.student.oname = ''
             this.student.dob = ''
@@ -482,6 +517,8 @@
       editStudent(studentid) {
         this.$http.get(BASE_URL + '/api/students/' + studentid).then(data => {
           
+          this.student.photo = data.data.data.photo
+          
           this.student.name = data.data.data.name
           this.student.reg_no = data.data.data.reg_no
           this.student.oname = data.data.data.oname
@@ -501,6 +538,7 @@
         this.$http
           .patch(BASE_URL + '/api/students/' + this.id, {
             student_id:this.id,
+            photo: this.selectedFile,
             name: this.student.name,
             reg_no: this.student.reg_no,
             oname: this.student.oname,
@@ -516,6 +554,7 @@
           .then(data => {
             this.succmsg = false
             console.log(data)
+            this.student.photo = ''
             this.student.name = ''
             this.student.oname = ''
             this.student.dob = ''

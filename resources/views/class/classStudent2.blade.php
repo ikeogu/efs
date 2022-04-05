@@ -85,6 +85,9 @@
        
 
     <class-ct :terms="{{$terms}}" :t="{{$t}}" :m="{{$class_T}}"></class-ct>
+      @if($class_T->status === 'Early Years')
+         <subcomment :s5_class_id="{{$class_T->id}}" :term_id="{{$t->id}}"/>
+    @endif
 
     </div>
 

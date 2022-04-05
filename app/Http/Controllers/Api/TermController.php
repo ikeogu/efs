@@ -276,18 +276,21 @@ private function getStudentsInClass($id,$class_id){
    
     //  check what happens after adding a child
   }
+  
   public function remove_stud_in_class($studid, $classid, $termid){
     $student = Student::find($studid);
     $class_ = S5Class::find($classid);
     $term = Term::find($termid);
     $studTerm = StudentTerm::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
+    $studMark = SubjectMark::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $comment = Comment::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $att = Attendance::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $behave = BehaviourChart::where('student_id',$student->id)->where('term_id',$term->id)->where('s5_class_id',$class_->id)->first();
     $comment->delete();
     $behave->delete();
     $att->delete();
-    $studTerm->delete();    
+    $studTerm->delete();  
+    $studMark->delete();
   }
   public function class_student($classid,$term){
    

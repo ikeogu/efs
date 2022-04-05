@@ -685,19 +685,23 @@
 												
 											</tr>
 											<tr>
-												@if($class_->name == 'JSS 1' || $class_->name == 'JSS 2')
+												@if($class_->name == 'J.S.S 1' || $class_->name == 'J.S.S 2')
 												    <td colspan="5" class="text-left text-bold text-uppercase">
 													    School Fee: ₦{{number_format($term->fee_1_2)}}
 												    </td>
-												@elseif($class_->name == 'JSS 3')
+												@elseif($class_->name == 'J.S.S 3')
 												<td colspan="5" class="text-left text-bold text-uppercase">
 													School Fee: ₦{{number_format($term->fee_3)}}
 												</td>
-												@elseif($class_->name == 'SSS 1' || $class_->name == 'SSS 2')
+													@elseif($class_->name == 'S.S.S 1')
 												    <td colspan="5" class="text-left text-bold text-uppercase">
 												    	School Fee: ₦{{number_format($term->fee_s1)}}
 												    </td>
-												@elseif($class_->name == 'SSS 3')
+													@elseif($class_->name == 'S.S.S 2')
+												    <td colspan="5" class="text-left text-bold text-uppercase">
+												    	School Fee: ₦197,000
+												    </td>
+												@elseif($class_->name == 'S.S.S 3')
 												    <td colspan="5" class="text-left text-bold text-uppercase">
 													School Fee: ₦{{number_format($term->fee_s3)}}
 												</td>

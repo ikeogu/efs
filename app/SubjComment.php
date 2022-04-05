@@ -8,7 +8,12 @@ class SubjComment extends Model
 {
     //
     protected $fillable = [
-        'name', 'f','s','th','fr','fif','six','sev','term_id','s5_class_id'
+        'description',
+         'subject_id',
+         'term_id',
+         's5_class_id',
+         'acquired',
+         'emerge'
     ];
 
     public function term(){
@@ -17,7 +22,8 @@ class SubjComment extends Model
     public function s5_class(){
         return $this->belongsTo(S5Class::class);
     }
-    public function assimiliate(){
-        return $this->hasMany(Assimililate::class);
+    public function subjectMark(){
+        return $this->hasMany(SubjectMark::class);
     }
+    
 }

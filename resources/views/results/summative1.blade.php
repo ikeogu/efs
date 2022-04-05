@@ -5,14 +5,13 @@
 @section('content')
 
 
-<div class="container-fluid" > 
-    <div class="d-flex justify-content-end">
-        <form>
-            <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
-        </form>
-    </div>
+<div class="container-fluid " > 
+          <div class="d-flex justify-content-end">
+            <a href="{{route('dsum',[$term->id,$class_->id])}}" type="button" class="btn btn-outline-danger"><i class="fa fa-download" aria-hidden="true"></i>ExportTOPDF</a>
+        </div>
+
    <div class="card">
-        <div class="card-header bg-success text-white">SUMMATIVE TEST I {{$class_->name}}| {{$class_->description}}     {{$term->name}} ||  {{$term->session}}</div>
+        <div class="card-header bg-success text-white">SUMMATIVE TEST I / {{$class_->name}} / {{$class_->description}}    / {{$term->name}}  /  {{$term->session}}</div>
         <div class="card-body">
             <div class="col-12 table-responsive">
                 <table  class="table table-striped table-bordered  text-default">
@@ -39,6 +38,7 @@
                         $sum_total = 0;
                         $min_t = 0;
                         $min_t_per = 0;
+                        $no_of_subject =0;
                         
                     @endphp                       
                     @foreach ($students as $key =>$student)
@@ -53,21 +53,26 @@
                                <td>{{$item->summative_1}}</td>
                                 @php
                                 $total += $item->summative_1;
+                                if(!empty($item->summative_1)){
+                                  $no_of_subject +=1;
+                                  
+                                }
                                @endphp 
                             @endif
                              
                         @endforeach
                         <td>{{$total}}</td>
 
-                        <td>{{App\Student::average($total,$subject->count())}}</td>
+                        <td>{{App\Student::average($total,$no_of_subject )}}</td>
                         @php
                             $sum_total += $total;
                             
-                            $avg = App\Student::average($total,$subject->count());
+                            $avg = App\Student::average($total,$no_of_subject );
                             $avgPer = App\Student::averPer($avg,$SMT_1);
                             $total = 0;
                             $min_t +=$avg; 
                             $min_t_per +=$avgPer; 
+                            $no_of_subject =0;
                         @endphp
                         <td>{{App\Student::averPer($avg,$SMT_1)}} </td>
                         <td>{{App\Student::grade($avgPer,$grades)}}  </td>
@@ -85,7 +90,7 @@
                         <td></td>
                         <th>Total</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::subject_total($item->id,$class_->id,$term->id)}} </td>
+                        <td>{{App\Student::subject_total_summative_1($item->id,$class_->id,$term->id)}} </td>
                         @endforeach
                         <td>{{$sum_total}}</td>
                         <td>{{$min_t}}</td>
@@ -96,7 +101,7 @@
                         <td></td>
                         <th>Max Score</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::max_score($item->id,$class_->id,$term->id)}}</td>
+                        <td>{{App\Student::max_score_1($item->id,$class_->id,$term->id)}}</td>
                         @endforeach
                         
                     </tr>
@@ -104,7 +109,7 @@
                         <td></td>
                         <th>Min Score</th>
                         @foreach ($subject->sortBy('name') as $item)
-                             <td>{{App\Student::min_score($item->id,$class_->id,$term->id)}}</td>
+                             <td>{{App\Student::min_score_1($item->id,$class_->id,$term->id)}}</td>
                         @endforeach
                         
                     </tr> 
@@ -112,7 +117,7 @@
                         <td></td>
                         <th>Subject Average</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::average(App\Student::subject_total($item->id,$class_->id,$term->id),App\Student::checkNoStudent($term->id,$class_->id,$item->id,1))}}</td>
+                        <td>{{App\Student::average(App\Student::subject_total_summative_1($item->id,$class_->id,$term->id),App\Student::checkNoStudent($term->id,$class_->id,$item->id,8))}}</td>
                         @endforeach
                         
                        
@@ -121,7 +126,7 @@
                         <td></td>
                         <th>Subject Average (%)</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,1))))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_summative_1($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,8))))}}</td>
                         @endforeach
                         
                        
@@ -131,7 +136,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,1))),$grades)}}</td>
+                        <td>{{App\Student::grade(App\Student::average_per(App\Student::subject_total_summative_1($item->id,$class_->id,$term->id),($SMT_1 * App\Student::checkNoStudent($term->id,$class_->id,$item->id,8))),$grades)}}</td>
                         @endforeach
                         
                         
@@ -140,6 +145,7 @@
                 </tbody>
                 
                 </table>
+                
             </div>
         </div>
     </div> 

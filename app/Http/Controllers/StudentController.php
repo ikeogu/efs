@@ -150,12 +150,12 @@ class StudentController extends Controller
         $dets = $this->details($term_id,$class_1);
        
         if($dets['class_']->status == 'Year School') {
-            $SMT_1 = 10;
+             $SMT_1 = $dets['term']->y_summative1;
             
             return view('results.summative1',['students'=>$dets['students'], 'subject'=>$dets['subject'],
             'SMT_1'=>$SMT_1,'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_']]);
        
-        } 
+        }
         
         return back()->with('success', 'No class'); 
         
@@ -214,7 +214,7 @@ class StudentController extends Controller
         $dets = $this->det($student_id,$term_id,$class_id);
         
         if($dets['class_']->status == 'Year School'){
-            $SMT_score = 10;
+            $SMT_score = $dets['term']->y_summative1;
             
             return view('results.summative-1',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],
             'scores'=>$dets['scores'],'users'=>$dets['users'],'SMT_1'=>$SMT_score,
@@ -281,7 +281,7 @@ class StudentController extends Controller
         $class_ = S5Class::find($class_id);
         $student = Student::find($student_id);
         $grades = GradeSetting::all();
-        $scores = SubjectMark::where('student_id',$student->id)->where('term_id',$term->id)
+        $scores = SubjectMark::with('subjectcomment')->where('student_id',$student->id)->where('term_id',$term->id)
         ->where('s5_class_id',$class_->id)->get();
         
         $users = SubjectMark::select('student_id')->where('term_id',$term->id)
@@ -298,7 +298,7 @@ class StudentController extends Controller
         $term = Term::find($term_id);
         $class_= S5Class::find($class_1);
         $grades = GradeSetting::all();
-        $scores = SubjectMark::where('term_id','=',$term->id)->where('s5_class_id','=',$class_->id)->distinct()->get();
+        $scores = SubjectMark::where('term_id',$term->id)->where('s5_class_id','=',$class_->id)->distinct()->get();
                          
         $ids = [];
         $sub_id = [];
@@ -356,16 +356,12 @@ class StudentController extends Controller
     public function summative1_ct($term_id,$class_1){
         $dets = $this->details($term_id,$class_1);
         if($dets['class_']->status == 'Year School') {
-            $SMT_score = 10;
-            return view('teacher.summative-1',['students'=>$dets['students'], 'subject'=>$dets['subject'],
+             $SMT_score = $dets['term']->y_summative1;
+            return view('teacher.summative1',['students'=>$dets['students'], 'subject'=>$dets['subject'],
             'SMT_1'=>$SMT_score,'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_']]);
        
-        } 
-        // if($dets['class_']->status == 'Early Years') {
-        //     $SMT_score = $dets['term']->e_summative;
-        // return view('teacher.summative',['students'=>$dets['students'], 'subject'=>$dets['subject'],'SMT_score'=>$SMT_score,
-        // 'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_']]);
-        // }   
+        }
+        
         
     }
     
@@ -419,17 +415,13 @@ class StudentController extends Controller
     public function summative_sheet1_ct($student_id,$term_id,$class_id){
         $dets = $this->det($student_id,$term_id,$class_id);
         if($dets['class_']->status == 'Year School'){
-            $SMT_score = 10;
+             $SMT_score = $dets['term']->y_summative1;
             return view('teacher.summative-1',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],
             'scores'=>$dets['scores'],'users'=>$dets['users'],'SMT_1'=>$SMT_score,
             'grades'=>$dets['grades']]);
         }
-        // if($dets['class_']->status == 'Early Years'){
-        //     $SMT_score = $dets['term']->e_summative;
-        //     return view('teacher.summative_sheet',['student'=>$dets['student'],'term'=>$dets['term'],'class_'=>$dets['class_'],
-        //     'scores'=>$dets['scores'],'users'=>$dets['users'],'SMT_score'=>$SMT_score,
-        //     'grades'=>$dets['grades']]);
-        // }
+        
+        
        
 
     }
@@ -544,7 +536,7 @@ class StudentController extends Controller
     public function download_summative_sheet($term_id, $class_id){
         $dets = $this->details($term_id,$class_id);
         if($dets['class_']->status == 'Year School') {
-            $SMT_score = $dets['term']->y_summative;
+            $SMT_score = $dets['term']->y_summative1;
             $pdf = PDF::loadView('pdf.summative_sheet',['data'=>$this->details($term_id,$class_id),'SMT_score'=>$SMT_score])->setPaper('a4', 'landscape');        
             return $pdf->download($dets['class_']->name.'_'.$dets['term']->name.'_'.$dets['term']->session.'.pdf');
         } 
@@ -554,8 +546,46 @@ class StudentController extends Controller
             return $pdf->download($dets['class_']->name.'_'.$dets['term']->name.'_'.$dets['term']->session.'.pdf');
         }   
     }
+    public function download_summative_sheet2($term_id, $class_id)
+    {
+        $dets = $this->details($term_id, $class_id);
+        if ($dets['class_']->status == 'Year School') {
+            $SMT_score = $dets['term']->y_summative;
+            $pdf = PDF::loadView('pdf.summative_sheet2', ['data' => $this->details($term_id, $class_id), 'SMT_score' => $SMT_score])->setPaper('a4', 'landscape');
+            return $pdf->download($dets['class_']->name . '_' . $dets['term']->name . '_' . $dets['term']->session . '.pdf');
+        }
+       
+    }
     
-
+    public function download_cat1_broadsheet($term_id, $class_id){
+         $dets = $this->details($term_id,$class_id);
+         $TCA_score = $dets['term']->h_cat1;
+         $pdf = PDF::loadView('pdf.cat1_broadsheet',['data'=>$this->details($term_id,$class_id),'TCA_score'=>$TCA_score])->setPaper('a4', 'landscape');
+        return $pdf->download($dets['class_']->name.'_'.$dets['term']->name.'_'.$dets['term']->session.'CAT-1_BroadSheet.pdf');
+        
+    }
+    public function download_cat2_broadsheet($term_id, $class_id){
+         $dets = $this->details($term_id,$class_id);
+         $TCA_score = $dets['term']->h_cat2;
+         $pdf = PDF::loadView('pdf.cat2_broadsheet',['data'=>$this->details($term_id,$class_id),'TCA_score'=>$TCA_score])->setPaper('a4', 'landscape');
+        return $pdf->download($dets['class_']->name.'_'.$dets['term']->name.'_'.$dets['term']->session.'CAT-2_BroadSheet.pdf');
+        
+    }
+    public function download_exambroadsheet($term_id, $class_id)
+    {
+        $dets = $this->details($term_id, $class_id);
+        $TCA_score = 50;
+        $pdf = PDF::loadView('pdf.exam', ['data' => $this->details($term_id, $class_id), 'TCA_score' => $TCA_score])->setPaper('a4', 'landscape');
+        return $pdf->download($dets['class_']->name . '_' . $dets['term']->name . '_' . $dets['term']->session . 'EXAM_BroadSheet.pdf');
+    }
+    public function download_GTbroadsheet($term_id, $class_id){
+         $dets = $this->details($term_id,$class_id);
+         $TCA_score = 100;
+         $pdf = PDF::loadView('pdf.grandTotal',['data'=>$this->details($term_id,$class_id),'TCA_score'=>$TCA_score])->setPaper('a4', 'landscape');
+        return $pdf->download($dets['class_']->name.'_'.$dets['term']->name.'_'.$dets['term']->session.'GT_BroadSheet.pdf');
+        
+    }
+    
     // check any broadsheet
     public function allbroadsheet(Request $request){
         
@@ -658,5 +688,150 @@ class StudentController extends Controller
 
     }
     
+    public function fetch_comment(Request $request){
+        $term = Term::all();
+        $class_ = S5Class::all();
+        
+        $comments = Comment::with('s5_class','term')->where('s5_class_id',$request->class_)->where('term_id',$request->term)->get();
+        $c= S5Class::find($request->class_);
+        $t= Term::find($request->term);
+        return view('check_comment',['comments'=>$comments,'term'=>$term, 'class_'=>$class_,'t'=>$t,'c'=>$c]);
+    }
+    
+    public function comments(){
+        $term = Term::all();
+        $class_ = S5Class::all();
+        $c = array();
+        $t= array();
+        
+        return view('check_comment',['term'=>$term, 'class_'=>$class_,'t'=>$t,'c'=>$c]);
+    }
+    
+    public function DC($c,$t){
+         $comments = Comment::with('s5_class','term')->where('s5_class_id',$c)->where('term_id',$t)->get();
+        $C= S5Class::find($c);
+        $T= Term::find($t);
+        
+        $pdf = PDF::loadView('pdf.comments',['comments'=>$comments,'T'=>$T, 'C'=>$C]);        
+        return $pdf->download($C->name.'_'.$C->description.'_'.$T->name.'_comment.pdf');
+    }
+     public function DBGT($term_id,$class_1){
+        $dets = $this->details($term_id,$class_1);
+        $GT_score =100; 
+          $C= S5Class::find($class_1);
+        $T= Term::find($term_id);
+         $pdf = PDF::loadView('pdf.broadsheet',['students'=>$dets['students'], 'subject'=>$dets['subject'],'GT_score'=>$GT_score,'grades'=>$dets['grades'],'term'=>$dets['term'],'class_'=>$dets['class_'],'subject_status'=>$dets['subject_status']])->setPaper('a4', 'landscape');        
+        return $pdf->download($C->name.'_'.$C->description.'_'.$T->name.'_GrandTotalBroadSheet.pdf');
+     }
+
+     public function userDetails(){
+        $users = User::where('isAdmin', 4)->latest()->get();
+        $pdf = PDF::loadView('pdf.users',['users'=>$users]);        
+        return $pdf->download('student-User-details'.'.pdf');
+
+        
+        
+    }
+    public function commentBank()
+    {
+        return view('commentBank');
+    }
+     public function updateExam(){
+        $scores = SubjectMark::where('term_id',6)->where('Exam',0)->get();
+        foreach($scores as $i){
+            $i->Exam = null;
+            $i->save();
+        }
+    }
+    public function resetScore(){
+        $scores = SubjectMark::where('status',null)->get();
+         foreach($scores as $i){
+           switch ($i->subname) {
+               
+              case 'ENGLISH LANGUAGE':
+                $i->status = 1;
+                $i->save();
+                break;
+              case 'LITERATURE IN ENG.':
+                $i->status = 1;
+                $i->save();
+                break;
+             
+              case 'BASIC SCIENCE':
+                $i->status = 2;
+                $i->save();
+                break;
+              case 'BASIC TECHNOLOGY':
+                $i->status = 2;
+                $i->save();
+                break;
+             case 'P. H. E':
+                $i->status = 2;
+                $i->save();
+                break;
+             case 'I.C.T':
+                $i->status = 2;
+                $i->save();
+                break;
+                
+             case 'AGRIC SCIENCE':
+                $i->status = 3;
+                $i->save();
+                break;
+                
+             case 'HOME ECONOMICS':
+                $i->status = 3;
+                $i->save();
+                break;
+                
+             case 'CIVIC EDUCATION':
+                $i->status = 4;
+                $i->save();
+                break;
+                
+             case 'FINE ART':
+                $i->status = 5;
+                $i->save();
+                break;
+             case 'DANCE & DRAMA':
+                $i->status = 5;
+                $i->save();
+                break;
+             case 'MUSIC':
+                $i->status = 5;
+                $i->save();
+                break;
+                
+             case 'BUSINESS STUDIES':
+                $i->status = 6;
+                $i->save();
+                break;
+                
+             case 'FRENCH':
+                $i->status = 7;
+                $i->save();
+                break;
+                
+             case 'MATHEMATICS':
+                $i->status = 8;
+                $i->save();
+                break;
+            case 'RELIGIOUS STUDIES':
+                $i->status = 9;
+                $i->save();
+                break;
+            case 'HANDWRITING':
+                $i->status = 10;
+                $i->save();
+                break;
+            
+            
+              default:
+                
+            }
+        }
+        return back()->with('success','Subject has been reset');
+    }
+
 
 }

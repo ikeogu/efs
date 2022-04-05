@@ -34,6 +34,9 @@
       
     </div>
   </div>
+  <div>
+      <a href="{{route('resetScore')}}" class="btn btn-sm btn-warning">Reset Subject</a>
+  </div>
 
   <term></term>
 

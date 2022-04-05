@@ -3,7 +3,12 @@
   <div id="postsrec" class="mt-5">
 
     <div class="row mt-5">
-      <div class="col-lg-12 text-right" style="margin-bottom: 20px;">
+      <div class="col-lg-6 text-right" style="margin-bottom: 20px;">
+        <a href="#" v-on:click="fixSubject()"
+           class="btn btn-warning">Fix Subject Comment</a>
+      </div>
+      <div class="col-lg-6 text-right" style="margin-bottom: 20px;">
+
         <a href="#"
            data-target="#exampleModal"
            data-toggle="modal"
@@ -40,55 +45,19 @@
               <div class="modal-body">
                 <form method="post" name="addSubjComment" id="addstudent" action="#" @submit.prevent="addSubjComment">
                   <div class="form-group">
-                    <label for="percentage">Subject</label>
-                    <input type="text" name="name" id="percentage" class="form-control" placeholder="name" v-model="setting.name"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">First Comment</label>
-                    <input type="text" name="f" id="grade" class="form-control" placeholder="First Comment" v-model="setting.f" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Second Comment</label>
-                    <input type="text" name="s" id="grade" class="form-control" placeholder="Second Comment" v-model="setting.s" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Third Comment</label>
-                    <input type="text" name="th" id="grade" class="form-control" placeholder="Third Comment" v-model="setting.th" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Fourth Comment</label>
-                    <input type="text" name="fr" id="grade" class="form-control" placeholder="Forth Comment" v-model="setting.fr" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Fifith Comment</label>
-                    <input type="text" name="fif" id="grade" class="form-control" placeholder="Fifth Comment" v-model="setting.fif" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Sixth Comment</label>
-                    <input type="text" name="six" id="grade" class="form-control" placeholder="Six Comment" v-model="setting.six" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Seventh Comment</label>
-                    <input type="text" name="sev" id="grade" class="form-control" placeholder="Seventh Comment" v-model="setting.sev" />
-                  </div>
-                  <div class="form-group">
-                    <label for="description">Class</label>
-                      <select class="form-control" name="s5_class_id" v-model="setting.s5_class_id"  placeholder="Choose Class">
-                         <option v-for="classes in classData" v-bind:value="classes.id" :key="classes.id">
-                          {{classes.name}}
+                    <label for="subject_id">Subject</label>
+                   <select class="form-control" name="subject_id" v-model="setting.subject_id" >
+                      <option>Select Subject</option>
+                      <option v-for="option in subjectData" v-bind:value="option.id" :key="option.id">
+                          {{option.name}}
                       </option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="description">Term</label>
-                      <select class="form-control" name="term_id" v-model="setting.term_id"  placeholder="Choose Term">
-                         <option v-for="term in TermData" v-bind:value="term.id" :key="term.id">
-                          {{term.name}}
-                      </option>
-                    </select>
+                    <label for="description">Decription</label>
+                    <textarea name="description"  class="form-control" placeholder="Enter Subejct Comment ...." v-model="setting.description"></textarea>
                   </div>
-
+                  
                   <div class="form-group text-right">
                     <button class="btn btn-success">Submit</button>
                   </div>
@@ -100,7 +69,7 @@
         </div>
 
         <div class="modal fade"
-             id="exampleModal1"
+             id="exampleModal1-sub"
              tabindex="-1"
              role="dialog"
              aria-labelledby="exampleModalLabel"
@@ -116,58 +85,26 @@
               </div>
               <div class="modal-body">
                 <form method="post" name="updatestudent" id="updatestudent" action="#" @submit.prevent="updateSubjComment">
-                  <div class="form-group">
-                    <label for="percentage">Subject</label>
-                    <input type="text" name="name" id="percentage" class="form-control" placeholder="name" v-model="setting.name"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">First Comment</label>
-                    <input type="text" name="f" id="grade" class="form-control" placeholder="First Comment" v-model="setting.f" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Second Comment</label>
-                    <input type="text" name="s" id="grade" class="form-control" placeholder="Second Comment" v-model="setting.s" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Third Comment</label>
-                    <input type="text" name="th" id="grade" class="form-control" placeholder="Third Comment" v-model="setting.th" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Fourth Comment</label>
-                    <input type="text" name="fr" id="grade" class="form-control" placeholder="Forth Comment" v-model="setting.fr" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Fifith Comment</label>
-                    <input type="text" name="fif" id="grade" class="form-control" placeholder="Fifth Comment" v-model="setting.fif" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Sixth Comment</label>
-                    <input type="text" name="six" id="grade" class="form-control" placeholder="Six Comment" v-model="setting.six" />
-                  </div>
-                  <div class="form-group">
-                    <label for="grade">Seventh Comment</label>
-                    <input type="text" name="sev" id="grade" class="form-control" placeholder="Seventh Comment" v-model="setting.sev" />
-                  </div>
-                  <div class="form-group">
-                    <label for="description">Class</label>
-                      <select class="form-control" name="s5_class_id" v-model="setting.s5_class_id"  placeholder="Choose Class">
-                         <option v-for="classes in classData" v-bind:value="classes.id" :key="classes.id">
-                          {{classes.name}}
+                 <div class="form-group">
+                    <label for="subject_id">Subject</label>
+                   <select class="form-control" name="subject_id" v-model="esetting.subeject_id" >
+                      <option>Select Subject</option>
+                      <option v-for="option in subjectData" v-bind:value="option.id" :key="option.id">
+                          {{option.name}}
                       </option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="description">Term</label>
-                      <select class="form-control" name="term_id" v-model="setting.term_id"  placeholder="Choose Term">
-                         <option v-for="term in TermData" v-bind:value="term.id" :key="term.id">
-                          {{term.name}}
-                      </option>
-                    </select>
+                     <input type="text" name="subject" readonly value="esetting.subject"  class="form-control">
                   </div>
-
+                  <div class="form-group">
+                    <label for="description">Decription</label>
+                    <textarea name="description"  class="form-control" v-model="esetting.description">
+                      
+                    </textarea>
+                  </div>
                   <div class="form-group text-right">
-                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-success">Update</button>
                   </div>
                 </form>
               </div>
@@ -176,7 +113,7 @@
           </div>
         </div>
 
-        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+        <div class="modal fade" id="exampleModal2-sub" tabindex="-1" role="dialog" aria-labelledby="exampleModal2-subLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -203,7 +140,7 @@
 
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-success">SubjComments List</h6>
+            <h6 class="m-0 font-weight-bold text-success">Subject Comments List</h6>
           </div>
           <div class="card-body table-responsive">
 
@@ -212,46 +149,80 @@
                 <tr>
                 <th>Class</th>
                 <th>Term</th>
-                  <th>Name</th>
-                  <th>First Com</th>
-                  <th>Second Com</th>
-                  <th>Third Com</th>
-                  <th>Fourth Com</th>
-                  <th>Fifth Com</th>
-                  <th>Sixth Com</th>
-                  <th>Seventh Com</th>
-                  
+                 <th>Subject</th>
+                  <th>Description</th>
+                             
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="gSetting in laravelData" :key="gSetting.id">
                   <td>{{ gSetting.class_ }}</td>
                   <td>{{ gSetting.term }}</td>
-                  <td>{{ gSetting.name}}</td>
-                  <td>{{ gSetting.f }}</td>
-                  <td>{{ gSetting.s }}</td>
-                  <td>{{ gSetting.th }}</td>
-                  <td>{{ gSetting.fr }}</td>
-                  <td>{{ gSetting.fif }}</td>
-                  <td>{{ gSetting.six }}</td>
-                  <td>{{ gSetting.sev }}</td>
+                    <td>{{ gSetting.subject}}</td>
+                  <td>{{ gSetting.description}}</td>
+                 
                   <td><a href="#"
                        v-on:click="editSubjComment(gSetting.id)"
-                       data-target="#exampleModal1"
+                       data-target="#exampleModal1-sub"
                        data-toggle="modal"
                        v-bind:title="gSetting.id">Edit</a></td>
-                  <td><a href="#" data-target="#exampleModal2" v-on:click="deleteId(gSetting.id)" data-toggle="modal" v-bind:id="id">Delete</a></td>
+                  <td><a href="#" data-target="#exampleModal2-sub" v-on:click="deleteId(gSetting.id)" data-toggle="modal" v-bind:id="id">Delete</a></td>
                 </tr>
               </tbody>
               
             </table>
-            <pagination :data="laravelData" :limit="2" @pagination-change-page="SubjCommentLists">
-              <span slot="prev-nav">&lt; Previous</span>
-              <span slot="next-nav">Next &gt;</span>
-            </pagination>
+        
           </div>
         </div>
+        <div class="card" >
+            <div class="card-header bg-success text-white">Subject Comment chart</div>
+          <div class="card-body">
+            <div class="table-responsive">
+            
+            <table class="table table-striped table-bordered" style="width:100%">
+              <thead>
+                <tr >
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>subject</th>
+                  <th>Comment</th>
+                  <th>Acquired</th>
+                  <th>Emerging</th>
+                </tr>
+                
+              </thead>
+              <tbody >
+                  
+                <tr  v-for="(st,index) in orderedSubjComment" :key="st.id" >
+                  <th scope="row">{{ index + 1 }}</th>
+                  <td>{{ st.student}}</td>
+                  <td>{{ st.subject}}</td>
+                  <td>{{ st.description}}</td>
 
+                  <td v-if="st.acquired!=null">{{ st.acquired}}</td>
+                  <td v-else>
+                  <input type="checkbox" id="one" :value="st.table_id + '_' + index + '_2'" v-model="checkedComments" > </td>  
+                  <td  v-if="st.emerging!=null">{{ st.emerging}}</td>                                          
+                  <td v-else>
+                   <input type="checkbox" id="two" :value="st.table_id  + '_' + index + '_1'" v-model="checkedComments" >    
+                  </td>  
+                </tr>
+               
+                <tr>
+                  <div class="form-group text-center">
+                  <button class="btn btn-success" v-on:click="updateSubjCommentEmerging()">Submit</button>
+                </div>
+                </tr>
+              </tbody>
+            
+                            
+             
+            </table>
+            </div>
+          </div>
+
+         
+        </div>
       </div>
     </div>
   </div>
@@ -259,25 +230,35 @@
 </template>
 
 <script>
-   const BASE_URL = 'https://efs.ishlp.com';
+   const BASE_URL = window.location.origin;
   export default {
     data() {
       return {
+        checkedComments: [],
         setting: {
-          f: '',
-          s: '',
-          th: '',
-          fr:'',
-          fif:'',
-          six:'',
-          sev:'',
+         
+          description:'',
           term_id:'',
           s5_class_id:'',
-          name:''
+          subject_id:''
+        },
+        esetting: {
+         
+          description:'',
+          term_id:'',
+          s5_class_id:'',
+          subject_id:''
         },
         laravelData: {},
         classData: {},
+        subjectData:{},
         termData: {},
+        subcomment:{
+          student:'',
+          acquired:'',
+          emerging:'',
+          description:'',
+        },
         id: '',
         succmsg: true,
         showmodal: false,
@@ -285,16 +266,36 @@
         actionmsg: ''
       }
     },
+    computed: {
+          orderedSubjComment: function () {
+            return _.orderBy(this.subcomment, 'student')
+          },
+    },
     methods: {
       SubjCommentLists(page) {
-        if (typeof page === 'undefined') {
-          page = 1
-        }
-        this.$http.get(BASE_URL + '/api/subjComment?page=' + page).then(response => {
+         this.$http.get(BASE_URL + '/api/subjComment/class/'+ this.setting.s5_class_id+ '/term/'+ this.setting.term_id ).then(response => {
           //this.posts = response.data.data;
+          
           this.laravelData = response.data.data
           
         })
+      },
+      // fetch the subeject description
+       fetchComment(){
+       this.$http.get( BASE_URL + '/api/subjcomment_/class/'+this.setting.s5_class_id+'/term/'+this.setting.term_id).then(response => {
+          this.subcomment = response.data;
+          console.log(response.data);
+          
+       })
+          
+      },
+      mouseOver: function(){
+            this.active = !this.active;   
+        },
+      getText () {
+        var values = this.options.map(function(o) { return o.value })
+        var index = values.indexOf(this.selected) 
+        this.term.name = this.options[index].text
       },
       classLists() {
         
@@ -312,34 +313,50 @@
         })
               
       },
+       subjectLists() {
+       
+        this.$http.get(BASE_URL + '/api/early-years-subject').then(response => {
+          //this.posts = response.data.data;
+          this.subjectData = response.data
+          
+        })
+              
+      },
+      fixSubject(){
+        this.$http
+          .post(BASE_URL + '/api/fix_early_years', {
+            
+            term_id: this.setting.term_id,
+            s5_class_id: this.setting.s5_class_id          
+          })
+          .then(data => {
+            this.succmsg = false
+            var self = this
+            setTimeout(function() {
+              self.succmsg = true
+            }, 3000)
+            this.actionmsg = 'Subjects fixed successfully'
+            $('#exampleModal').modal('hide')
+            $('body')
+              .removeClass()
+              .removeAttr('style')
+            $('.modal-backdrop').remove()
+            this.SubjCommentLists()
+          })
+      },
       addSubjComment() {
         this.$http
           .post(BASE_URL + '/api/subjComment', {
-            name: this.setting.name,
+            description: this.setting.description,
             term_id: this.setting.term_id,
             s5_class_id: this.setting.s5_class_id,
-            f: this.setting.f,
-            s: this.setting.s,
-            th: this.setting.th,
-            fr: this.setting.fr,
-            fif: this.setting.fif,
-            six: this.setting.six,
-            sev: this.setting.sev,
-            
+            subject_id: this.setting.subject_id            
           })
           .then(data => {
             this.succmsg = false
             console.log(data)
-            this.setting.name = ''
-            this.setting.term_id = ''
-            this.setting.s5_class_id = ''
-             this.setting.f = ''
-             this.setting.s = ''
-             this.setting.th = ''
-             this.setting.fr = ''
-             this.setting.fif = ''
-             this.setting.six = ''
-             this.setting.sev = ''
+            this.setting.description = ''
+            
             var self = this
             setTimeout(function() {
               self.succmsg = true
@@ -350,61 +367,59 @@
               .removeClass()
               .removeAttr('style')
             $('.modal-backdrop').remove()
-            this.SubjCommentLists(this.pagenumber)
+            this.SubjCommentLists()
           })
       },
       editSubjComment(settingid) {
         this.$http.get(BASE_URL + '/api/subjComment/' + settingid).then(data => {
-          this.setting.name = data.data.data.name
-          this.setting.f = data.data.data.f
-          this.setting.s = data.data.data.s
-          this.setting.th = data.data.data.th
-          this.setting.fr = data.data.data.fr
-          this.setting.fif = data.data.data.fif
-          this.setting.six = data.data.data.six
-          this.setting.sev = data.data.data.sev
+          this.esetting.description = data.data.data.description
+          this.esetting.subject_id = data.data.data.subject_id
+          this.esetting.subject = data.data.data.subject
           this.id = settingid
         })
       },
       updateSubjComment() {
         this.$http
           .patch(BASE_URL + '/api/subjComment/' + this.id, {
-            name: this.setting.name,
-            term_id: this.setting.term_id,
-            s5_class_id: this.setting.s5_class_id,
-            f: this.setting.f,
-            s: this.setting.s,
-            th: this.setting.th,
-            fr: this.setting.fr,
-            fif: this.setting.fif,
-            six: this.setting.six,
-            sev: this.setting.sev,
-            
+           description: this.esetting.description,
+           subject_id: this.esetting.subject_id,
           })
           .then(data => {
             this.succmsg = false
             console.log(data)
-            this.setting.name = ''
-            this.setting.term_id = ''
-            this.setting.s5_class_id = ''
-             this.setting.f = ''
-             this.setting.s = ''
-             this.setting.th = ''
-             this.setting.fr = ''
-             this.setting.fif = ''
-             this.setting.six = ''
-             this.setting.sev = ''
+            this.esetting.description = ''
+            this.esetting.subject_id = ''
             var self = this
             setTimeout(function() {
               self.succmsg = true
             }, 3000)
             this.actionmsg = 'Data updated successfully'
-            $('#exampleModal1').modal('hide')
+            $('#exampleModal1-sub').modal('hide')
             $('body')
               .removeClass()
               .removeAttr('style')
             $('.modal-backdrop').remove()
-            this.SubjCommentLists(this.pagenumber)
+            this.SubjCommentLists()
+          })
+      },
+      
+       updateSubjCommentEmerging() {
+          console.log(this.checkedComments);    
+        this.$http
+          .post(BASE_URL + '/api/update-subjcomment', {
+            emerging: this.checkedComments
+            })
+          .then(data => {
+            this.succmsg = false
+            console.log(data)
+            this.checkedComments= ''
+            
+            var self = this
+            setTimeout(function() {
+              self.succmsg = true
+            }, 3000)
+            this.actionmsg = 'Data updated successfully'
+            this.SubjCommentLists()
           })
       },
       deleteId(settingid) {
@@ -420,7 +435,7 @@
 
           this.actionmsg = 'Data deleted successfully'
           this.SubjCommentLists(this.pagenumber)
-          $('#exampleModal2').modal('hide')
+          $('#exampleModal2-sub').modal('hide')
           $('body')
             .removeClass()
             .removeAttr('style')
@@ -428,18 +443,31 @@
         })
       },
       hideModal() {
-        $('#exampleModal2').modal('hide')
+        $('#exampleModal2-sub').modal('hide')
         $('body')
           .removeClass()
           .removeAttr('style')
         $('.modal-backdrop').remove()
       }
     },
+    beforeMount(){
+       this.setting.term_id = this.term_id
+      this.setting.s5_class_id = this.s5_class_id
+    },
     mounted() {
+      
       this.SubjCommentLists()
+      this.subjectLists()
       this.classLists()
       this.termLists()
-    }
+      this.fetchComment()
+      
+      
+    },
+    props:[
+      'term_id',
+      's5_class_id'
+    ]
   }
 
 </script>

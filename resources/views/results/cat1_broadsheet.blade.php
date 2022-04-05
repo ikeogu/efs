@@ -6,9 +6,14 @@
 @section('content')
 
 <div class="container-fluid">
+    <div class="row">
+        
     <form>
-        <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success btn-block btn-sm"/>
+      <input type = "button" value = "Print" onclick = "window.print()" id="printPageButton"  class="btn btn-success  btn-sm"/>
     </form>
+     
+        <a href="{{route('dcat1_bs',[$term->id,$class_->id])}}" type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-download" aria-hidden="true"></i>ExportTOPDF</a>
+    </div> 
     <div class="card">
     <div class="card-header bg-success text-capitalize text-white">C.A.T 1 {{$class_->name}}|   {{$class_->description}}  | {{$term->name}}|  {{$term->session}}</div>
         <div class="card-body">
@@ -369,7 +374,7 @@
                         <td></td>
                         <th>Class Average</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::average_(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,4)}}</td>
+                        <td>{{App\Student::average_(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),$term->id,$class_->id,$item->id,2)}}</td>
                         @endforeach
                         
                        
@@ -378,9 +383,9 @@
                         <td></td>
                         <th>Class Performance (%)</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{round(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))))}}</td>
+                        <td>{{round(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,2))))}}</td>
                         @php
-                            $cl_av += App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4)));
+                            $cl_av += App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,2)));
                         @endphp
                         @endforeach
                         {{-- <td>{{App\Student::average($cl_av,$subject->count())}}</td>
@@ -392,7 +397,7 @@
                         <td></td>
                         <th>Remarks</th>
                         @foreach ($subject->sortBy('name') as $item)
-                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,4))),$grades)}}</td>
+                        <td>{{App\Student::h_grade(App\Student::average_per(App\Student::subject_total_cat1($item->id,$class_->id,$term->id),($TCA_score  * App\Student::checkNoStudent($term->id,$class_->id,$item->id,2))),$grades)}}</td>
                         @endforeach
                         
                         
@@ -400,6 +405,7 @@
                   </tbody>
                 </table>
                 @endif
+                
                 
             </div>
         </div>

@@ -40,7 +40,28 @@
     
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+<style>
+  body,
+            p,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            td,
+            th,
+            span,
+            .btn,
+            strong,
+            label,
+            option,
+            form,
+            select,
+            .input-group-text {
+                font-size: 0.8rem  !important;
+            }
+  </style>
 </head>
 
 <body id="page-top">
@@ -83,6 +104,30 @@
            
               <!-- Nav Item - Charts -->
               <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                        aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Assignments</span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+
+                            <a class="collapse-item" href="{{ route('ASS') }}">
+                                <i class="fas fa-fw fa-chart-area"></i>
+                                <span> Post Assignment</span></a>
+                            <a class="collapse-item" href="{{route('MA')}}">Posted Assigments</a>
+                            {{-- <a class="collapse-item" href="{{ route('hschool') }}">High School Students</a>
+                            <a class="collapse-item" href="{{ route('jhschool') }}">Junior High School</a>
+                            <a class="collapse-item" href="{{ route('yschool') }}">Year School Students</a> --}}
+
+                            <div class="collapse-divider"></div>
+
+                        </div>
+                    </div>
+                </li>
+             
+              <li class="nav-item">
               <a class="nav-link" href="{{route('teacher.dashboard')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Biodata</span></a>
@@ -94,6 +139,7 @@
                   <i class="fas fa-fw fa-chart-area"></i>
                   <span>Class Teacher</span></a>
               </li>
+              
               <li class="nav-item">
                 <a class="nav-link" href="{{route('broad',[Auth::user()->teacher_id])}}">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -101,6 +147,11 @@
                 </li>
               @endif
               @endif
+              <li class="nav-item">
+              <a class="nav-link" href="{{route('ComB')}}">
+                  <i class="fas fa-fw fa-chart-area"></i>
+                  <span>Comment Bank</span></a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{route('ind')}}">
                     <i class="fas fa-fw fa-setting-o"></i>

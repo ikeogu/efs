@@ -54,10 +54,16 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StudentRequest $request)
+    public function store(Request $request)
     {
       $student = $request->isMethod('put') ? Student::findOrFail($request->student_id) : new Student;
-      
+    if ($request->get('photo')) {
+      $photo = $request->get('photo');
+      $name = time() . '.' . explode('/', explode(':', substr($photo, 0, strpos($photo, ';')))[1])[1];
+      // $name = time().'.'.$request->get('photo')->getClientOriginalExtension();
+      $save_path = public_path('storage/Students/' . $name);
+      \Image::make($request->get('photo'))->save($save_path);
+    }
       $student->name = $request->name;
       $student->oname = $request->oname;
       $student->surname = $request->surname;
@@ -125,7 +131,22 @@ class StudentController extends Controller
      */
     public function update(Request $request)
     {
-      Student::whereId($request->student_id)->update($request->except(['_method','_token','student_id']));
+    if ($request->get('photo')) {
+      $photo = $request->get('photo');
+      $name = time() . '.' . explode('/', explode(':', substr($photo, 0, strpos($photo, ';')))[1])[1];
+      // $name = time().'.'.$request->get('photo')->getClientOriginalExtension();
+      $save_path = storage_path('app/public/Students/'.$name);
+          \Image::make($request->get('photo'))->save($save_path);
+         
+        $s = Student::find($request->student_id);
+      $oldfile =  public_path('storage/Students/' . $s->photo);
+      if (file_exists($oldfile))
+        unlink($oldfile);
+
+      $s->photo = $name;
+      $s->save();
+    }
+      Student::whereId($request->student_id)->update($request->except(['_method','_token','student_id','photo']));
 
     }
 
@@ -181,21 +202,18 @@ class StudentController extends Controller
         $this->subject_fix($student->id,$class_->id,$term->id,$subject->id); 
       }
       // assign subjects to all my student.
-      public function assignSubjectToMyStudent($term, $s5class)
+      public function assignSubjectToMyStudent(Request $request)
       {
-        $data = Student::getStudentsInClass($term,$s5class);
+        $data = Student::getStudentsInClass($request->term_id,$request->class_id);
         $subjects = Subject::where('level',$data['class_T']->status)->get();
         foreach($data['students'] as $student){
-          
           foreach($subjects->sortBy('name') as $subject){
             $studentterm = StudentTerm::where('student_id',$student->id)->where('term_id',$data['term']->id)->
             where('s5_class_id',$data['class_T']->id)->where('subject_id',$subject->id)->first();
-            if($studentterm != null){
+            if(empty($studentterm)){
                $this->subject_fix($student->id,$data['class_T']->id,$data['term']->id,$subject->id);
             }
-           
-          }
-                      
+          }        
         }
          
       }
@@ -240,7 +258,7 @@ class StudentController extends Controller
       public function myClasses($id){
         $imstudent = Student::find($id);
         
-        $stc = DB::table('student_term_classes')->where('student_id',$imstudent->id)->get();
+        $stc = DB::table('student_term')->where('student_id',$imstudent->id)->get();
 
         
         $arr = [];
@@ -252,11 +270,11 @@ class StudentController extends Controller
       }
 
       public function search(Request $request){
-         $qry = $request->input('query');
+         $qry = strtoupper($request->input('query'));
         $users = DB::table('students')
-        ->where('name','ilike','%'.$qry.'%')
-        ->orWhere('oname','ilike','%'.$qry.'%')->
-        orWhere('surname','ilike','%'.$qry.'%')->get();
+        ->where('name','like','%'.$qry.'%')
+        ->orWhere('oname','like','%'.$qry.'%')->
+        orWhere('surname','like','%'.$qry.'%')->get();
         if($users){
           return response()->json($users);
         }
@@ -319,6 +337,39 @@ class StudentController extends Controller
             }
         } 
       }
+  public function import_students_by_class(Request $request)
+  {
+
+    $t = Term::find($request->oldTerm);
+    $new_term = Term::find($request->newTerm);
+    $c = S5Class::find($request->oldClass);
+    $new_class = S5Class::find($request->newClass);
+    
+    $stud_ids = StudentTerm::where('s5_class_id', $c->id)->where('term_id', $t->id)->get();
+    $_ids = [];
+    foreach ($stud_ids as $sid) {
+      array_push($_ids, $sid->student_id);
+    }
+
+    $students = Student::whereIn('id', $_ids)->get();
+
+    foreach ($students as $student) {
+      // add students to class
+      $this->TermController->add_student_term($student, $new_term, $new_class->id);
+      // assigns subjects to them
+      $subjects = $this->assignedSubjects($student, $new_class->id, $new_term);
+
+      $studentterm = StudentTerm::where('student_id', $student->id)->where('term_id', $new_term->id)->where('s5_class_id', $new_class->id)->first();
+
+      if ($studentterm != null) {
+        foreach ($subjects->sortBy('name') as $subject) {
+          $this->subject_fix($student->id, $new_class->id, $new_term->id, $subject->id);
+        }
+      }
+    }
+  }
+
+  
 
      
       private function subject_fix($student_id,$class_id,$term_id,$subject_id){
@@ -373,4 +424,3 @@ class StudentController extends Controller
         }
       }
 }
-

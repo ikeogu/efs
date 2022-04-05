@@ -18,9 +18,9 @@ class StudentTermResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'student' => Student::where('id', $this->student_id)->first()->surname.' '. Student::where('id', $this->student_id)->first()->name,
-            's5_class_id' => S5Class::where('id',$this->s5_class_id)->first()->name.''.S5Class::where('id',$this->s5_class_id)->first()->description,    
-            'term' =>  Term::where('id',$this->term_id)->first()->name.''.Term::where('id',$this->term_id)->first()->description,
+            'student' => (Student::find($this->student_id))? (Student::find($this->student_id)->surname ?? ''.' '. Student::find($this->student_id)->name ?? ''): '',
+            's5_class_id' => S5Class::find($this->s5_class_id)->name.''.S5Class::find($this->s5_class_id)->description,    
+            'term' =>  Term::find($this->term_id)->name.''.Term::find($this->term_id)->description,
            ];
     }
 }
